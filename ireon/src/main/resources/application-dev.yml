@@ -1,0 +1,48 @@
+spring:
+  # database setting
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  # jpa setting
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        format_sql: true
+        show_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        # reserved words error config (add backticks)
+        auto_quote_keyword: false
+        globally_quoted_identifiers: false
+    open-in-view: true
+    defer-datasource-initialization: true
+
+# log setting
+logging:
+  level:
+    org.hibernate.sql: debug
+    com.boyworld.carrot: debug
+
+server:
+  port: 8080
+
+# file path
+file:
+  dir: /var/images
+
+cloud:
+  aws:
+    s3:
+      bucket: uhpoo
+    credentials:
+      access-key: ${ACCESS_KEY}
+      secret-key: ${SECRET_KEY}
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
