@@ -1,14 +1,13 @@
 spring:
-  # database setting
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url:  jdbc:postgresql://localhost:5432/ireon_local
+    username: ireon
+    password: ireon
     driver-class-name: org.postgresql.Driver
   # jpa setting
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
     properties:
       hibernate:
         default_batch_fetch_size: 100
