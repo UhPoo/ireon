@@ -5,6 +5,7 @@ import com.uhpoo.ireon.domain.abandon.repository.AbandonRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 유기동물 게시글 서비스
@@ -20,12 +21,13 @@ public class AbandonService {
 
     /**
      * 유기동물 게시글 등록
-     * 
-     * @param dto 유기동물 게시글 정보
+     *
+     * @param dto      유기동물 게시글 정보
      * @param nickname 현재 로그인 중인 회원 닉네임
+     * @param file
      * @return 등록된 PK 값
      */
-    public Long createAbandon(CreateAbandonDto dto, String nickname) {
+    public Long createAbandon(CreateAbandonDto dto, String nickname, MultipartFile file) {
         return null;
     }
 }

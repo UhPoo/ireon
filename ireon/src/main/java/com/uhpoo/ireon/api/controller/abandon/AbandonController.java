@@ -27,24 +27,24 @@ public class AbandonController {
      * 유기동물 게시글 등록 API
      *
      * @param request       유기동물 게시글 정보
-     * @param multipartFile 첨부파일
+     * @param file 첨부파일
      * @return 등록된 PK 값
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<Long> createAbandon(@Valid @RequestPart CreateAbandonRequest request,
-                                           @RequestPart(required = false) MultipartFile multipartFile) {
+    public ApiResponse<Long> createAbandon(@Valid @RequestPart(name = "request") CreateAbandonRequest request,
+                                           @RequestPart(required = false, name = "file") MultipartFile file) {
         log.debug("AbandonController#createAbandon called.");
         log.debug("CreateAbandonRequest={}", request);
-        log.debug("MultipartFile={}", multipartFile);
+        log.debug("MultipartFile={}", file);
 
         // TODO: 2024-02-29 Security 에서 로그인한 회원 탐색 필요
         String nickname = "nickname";
         log.debug("nickname={}", nickname);
 
-        Long saveId = abandonService.createAbandon(request.toDto(), nickname);
+        Long saveId = abandonService.createAbandon(request.toDto(), nickname, file);
         log.debug("saveId={}", saveId);
 
-        return ApiResponse.created(null);
+        return ApiResponse.created(saveId);
     }
 }
