@@ -1,0 +1,12 @@
+[[create-abandon]]
+=== 유기동물 게시글 등록
+
+==== HTTP Request
+
+include::{snippets}/create-abandon/http-request.adoc[]
+include::{snippets}/create-abandon/request-parts.adoc[]
+include::{snippets}/create-abandon/request-part-request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/create-abandon/http-response.adoc[]
+include::{snippets}/create-abandon/response-fields.adoc[]
