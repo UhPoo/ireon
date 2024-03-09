@@ -18,6 +18,8 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -138,12 +140,16 @@ public class MemberControllerDocsTest extends RestDocsSupport{
 
         mockMvc.perform(
                         patch("/member/logout")
+                                .header("Authorization","Bearer ******")
                 )
                 .andDo(print())
                 .andExpect(status().isNoContent())
                 .andDo(document("member-logout",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Basic Auth Credentials")
+                        ),
                         responseFields(
                                 fieldWithPath("code").type(JsonFieldType.NUMBER).description("코드"),
                                 fieldWithPath("status").type(JsonFieldType.STRING).description("상태"),

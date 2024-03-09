@@ -26,6 +26,8 @@ include::{snippets}/member-login/response-fields.adoc[]
 
 === HTTP Request
 include::{snippets}/member-logout/http-request.adoc[]
+request header
+include::{snippets}/member-logout/request-headers.adoc[]
 
 === HTTP Response
 include::{snippets}/member-logout/http-response.adoc[]
