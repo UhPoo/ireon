@@ -23,4 +23,7 @@ public class MemberService {
     public TokenResponse login(MemberLoginDto dto) {
         return null;
     }
+
+    public void logout(String encryptedRefreshToken, String accessToken) {
+    }
 }

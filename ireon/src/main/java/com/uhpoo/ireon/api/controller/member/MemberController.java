@@ -6,6 +6,7 @@ import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
 import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
 import com.uhpoo.ireon.api.service.member.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,5 +40,18 @@ public class MemberController {
         log.debug("TokenDto={}",response);
 
         return ApiResponse.ok(response);
+    }
+
+    @PatchMapping("/logout")
+    public ApiResponse<Object> logout(HttpServletRequest request) {
+        log.debug("MemberController#logout called.");
+        //String encryptedRefreshToken = jwtTokenProvider.resolveRefreshToken(request);
+        String encryptedRefreshToken = "encryptedRefreshToken";
+        //String accessToken = jwtTokenProvider.resolveAccessToken(request);
+        String accessToken = "accessToken";
+
+        memberService.logout(encryptedRefreshToken,accessToken); //TODO: 로그아웃 시 레디스 저장
+
+        return ApiResponse.of(HttpStatus.NO_CONTENT,"Logged out successfully", null);
     }
 }
