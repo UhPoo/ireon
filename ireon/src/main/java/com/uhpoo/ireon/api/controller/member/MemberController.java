@@ -1,8 +1,10 @@
 package com.uhpoo.ireon.api.controller.member;
 
 import com.uhpoo.ireon.api.ApiResponse;
+import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
 import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
+import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
 import com.uhpoo.ireon.api.service.member.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +28,16 @@ public class MemberController {
         log.debug("MemberSignUpResponse={}",response);
 
         return ApiResponse.created(response);
+    }
+
+    @PostMapping("/login")
+    public ApiResponse<TokenResponse> login(@RequestBody MemberLoginRequest request) {
+        log.debug("MemberController#login called.");
+        log.debug("MemberLoginRequest={}", request);
+
+        TokenResponse response = memberService.login(request.toDto());
+        log.debug("TokenDto={}",response);
+
+        return ApiResponse.ok(response);
     }
 }
