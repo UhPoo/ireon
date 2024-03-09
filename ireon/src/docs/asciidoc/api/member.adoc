@@ -8,3 +8,15 @@ include::{snippets}/member-signup/request-fields.adoc[]
 === HTTP Response
 include::{snippets}/member-signup/http-response.adoc[]
 include::{snippets}/member-signup/response-fields.adoc[]
+
+
+[[member-login]]
+=== 멤버 로그인
+
+=== HTTP Request
+include::{snippets}/member-login/http-request.adoc[]
+include::{snippets}/member-login/request-fields.adoc[]
+
+=== HTTP Response
+include::{snippets}/member-login/http-response.adoc[]
+include::{snippets}/member-login/response-fields.adoc[]

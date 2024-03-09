@@ -2,9 +2,12 @@ package com.uhpoo.ireon.docs;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.uhpoo.ireon.api.controller.member.MemberController;
+import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
 import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
+import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
 import com.uhpoo.ireon.api.service.member.MemberService;
+import com.uhpoo.ireon.api.service.member.dto.MemberLoginDto;
 import com.uhpoo.ireon.api.service.member.dto.MemberSignUpDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -76,5 +79,55 @@ public class MemberControllerDocsTest extends RestDocsSupport{
 
 
                         ));
+    }
+
+    @DisplayName("로그인 API ")
+    @Test
+    void login() throws Exception {
+        MemberLoginRequest request = MemberLoginRequest.builder()
+                        .email("email@email.com")
+                        .password("pwd")
+                        .build();
+
+        given(memberService.login(any(MemberLoginDto.class)))
+                .willReturn(TokenResponse.builder()
+                        .email("email@email.com")
+                        .nickname("nickname")
+                        .grantType("bearer")
+                        .accessToken("accessToken")
+                        .refreshToken("refreshToken")
+                        .accessTokenExpiresIn(151690L)
+                        .build()
+                );
+
+        mockMvc.perform(
+                        post("/member/login")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("member-login",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestFields(
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER).description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING).description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                                fieldWithPath("data.email").type(JsonFieldType.STRING).description("이메일"),
+                                fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                fieldWithPath("data.grantType").type(JsonFieldType.STRING).description("Grant Type"),
+                                fieldWithPath("data.accessToken").type(JsonFieldType.STRING).description("Access Token"),
+                                fieldWithPath("data.refreshToken").type(JsonFieldType.STRING).description("Refresh Token"),
+                                fieldWithPath("data.accessTokenExpiresIn").type(JsonFieldType.NUMBER).description("Expires Time")
+                        )
+
+
+                ));
     }
 }
