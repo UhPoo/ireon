@@ -21,6 +21,7 @@ import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -81,7 +82,7 @@ public class MemberControllerDocsTest extends RestDocsSupport{
                         ));
     }
 
-    @DisplayName("로그인 API ")
+    @DisplayName("로그인 API")
     @Test
     void login() throws Exception {
         MemberLoginRequest request = MemberLoginRequest.builder()
@@ -125,6 +126,29 @@ public class MemberControllerDocsTest extends RestDocsSupport{
                                 fieldWithPath("data.accessToken").type(JsonFieldType.STRING).description("Access Token"),
                                 fieldWithPath("data.refreshToken").type(JsonFieldType.STRING).description("Refresh Token"),
                                 fieldWithPath("data.accessTokenExpiresIn").type(JsonFieldType.NUMBER).description("Expires Time")
+                        )
+
+
+                ));
+    }
+
+    @DisplayName("로그아웃 API")
+    @Test
+    void logout() throws Exception {
+
+        mockMvc.perform(
+                        patch("/member/logout")
+                )
+                .andDo(print())
+                .andExpect(status().isNoContent())
+                .andDo(document("member-logout",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER).description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING).description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NULL).description("응답 데이터")
                         )
 
 

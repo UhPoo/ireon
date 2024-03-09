@@ -20,3 +20,13 @@ include::{snippets}/member-login/request-fields.adoc[]
 === HTTP Response
 include::{snippets}/member-login/http-response.adoc[]
 include::{snippets}/member-login/response-fields.adoc[]
+
+[[member-logout]]
+=== 멤버 로그아웃
+
+=== HTTP Request
+include::{snippets}/member-logout/http-request.adoc[]
+
+=== HTTP Response
+include::{snippets}/member-logout/http-response.adoc[]
+include::{snippets}/member-logout/response-fields.adoc[]

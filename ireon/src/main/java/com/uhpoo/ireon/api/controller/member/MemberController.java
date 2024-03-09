@@ -43,6 +43,7 @@ public class MemberController {
     }
 
     @PatchMapping("/logout")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ApiResponse<Object> logout(HttpServletRequest request) {
         log.debug("MemberController#logout called.");
         //String encryptedRefreshToken = jwtTokenProvider.resolveRefreshToken(request);
