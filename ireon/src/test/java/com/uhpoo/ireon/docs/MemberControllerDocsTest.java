@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.uhpoo.ireon.api.controller.member.MemberController;
 import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
 import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
+import com.uhpoo.ireon.api.controller.member.response.MemberInfoResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
 import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
 import com.uhpoo.ireon.api.service.member.MemberService;
@@ -21,6 +22,7 @@ import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -157,6 +159,53 @@ public class MemberControllerDocsTest extends RestDocsSupport{
                                 fieldWithPath("data").type(JsonFieldType.NULL).description("응답 데이터")
                         )
 
+
+                ));
+    }
+
+    @DisplayName("내정보조회 API")
+    @Test
+    void getMemberInfo() throws Exception {
+
+        given(memberService.getMemberInfo(any(String.class)))
+                .willReturn(MemberInfoResponse.builder()
+                        .email("email@email.com")
+                        .nickname("nickname")
+                        .name("잔든뉴진")
+                        .zipcode("11111")
+                        .roadAddress("도화길 87")
+                        .jibunAddress("마곡동 776")
+                        .detailAddress("614호")
+                        .phoneNumber("01012345678")
+                        .build()
+                );
+
+        mockMvc.perform(
+                        get("/member/info")
+                                .header("Authorization","Bearer ******")
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("member-getMemberInfo",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Basic Auth Credentials")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER).description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING).description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                                fieldWithPath("data.email").type(JsonFieldType.STRING).description("이메일"),
+                                fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                fieldWithPath("data.name").type(JsonFieldType.STRING).description("이름"),
+                                fieldWithPath("data.zipcode").type(JsonFieldType.STRING).description("우편번호"),
+                                fieldWithPath("data.roadAddress").type(JsonFieldType.STRING).description("도로명 주소"),
+                                fieldWithPath("data.jibunAddress").type(JsonFieldType.STRING).description("지번 주소"),
+                                fieldWithPath("data.detailAddress").type(JsonFieldType.STRING).description("상세 주소"),
+                                fieldWithPath("data.phoneNumber").type(JsonFieldType.STRING).description("휴대폰 번호")
+                        )
 
                 ));
     }

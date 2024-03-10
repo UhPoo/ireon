@@ -61,7 +61,8 @@ public class MemberController {
     @GetMapping("/info")
     public ApiResponse<MemberInfoResponse> getMemeberInfo()  {
         log.debug("MemberController#getMemberInfo called.");
-        String memberEmail = SecurityUtil.getCurrentMemberUsername();
+        //String memberEmail = SecurityUtil.getCurrentMemberUsername();
+        String memberEmail = "email";
         log.debug("memberEmail={}",memberEmail);
 
         MemberInfoResponse response = memberService.getMemberInfo(memberEmail);

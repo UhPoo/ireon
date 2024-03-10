@@ -32,3 +32,15 @@ include::{snippets}/member-logout/request-headers.adoc[]
 === HTTP Response
 include::{snippets}/member-logout/http-response.adoc[]
 include::{snippets}/member-logout/response-fields.adoc[]
+
+[[member-getMemberInfo]]
+=== 멤버 내정보조회
+
+=== HTTP Request
+include::{snippets}/member-getMemberInfo/http-request.adoc[]
+request header
+include::{snippets}/member-getMemberInfo/request-headers.adoc[]
+
+=== HTTP Response
+include::{snippets}/member-getMemberInfo/http-response.adoc[]
+include::{snippets}/member-getMemberInfo/response-fields.adoc[]
