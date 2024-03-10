@@ -1,5 +1,6 @@
 package com.uhpoo.ireon.api.service.member;
 
+import com.uhpoo.ireon.api.controller.member.response.MemberInfoResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
 import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
 import com.uhpoo.ireon.api.service.member.dto.MemberLoginDto;
@@ -25,5 +26,9 @@ public class MemberService {
     }
 
     public void logout(String encryptedRefreshToken, String accessToken) {
+    }
+
+    public MemberInfoResponse getMemberInfo(String memberEmail) {
+        return null;
     }
 }

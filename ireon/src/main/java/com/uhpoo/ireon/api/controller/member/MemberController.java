@@ -3,9 +3,11 @@ package com.uhpoo.ireon.api.controller.member;
 import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
 import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
+import com.uhpoo.ireon.api.controller.member.response.MemberInfoResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
 import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
 import com.uhpoo.ireon.api.service.member.MemberService;
+import com.uhpoo.ireon.global.security.util.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -54,5 +56,17 @@ public class MemberController {
         memberService.logout(encryptedRefreshToken,accessToken); //TODO: 로그아웃 시 레디스 저장
 
         return ApiResponse.of(HttpStatus.NO_CONTENT,"Logged out successfully", null);
+    }
+
+    @GetMapping("/info")
+    public ApiResponse<MemberInfoResponse> getMemeberInfo()  {
+        log.debug("MemberController#getMemberInfo called.");
+        String memberEmail = SecurityUtil.getCurrentMemberUsername();
+        log.debug("memberEmail={}",memberEmail);
+
+        MemberInfoResponse response = memberService.getMemberInfo(memberEmail);
+        log.debug("response={}",response);
+
+        return ApiResponse.ok(response);
     }
 }
