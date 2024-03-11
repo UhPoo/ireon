@@ -3,6 +3,7 @@ package com.uhpoo.ireon.api.controller.member;
 import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
 import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
+import com.uhpoo.ireon.api.controller.member.request.MemberUpdateRequest;
 import com.uhpoo.ireon.api.controller.member.response.MemberResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
 import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
@@ -66,6 +67,18 @@ public class MemberController {
         log.debug("memberEmail={}",memberEmail);
 
         MemberResponse response = memberService.getMember(memberEmail);
+        log.debug("response={}",response);
+
+        return ApiResponse.ok(response);
+    }
+
+    @PostMapping("info")
+    public ApiResponse<MemberResponse> updateMember(@Valid @RequestBody MemberUpdateRequest request) {
+        log.debug("MemberController#updateMember called.");
+        log.debug("MemberUpdateRequest={}",request);
+        // TODO: 로그인 사용자와 요청 사용자 일치 여부 확인
+
+        MemberResponse response = memberService.updateMember(request.toDto());
         log.debug("response={}",response);
 
         return ApiResponse.ok(response);
