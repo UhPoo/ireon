@@ -1,7 +1,10 @@
 package com.uhpoo.ireon.api.controller.abandon;
 
 import com.uhpoo.ireon.api.ApiResponse;
+import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.abandon.request.CreateAbandonRequest;
+import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
+import com.uhpoo.ireon.api.service.abandon.AbandonQueryService;
 import com.uhpoo.ireon.api.service.abandon.AbandonService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 유기동물 게시판 API 컨트롤러
@@ -22,12 +27,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class AbandonController {
 
     private final AbandonService abandonService;
+    private final AbandonQueryService abandonQueryService;
 
     /**
      * 유기동물 게시글 등록 API
      *
-     * @param request       유기동물 게시글 정보
-     * @param file 첨부파일
+     * @param request 유기동물 게시글 정보
+     * @param file    첨부파일
      * @return 등록된 PK 값
      */
     @PostMapping
@@ -46,5 +52,21 @@ public class AbandonController {
         log.debug("saveId={}", saveId);
 
         return ApiResponse.created(saveId);
+    }
+
+    /**
+     * 유기동물 게시글 목록 조회 API
+     *
+     * @return 검색 조건에 해당하는 유기동물 게시글 목록
+     */
+    @GetMapping
+    public ApiResponse<PageResponse<List<AbandonResponse>>> getAbandons() {
+        // TODO: 2024-03-04 검색조건 추가되어야함.
+        log.debug("AbandonController#getAbandons called.");
+
+        PageResponse<List<AbandonResponse>> pageResponses = abandonQueryService.getAbandons();
+        log.debug("pageResponses={}", pageResponses);
+
+        return ApiResponse.ok(pageResponses);
     }
 }
