@@ -3,12 +3,14 @@ package com.uhpoo.ireon.docs;
 import com.uhpoo.ireon.api.controller.member.MemberController;
 import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
 import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
+import com.uhpoo.ireon.api.controller.member.request.MemberUpdateRequest;
 import com.uhpoo.ireon.api.controller.member.response.MemberResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
 import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
 import com.uhpoo.ireon.api.service.member.MemberService;
 import com.uhpoo.ireon.api.service.member.dto.MemberLoginDto;
 import com.uhpoo.ireon.api.service.member.dto.MemberSignUpDto;
+import com.uhpoo.ireon.api.service.member.dto.MemberUpdateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -166,7 +168,7 @@ public class MemberControllerDocsTest extends RestDocsSupport{
 
     @DisplayName("내정보조회 API")
     @Test
-    void getMemberInfo() throws Exception {
+    void getMember() throws Exception {
 
         given(memberService.getMember(any(String.class)))
                 .willReturn(MemberResponse.builder()
@@ -205,6 +207,76 @@ public class MemberControllerDocsTest extends RestDocsSupport{
                                 fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("닉네임"),
                                 fieldWithPath("data.name").type(JsonFieldType.STRING).description("이름"),
                                 fieldWithPath("data.zipcode").type(JsonFieldType.STRING).description("우편번호"),
+                                fieldWithPath("data.roadAddress").type(JsonFieldType.STRING).description("도로명 주소"),
+                                fieldWithPath("data.jibunAddress").type(JsonFieldType.STRING).description("지번 주소"),
+                                fieldWithPath("data.detailAddress").type(JsonFieldType.STRING).description("상세 주소"),
+                                fieldWithPath("data.phoneNumber").type(JsonFieldType.STRING).description("휴대폰 번호")
+                        )
+
+                ));
+    }
+
+
+    @DisplayName("내정보수정 API")
+    @Test
+    void updateMember() throws Exception {
+        MemberUpdateRequest request = MemberUpdateRequest.builder()
+                .email("email@email.com")
+                .nickname("잔든뉴진")
+                .name("잔뉴진")
+                .zipcode("11111")
+                .roadAddress("도화길87")
+                .jibunAddress("마곡동776")
+                .detailAddress("614호")
+                .phoneNumber("01011112222")
+                .build();
+
+        given(memberService.updateMember(any(MemberUpdateDto.class)))
+                .willReturn(MemberResponse.builder()
+                        .email("email@email.com")
+                        .nickname("잔든뉴진")
+                        .name("잔뉴진")
+                        .zipcode("22222")
+                        .roadAddress("도화길 87")
+                        .jibunAddress("마곡동 776")
+                        .detailAddress("614호")
+                        .phoneNumber("01012345678")
+                        .build()
+                );
+
+        mockMvc.perform(
+                        post("/member/info")
+                                .header("Authorization","Bearer ******")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("member-updateMember",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Basic Auth Credentials")
+                        ),
+                        requestFields(
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
+                                fieldWithPath("zipcode").type(JsonFieldType.STRING).description("우편 번호"),
+                                fieldWithPath("roadAddress").type(JsonFieldType.STRING).description("도로명 주소"),
+                                fieldWithPath("jibunAddress").type(JsonFieldType.STRING).description("지번 주소"),
+                                fieldWithPath("detailAddress").type(JsonFieldType.STRING).description("상세 주소"),
+                                fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("휴대폰 번호")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER).description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING).description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                                fieldWithPath("data.email").type(JsonFieldType.STRING).description("이메일"),
+                                fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                fieldWithPath("data.name").type(JsonFieldType.STRING).description("이름"),
+                                fieldWithPath("data.zipcode").type(JsonFieldType.STRING).description("우편 번호"),
                                 fieldWithPath("data.roadAddress").type(JsonFieldType.STRING).description("도로명 주소"),
                                 fieldWithPath("data.jibunAddress").type(JsonFieldType.STRING).description("지번 주소"),
                                 fieldWithPath("data.detailAddress").type(JsonFieldType.STRING).description("상세 주소"),

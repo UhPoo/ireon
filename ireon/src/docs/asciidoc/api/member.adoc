@@ -33,7 +33,7 @@ include::{snippets}/member-logout/request-headers.adoc[]
 include::{snippets}/member-logout/http-response.adoc[]
 include::{snippets}/member-logout/response-fields.adoc[]
 
-[[member-getMemberInfo]]
+[[member-getMember]]
 === 멤버 내정보조회
 
 === HTTP Request
@@ -46,3 +46,18 @@ include::{snippets}/member-getMember/query-parameters.adoc[]
 === HTTP Response
 include::{snippets}/member-getMember/http-response.adoc[]
 include::{snippets}/member-getMember/response-fields.adoc[]
+
+
+[[member-updateMember]]
+=== 멤버 내정보수정
+
+=== HTTP Request
+include::{snippets}/member-updateMember/http-request.adoc[]
+request header
+include::{snippets}/member-updateMember/request-headers.adoc[]
+request body
+include::{snippets}/member-updateMember/request-fields.adoc[]
+
+=== HTTP Response
+include::{snippets}/member-updateMember/http-response.adoc[]
+include::{snippets}/member-updateMember/response-fields.adoc[]
