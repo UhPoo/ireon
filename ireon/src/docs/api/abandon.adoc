@@ -10,3 +10,14 @@ include::{snippets}/create-abandon/request-part-request-fields.adoc[]
 ==== HTTP Response
 include::{snippets}/create-abandon/http-response.adoc[]
 include::{snippets}/create-abandon/response-fields.adoc[]
+
+[[get-abandon]]
+=== 유기동물 게시글 목록 조회
+
+==== HTTP Request
+
+include::{snippets}/get-abandons/http-request.adoc[]
+
+==== HTTP Response
+include::{snippets}/get-abandons/http-response.adoc[]
+include::{snippets}/get-abandons/response-fields.adoc[]
