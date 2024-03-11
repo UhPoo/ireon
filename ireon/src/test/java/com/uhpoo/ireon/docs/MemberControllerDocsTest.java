@@ -24,6 +24,8 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -181,6 +183,7 @@ public class MemberControllerDocsTest extends RestDocsSupport{
 
         mockMvc.perform(
                         get("/member/info")
+                                .param("email","email@email.com")
                                 .header("Authorization","Bearer ******")
                 )
                 .andDo(print())
@@ -190,6 +193,8 @@ public class MemberControllerDocsTest extends RestDocsSupport{
                         preprocessResponse(prettyPrint()),
                         requestHeaders(
                                 headerWithName("Authorization").description("Basic Auth Credentials")
+                        ),
+                        queryParameters(parameterWithName("email").description("조회할 회원 이메일")
                         ),
                         responseFields(
                                 fieldWithPath("code").type(JsonFieldType.NUMBER).description("코드"),

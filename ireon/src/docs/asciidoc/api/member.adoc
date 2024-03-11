@@ -37,10 +37,12 @@ include::{snippets}/member-logout/response-fields.adoc[]
 === 멤버 내정보조회
 
 === HTTP Request
-include::{snippets}/member-getMemberInfo/http-request.adoc[]
+include::{snippets}/member-getMember/http-request.adoc[]
 request header
-include::{snippets}/member-getMemberInfo/request-headers.adoc[]
+include::{snippets}/member-getMember/request-headers.adoc[]
+query parameter
+include::{snippets}/member-getMember/query-parameters.adoc[]
 
 === HTTP Response
-include::{snippets}/member-getMemberInfo/http-response.adoc[]
-include::{snippets}/member-getMemberInfo/response-fields.adoc[]
+include::{snippets}/member-getMember/http-response.adoc[]
+include::{snippets}/member-getMember/response-fields.adoc[]

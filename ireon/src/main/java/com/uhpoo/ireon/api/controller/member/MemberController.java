@@ -58,8 +58,9 @@ public class MemberController {
     }
 
     @GetMapping("/info")
-    public ApiResponse<MemberResponse> getMemeber()  {
+    public ApiResponse<MemberResponse> getMemeber(@RequestParam("email") String email)  {
         log.debug("MemberController#getMemeber called.");
+        // TODO: 로그인 사용자와 요청한 사용자 일치 여부 확인
         //String memberEmail = SecurityUtil.getCurrentMemberUsername();
         String memberEmail = "email";
         log.debug("memberEmail={}",memberEmail);
