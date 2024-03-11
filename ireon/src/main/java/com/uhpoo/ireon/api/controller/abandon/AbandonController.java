@@ -3,6 +3,7 @@ package com.uhpoo.ireon.api.controller.abandon;
 import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.abandon.request.CreateAbandonRequest;
+import com.uhpoo.ireon.api.controller.abandon.response.AbandonDetailResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
 import com.uhpoo.ireon.api.service.abandon.AbandonQueryService;
 import com.uhpoo.ireon.api.service.abandon.AbandonService;
@@ -68,5 +69,22 @@ public class AbandonController {
         log.debug("pageResponses={}", pageResponses);
 
         return ApiResponse.ok(pageResponses);
+    }
+
+    /**
+     * 유기동물 게시글 상세 조회 API
+     *
+     * @param abandonId 유기동물 게시글 PK
+     * @return PK에 해당하는 유기동물 게시글 정보
+     */
+    @GetMapping("/{abandonId}")
+    public ApiResponse<AbandonDetailResponse> getAbandon(@PathVariable(name = "abandonId") Long abandonId) {
+        log.debug("AbandonController#getAbandon called.");
+        log.debug("abandonId={}", abandonId);
+
+        AbandonDetailResponse response = abandonQueryService.getAbandon(abandonId);
+        log.debug("response={}", response);
+
+        return ApiResponse.ok(response);
     }
 }
