@@ -4,18 +4,16 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * 동물 종류
- *
+ * 유기동물 상태
+ * 
  * @author 최영환
  */
 @Getter
 @RequiredArgsConstructor
-public enum AnimalType {
-
-    DOG("개"),
-    CAT("고양이"),
-    HAMSTER("햄스터"),
-    ETC("기타");
+public enum AbandonStatus {
+    PROTECTING("임시보호 중"),
+    SEARCHING("입양처 탐색중"),
+    ADOPTED("입양됨");
 
     private final String text;
 }

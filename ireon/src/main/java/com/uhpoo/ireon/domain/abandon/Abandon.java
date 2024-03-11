@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 /**
  * 유기동물 게시글 엔티티
  *
@@ -31,21 +29,20 @@ public class Abandon extends TimeBaseEntity {
     @Column(columnDefinition = "LONGTEXT")
     private String content;
 
-    @Column(nullable = false)
-    private AnimalType animalType;
+    @Embedded
+    private AnimalInfo animalInfo;
 
-    @Column(nullable = false, length = 50)
-    private String animalDetail;
-
-    @Column(nullable = false)
-    private Gender gender;
+    @Column(nullable = false, length = 20)
+    private VaccinationStatus vaccinationStatus;
 
     @Column(nullable = false)
-    private LocalDateTime foundTime;
-    @Column(nullable = false)
-    private String foundLoc;
-    @Column(nullable = false)
-    private String currentLoc;
+    private Boolean neutralized;
+
+    @Column(nullable = false, length = 20)
+    private AbandonStatus abandonStatus;
+
+    @Embedded
+    private Address address;
 
     @Column(nullable = false, length = 13)
     private String phoneNumber;
@@ -58,17 +55,16 @@ public class Abandon extends TimeBaseEntity {
     private Member member;
 
     @Builder
-    private Abandon(String title, String content, AnimalType animalType, String animalDetail, Gender gender,
-                    LocalDateTime foundTime, String foundLoc, String currentLoc, String phoneNumber,
+    private Abandon(String title, String content, AnimalInfo animalInfo, VaccinationStatus vaccinationStatus,
+                   Boolean neutralized, AbandonStatus abandonStatus, Address address, String phoneNumber,
                     Boolean active, Member member) {
         this.title = title;
         this.content = content;
-        this.animalType = animalType;
-        this.animalDetail = animalDetail;
-        this.gender = gender;
-        this.foundTime = foundTime;
-        this.foundLoc = foundLoc;
-        this.currentLoc = currentLoc;
+        this.animalInfo = animalInfo;
+        this.vaccinationStatus = vaccinationStatus;
+        this.neutralized = neutralized;
+        this.abandonStatus = abandonStatus;
+        this.address = address;
         this.phoneNumber = phoneNumber;
         this.active = active;
         this.member = member;

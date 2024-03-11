@@ -19,22 +19,34 @@ public class CreateAbandonRequest {
     private String animalType;
     private String animalDetail;
     private String animalGender;
-    private String foundTime;
-    private String foundLoc;
-    private String currentLoc;
+    private Integer animalAge;
+    private String vaccinationStatus;
+    private Boolean neutralized;
+    private String abandonStatus;
+    private String zipcode;
+    private String roadAddress;
+    private String jibunAddress;
+    private String detailAddress;
     private String phoneNumber;
 
     @Builder
     public CreateAbandonRequest(String title, String content, String animalType, String animalDetail,
-                                String animalGender, String foundTime, String foundLoc, String currentLoc, String phoneNumber) {
+                                String animalGender, Integer animalAge, String vaccinationStatus, Boolean neutralized,
+                                String abandonStatus, String zipcode, String roadAddress, String jibunAddress,
+                                String detailAddress, String phoneNumber) {
         this.title = title;
         this.content = content;
         this.animalType = animalType;
         this.animalDetail = animalDetail;
         this.animalGender = animalGender;
-        this.foundTime = foundTime;
-        this.foundLoc = foundLoc;
-        this.currentLoc = currentLoc;
+        this.animalAge = animalAge;
+        this.vaccinationStatus = vaccinationStatus;
+        this.neutralized = neutralized;
+        this.abandonStatus = abandonStatus;
+        this.zipcode = zipcode;
+        this.roadAddress = roadAddress;
+        this.jibunAddress = jibunAddress;
+        this.detailAddress = detailAddress;
         this.phoneNumber = phoneNumber;
     }
 
@@ -45,9 +57,14 @@ public class CreateAbandonRequest {
                 .animalType(this.animalType)
                 .animalDetail(this.animalDetail)
                 .animalGender(this.animalGender)
-                .foundTime(this.foundTime)
-                .foundLoc(this.foundLoc)
-                .currentLoc(this.currentLoc)
+                .animalAge(this.animalAge)
+                .vaccinationStatus(this.vaccinationStatus)
+                .neutralized(this.neutralized)
+                .abandonStatus(this.abandonStatus)
+                .zipcode(this.zipcode)
+                .roadAddress(this.roadAddress)
+                .jibunAddress(this.jibunAddress)
+                .detailAddress(this.detailAddress)
                 .phoneNumber(this.phoneNumber)
                 .build();
     }

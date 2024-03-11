@@ -4,18 +4,18 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * 동물 종류
+ * 접종 여부
  *
  * @author 최영환
  */
 @Getter
 @RequiredArgsConstructor
-public enum AnimalType {
+public enum VaccinationStatus {
 
-    DOG("개"),
-    CAT("고양이"),
-    HAMSTER("햄스터"),
-    ETC("기타");
+    ZERO("미완료"),
+    FIRST("1차 완료"),
+    SECOND("2차 완료"),
+    THIRD("3차 완료");
 
     private final String text;
 }

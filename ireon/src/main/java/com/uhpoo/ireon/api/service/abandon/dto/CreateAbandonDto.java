@@ -18,22 +18,34 @@ public class CreateAbandonDto {
     private String animalType;
     private String animalDetail;
     private String animalGender;
-    private String foundTime;
-    private String foundLoc;
-    private String currentLoc;
+    private Integer animalAge;
+    private String vaccinationStatus;
+    private Boolean neutralized;
+    private String abandonStatus;
+    private String zipcode;
+    private String roadAddress;
+    private String jibunAddress;
+    private String detailAddress;
     private String phoneNumber;
 
     @Builder
     public CreateAbandonDto(String title, String content, String animalType, String animalDetail, String animalGender,
-                            String foundTime, String foundLoc, String currentLoc, String phoneNumber) {
+                            Integer animalAge, String vaccinationStatus, Boolean neutralized, String abandonStatus,
+                            String zipcode, String roadAddress, String jibunAddress, String detailAddress,
+                            String phoneNumber) {
         this.title = title;
         this.content = content;
         this.animalType = animalType;
         this.animalDetail = animalDetail;
         this.animalGender = animalGender;
-        this.foundTime = foundTime;
-        this.foundLoc = foundLoc;
-        this.currentLoc = currentLoc;
+        this.animalAge = animalAge;
+        this.vaccinationStatus = vaccinationStatus;
+        this.neutralized = neutralized;
+        this.abandonStatus = abandonStatus;
+        this.zipcode = zipcode;
+        this.roadAddress = roadAddress;
+        this.jibunAddress = jibunAddress;
+        this.detailAddress = detailAddress;
         this.phoneNumber = phoneNumber;
     }
 }
