@@ -1,10 +1,9 @@
 package com.uhpoo.ireon.docs;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.uhpoo.ireon.api.controller.member.MemberController;
 import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
 import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
-import com.uhpoo.ireon.api.controller.member.response.MemberInfoResponse;
+import com.uhpoo.ireon.api.controller.member.response.MemberResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
 import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
 import com.uhpoo.ireon.api.service.member.MemberService;
@@ -167,8 +166,8 @@ public class MemberControllerDocsTest extends RestDocsSupport{
     @Test
     void getMemberInfo() throws Exception {
 
-        given(memberService.getMemberInfo(any(String.class)))
-                .willReturn(MemberInfoResponse.builder()
+        given(memberService.getMember(any(String.class)))
+                .willReturn(MemberResponse.builder()
                         .email("email@email.com")
                         .nickname("nickname")
                         .name("잔든뉴진")
@@ -186,7 +185,7 @@ public class MemberControllerDocsTest extends RestDocsSupport{
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andDo(document("member-getMemberInfo",
+                .andDo(document("member-getMember",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(

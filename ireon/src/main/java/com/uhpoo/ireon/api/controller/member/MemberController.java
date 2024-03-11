@@ -3,11 +3,10 @@ package com.uhpoo.ireon.api.controller.member;
 import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
 import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
-import com.uhpoo.ireon.api.controller.member.response.MemberInfoResponse;
+import com.uhpoo.ireon.api.controller.member.response.MemberResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
 import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
 import com.uhpoo.ireon.api.service.member.MemberService;
-import com.uhpoo.ireon.global.security.util.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -59,15 +58,17 @@ public class MemberController {
     }
 
     @GetMapping("/info")
-    public ApiResponse<MemberInfoResponse> getMemeberInfo()  {
-        log.debug("MemberController#getMemberInfo called.");
+    public ApiResponse<MemberResponse> getMemeber()  {
+        log.debug("MemberController#getMemeber called.");
         //String memberEmail = SecurityUtil.getCurrentMemberUsername();
         String memberEmail = "email";
         log.debug("memberEmail={}",memberEmail);
 
-        MemberInfoResponse response = memberService.getMemberInfo(memberEmail);
+        MemberResponse response = memberService.getMember(memberEmail);
         log.debug("response={}",response);
 
         return ApiResponse.ok(response);
     }
+
+
 }

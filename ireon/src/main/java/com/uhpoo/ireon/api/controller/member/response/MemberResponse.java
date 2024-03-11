@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class MemberInfoResponse {
+public class MemberResponse {
     private String email;
     private String nickname;
     private String name;
@@ -15,7 +15,7 @@ public class MemberInfoResponse {
     private String phoneNumber;
 
     @Builder
-    public MemberInfoResponse(String email, String nickname, String name, String zipcode, String roadAddress, String jibunAddress, String detailAddress, String phoneNumber) {
+    public MemberResponse(String email, String nickname, String name, String zipcode, String roadAddress, String jibunAddress, String detailAddress, String phoneNumber) {
         this.email = email;
         this.nickname = nickname;
         this.name = name;
