@@ -3,6 +3,7 @@ package com.uhpoo.ireon.docs;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.abandon.AbandonController;
 import com.uhpoo.ireon.api.controller.abandon.request.CreateAbandonRequest;
+import com.uhpoo.ireon.api.controller.abandon.response.AbandonDetailResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
 import com.uhpoo.ireon.api.service.abandon.AbandonQueryService;
 import com.uhpoo.ireon.api.service.abandon.AbandonService;
@@ -23,19 +24,16 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -183,11 +181,11 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
         mockMvc.perform(
                         get("/abandon")
                                 .header("Authentication", "authentication")
-                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("get-abandons",
+                        preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         responseFields(
                                 fieldWithPath("code").type(JsonFieldType.NUMBER)
@@ -223,6 +221,95 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                                 fieldWithPath("data.items[].clipped").type(JsonFieldType.BOOLEAN)
                                         .description("스크랩 여부"),
                                 fieldWithPath("data.items[].createdDate").type(JsonFieldType.STRING)
+                                        .description("작성일")
+                        )
+                ));
+
+    }
+
+    @DisplayName("유기동물 상세 조회 API")
+    @Test
+    @WithMockUser
+    void getAbandon() throws Exception {
+
+        AbandonDetailResponse response = AbandonDetailResponse.builder()
+                .abandonId(1L)
+                .title("제목1")
+                .author("작성자1")
+                .animalType("개")
+                .animalDetail("말티즈")
+                .animalGender("암컷")
+                .animalAge(5)
+                .vaccinationStatus(VaccinationStatus.SECOND.getText())
+                .neutralized(false)
+                .abandonStatus(AbandonStatus.SEARCHING.getText())
+                .zipcode("11111")
+                .roadAddress("서울시 송파구 토성로")
+                .jibunAddress("서울시 송파구 풍납동")
+                .detailAddress("비밀")
+                .phoneNumber("010-1234-5678")
+                .clipped(true)
+                .createdDate("2024-03-05")
+                .build();
+
+
+        given(abandonQueryService.getAbandon(anyLong()))
+                .willReturn(response);
+
+        mockMvc.perform(
+                        get("/abandon/{abandonId}", response.getAbandonId())
+                                .header("Authentication", "authentication")
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("get-abandon",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("abandonId").description("유기동물 게시글 PK")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.OBJECT)
+                                        .description("유기동물 상세 조회 결과"),
+                                fieldWithPath("data.abandonId").type(JsonFieldType.NUMBER)
+                                        .description("유기동물 게시글 PK"),
+                                fieldWithPath("data.title").type(JsonFieldType.STRING)
+                                        .description("글 제목"),
+                                fieldWithPath("data.author").type(JsonFieldType.STRING)
+                                        .description("작성자"),
+                                fieldWithPath("data.animalType").type(JsonFieldType.STRING)
+                                        .description("동물 종류"),
+                                fieldWithPath("data.animalDetail").type(JsonFieldType.STRING)
+                                        .description("동물 종류 상세"),
+                                fieldWithPath("data.animalGender").type(JsonFieldType.STRING)
+                                        .description("동물 성별"),
+                                fieldWithPath("data.animalAge").type(JsonFieldType.NUMBER)
+                                        .description("동물 나이"),
+                                fieldWithPath("data.vaccinationStatus").type(JsonFieldType.STRING)
+                                        .description("예방접종 상태"),
+                                fieldWithPath("data.neutralized").type(JsonFieldType.BOOLEAN)
+                                        .description("중성화 여부"),
+                                fieldWithPath("data.abandonStatus").type(JsonFieldType.STRING)
+                                        .description("유기동물 상태"),
+                                fieldWithPath("data.zipcode").type(JsonFieldType.STRING)
+                                        .description("우편번호"),
+                                fieldWithPath("data.roadAddress").type(JsonFieldType.STRING)
+                                        .description("도로명 주소"),
+                                fieldWithPath("data.jibunAddress").type(JsonFieldType.STRING)
+                                        .description("지번 주소"),
+                                fieldWithPath("data.detailAddress").type(JsonFieldType.STRING)
+                                        .description("상세 주소"),
+                                fieldWithPath("data.phoneNumber").type(JsonFieldType.STRING)
+                                        .description("연락처"),
+                                fieldWithPath("data.clipped").type(JsonFieldType.BOOLEAN)
+                                        .description("스크랩 여부"),
+                                fieldWithPath("data.createdDate").type(JsonFieldType.STRING)
                                         .description("작성일")
                         )
                 ));
