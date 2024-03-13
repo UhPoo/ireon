@@ -30,4 +30,6 @@ public abstract class RestDocsSupport {
     }
 
     protected abstract Object initController();
+
 }
+

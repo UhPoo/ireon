@@ -1,0 +1,16 @@
+ifndef::snippets[]
+:snippets: ../../build/generated-snippets
+endif::[]
+= 이리온 REST API 문서
+:doctype: book
+:icons: font
+:source-highlighter: higlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+include::overview.adoc[]
+
+[[Abandon-API]]
+== 유기동물 API
+include::{docdir}/api/abandon.adoc[]
