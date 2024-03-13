@@ -13,7 +13,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 
 /**
  * Rest Docs 통합 클래스
- * 
+ *
  * @author 최영환
  */
 @ExtendWith(RestDocumentationExtension.class)
@@ -30,4 +30,6 @@ public abstract class RestDocsSupport {
     }
 
     protected abstract Object initController();
+
 }
+
