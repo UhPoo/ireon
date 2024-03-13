@@ -1,4 +1,4 @@
-package com.uhpoo.ireon.domain;
+package com.uhpoo.ireon.domain.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

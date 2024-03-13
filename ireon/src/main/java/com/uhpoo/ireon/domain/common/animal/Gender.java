@@ -1,4 +1,4 @@
-package com.uhpoo.ireon.domain.abandon;
+package com.uhpoo.ireon.domain.common.animal;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

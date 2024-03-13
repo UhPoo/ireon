@@ -1,11 +1,12 @@
-package com.uhpoo.ireon.domain;
+package com.uhpoo.ireon.domain.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @Embeddable
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Address {
     @Column(length = 5)
     private String zipcode;

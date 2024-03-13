@@ -1,6 +1,6 @@
 spring:
   profiles:
-    default: local
+    default: test
   servlet:
     multipart:
       max-file-size: 100MB

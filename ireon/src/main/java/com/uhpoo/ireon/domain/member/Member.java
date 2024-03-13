@@ -1,8 +1,8 @@
 package com.uhpoo.ireon.domain.member;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.uhpoo.ireon.domain.Address;
-import com.uhpoo.ireon.domain.TimeBaseEntity;
+import com.uhpoo.ireon.domain.common.Address;
+import com.uhpoo.ireon.domain.common.TimeBaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

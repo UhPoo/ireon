@@ -1,6 +1,8 @@
 package com.uhpoo.ireon.domain.abandon;
 
-import com.uhpoo.ireon.domain.TimeBaseEntity;
+import com.uhpoo.ireon.domain.common.Address;
+import com.uhpoo.ireon.domain.common.TimeBaseEntity;
+import com.uhpoo.ireon.domain.common.animal.AnimalInfo;
 import com.uhpoo.ireon.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -56,7 +58,7 @@ public class Abandon extends TimeBaseEntity {
 
     @Builder
     private Abandon(String title, String content, AnimalInfo animalInfo, VaccinationStatus vaccinationStatus,
-                   Boolean neutralized, AbandonStatus abandonStatus, Address address, String phoneNumber,
+                    Boolean neutralized, AbandonStatus abandonStatus, Address address, String phoneNumber,
                     Boolean active, Member member) {
         this.title = title;
         this.content = content;

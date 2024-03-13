@@ -1,4 +1,4 @@
-package com.uhpoo.ireon.domain.abandon;
+package com.uhpoo.ireon.domain.common.animal;
 
 import jakarta.persistence.Column;
 import lombok.AccessLevel;

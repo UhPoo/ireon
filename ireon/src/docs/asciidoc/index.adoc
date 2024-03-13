@@ -14,3 +14,7 @@ include::overview.adoc[]
 [[Member-API]]
 == 멤버 API
 include::{docdir}/api/member.adoc[]
+
+[[Abandon-API]]
+== 유기동물 API
+include::{docdir}/api/abandon.adoc[]

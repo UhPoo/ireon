@@ -1,11 +1,11 @@
 [[member-signup]]
 === 멤버 회원가입
 
-=== HTTP Request
+==== HTTP Request
 include::{snippets}/member-signup/http-request.adoc[]
 include::{snippets}/member-signup/request-fields.adoc[]
 
-=== HTTP Response
+==== HTTP Response
 include::{snippets}/member-signup/http-response.adoc[]
 include::{snippets}/member-signup/response-fields.adoc[]
 
@@ -13,37 +13,37 @@ include::{snippets}/member-signup/response-fields.adoc[]
 [[member-login]]
 === 멤버 로그인
 
-=== HTTP Request
+==== HTTP Request
 include::{snippets}/member-login/http-request.adoc[]
 include::{snippets}/member-login/request-fields.adoc[]
 
-=== HTTP Response
+==== HTTP Response
 include::{snippets}/member-login/http-response.adoc[]
 include::{snippets}/member-login/response-fields.adoc[]
 
 [[member-logout]]
 === 멤버 로그아웃
 
-=== HTTP Request
+==== HTTP Request
 include::{snippets}/member-logout/http-request.adoc[]
 request header
 include::{snippets}/member-logout/request-headers.adoc[]
 
-=== HTTP Response
+==== HTTP Response
 include::{snippets}/member-logout/http-response.adoc[]
 include::{snippets}/member-logout/response-fields.adoc[]
 
 [[member-getMember]]
 === 멤버 내정보조회
 
-=== HTTP Request
+==== HTTP Request
 include::{snippets}/member-getMember/http-request.adoc[]
 request header
 include::{snippets}/member-getMember/request-headers.adoc[]
 query parameter
 include::{snippets}/member-getMember/query-parameters.adoc[]
 
-=== HTTP Response
+==== HTTP Response
 include::{snippets}/member-getMember/http-response.adoc[]
 include::{snippets}/member-getMember/response-fields.adoc[]
 
@@ -51,13 +51,13 @@ include::{snippets}/member-getMember/response-fields.adoc[]
 [[member-updateMember]]
 === 멤버 내정보수정
 
-=== HTTP Request
+==== HTTP Request
 include::{snippets}/member-updateMember/http-request.adoc[]
 request header
 include::{snippets}/member-updateMember/request-headers.adoc[]
 request body
 include::{snippets}/member-updateMember/request-fields.adoc[]
 
-=== HTTP Response
+==== HTTP Response
 include::{snippets}/member-updateMember/http-response.adoc[]
 include::{snippets}/member-updateMember/response-fields.adoc[]
