@@ -21,6 +21,10 @@ spring:
         globally_quoted_identifiers: false
     open-in-view: true
     defer-datasource-initialization: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
 # log setting
 logging:

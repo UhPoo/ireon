@@ -72,7 +72,7 @@ public class MemberController {
         return ApiResponse.ok(response);
     }
 
-    @PostMapping("info")
+    @PostMapping("/info")
     public ApiResponse<MemberResponse> updateMember(@Valid @RequestBody MemberUpdateRequest request) {
         log.debug("MemberController#updateMember called.");
         log.debug("MemberUpdateRequest={}",request);
@@ -83,6 +83,5 @@ public class MemberController {
 
         return ApiResponse.ok(response);
     }
-
 
 }
