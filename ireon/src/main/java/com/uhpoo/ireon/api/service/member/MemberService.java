@@ -1,5 +1,6 @@
 package com.uhpoo.ireon.api.service.member;
 
+import com.uhpoo.ireon.api.controller.member.response.EmailVerificationResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
 import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
@@ -38,5 +39,9 @@ public class MemberService {
 
     public void sendCodeToEmail(String email) {
 
+    }
+
+    public EmailVerificationResponse verifiedCodeFromEmail(String email, String authCode) {
+        return null;
     }
 }

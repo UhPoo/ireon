@@ -4,6 +4,7 @@ import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
 import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
 import com.uhpoo.ireon.api.controller.member.request.MemberUpdateRequest;
+import com.uhpoo.ireon.api.controller.member.response.EmailVerificationResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
 import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
@@ -85,8 +86,6 @@ public class MemberController {
         return ApiResponse.ok(response);
     }
 
-
-    // 이메일 인증번호 요청 API
     @PostMapping("/email/verification-request")
     public ApiResponse sendCodeToEmail(@RequestParam("email") @Email String email) {
         log.debug("MemberController#sendMessage called.");
@@ -97,4 +96,17 @@ public class MemberController {
         return ApiResponse.ok(null);
     }
 
+    @GetMapping("/email/verifications")
+    public ApiResponse<EmailVerificationResponse> verifiedCodeFromEmail(@RequestParam("email") @Email String email,
+                                                                        @RequestParam("code") String authCode) {
+        log.debug("MemberController#verifiedCodeFromEmail called.");
+        log.debug("email={}, authCode={}",email, authCode);
+
+        EmailVerificationResponse response = memberService.verifiedCodeFromEmail(email, authCode);
+
+        log.debug("response={}", response);
+
+        return ApiResponse.ok(response);
+
+    }
 }
