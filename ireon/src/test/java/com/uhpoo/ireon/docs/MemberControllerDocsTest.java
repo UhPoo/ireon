@@ -4,6 +4,7 @@ import com.uhpoo.ireon.api.controller.member.MemberController;
 import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
 import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
 import com.uhpoo.ireon.api.controller.member.request.MemberUpdateRequest;
+import com.uhpoo.ireon.api.controller.member.response.EmailVerificationResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
 import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
@@ -306,4 +307,43 @@ public class MemberControllerDocsTest extends RestDocsSupport{
                                 )
                         ));
     }
+
+    @DisplayName("이메일 인증 번호 확인 API")
+    @Test
+    void verifiedCodeFromEmail() throws Exception {
+        given(memberService.verifiedCodeFromEmail(any(String.class),any(String.class)))
+                .willReturn(EmailVerificationResponse.builder()
+                        .email("email@email.com")
+                        .authCode("12345")
+                        .result(true)
+                        .build()
+                );
+
+        mockMvc.perform(
+                        get("/member/email/verifications")
+                                .queryParam("email","email@email.com")
+                                .queryParam("code","12345")
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("member-verifiedCodeFromEmail",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        queryParameters(
+                                parameterWithName("email").description("인증 번호를 전송할 이메일"),
+                                parameterWithName("code").description("인증 번호")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER).description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING).description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                                fieldWithPath("data.email").type(JsonFieldType.STRING).description("인증 요청 이메일"),
+                                fieldWithPath("data.authCode").type(JsonFieldType.STRING).description("인증 번호"),
+                                fieldWithPath("data.result").type(JsonFieldType.BOOLEAN).description("결과")
+                        )
+                ));
+    }
+
+
 }

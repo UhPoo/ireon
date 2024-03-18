@@ -73,3 +73,15 @@ include::{snippets}/member-sendCodeToEmail/query-parameters.adoc[]
 
 ==== HTTP Response
 include::{snippets}/member-sendCodeToEmail/http-response.adoc[]
+
+[[member-verifiedCodeFromEmail]]
+=== 멤버 이메일 인증 번호 확인
+
+==== HTTP Request
+include::{snippets}/member-verifiedCodeFromEmail/http-request.adoc[]
+request param
+include::{snippets}/member-verifiedCodeFromEmail/query-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/member-verifiedCodeFromEmail/http-response.adoc[]
+include::{snippets}/member-verifiedCodeFromEmail/response-fields.adoc[]
