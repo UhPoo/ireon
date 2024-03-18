@@ -61,3 +61,15 @@ include::{snippets}/member-updateMember/request-fields.adoc[]
 ==== HTTP Response
 include::{snippets}/member-updateMember/http-response.adoc[]
 include::{snippets}/member-updateMember/response-fields.adoc[]
+
+
+[[member-sendCodeToEmail]]
+=== 멤버 이메일 인증 번호 전송
+
+==== HTTP Request
+include::{snippets}/member-sendCodeToEmail/http-request.adoc[]
+request param
+include::{snippets}/member-sendCodeToEmail/query-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/member-sendCodeToEmail/http-response.adoc[]
