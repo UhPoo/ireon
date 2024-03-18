@@ -10,6 +10,7 @@ import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
 import com.uhpoo.ireon.api.service.member.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -82,6 +83,18 @@ public class MemberController {
         log.debug("response={}",response);
 
         return ApiResponse.ok(response);
+    }
+
+
+    // 이메일 인증번호 요청 API
+    @PostMapping("/email/verification-request")
+    public ApiResponse sendCodeToEmail(@RequestParam("email") @Email String email) {
+        log.debug("MemberController#sendMessage called.");
+        log.debug("email={}",email);
+
+        memberService.sendCodeToEmail(email);
+
+        return ApiResponse.ok(null);
     }
 
 }

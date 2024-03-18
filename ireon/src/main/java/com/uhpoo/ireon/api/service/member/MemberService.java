@@ -35,4 +35,8 @@ public class MemberService {
     public MemberResponse updateMember(MemberUpdateDto dto) {
         return null;
     }
+
+    public void sendCodeToEmail(String email) {
+
+    }
 }

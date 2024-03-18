@@ -31,11 +31,11 @@ spring:
 
   # SMTP
   mail:
-  host: smtp.gmail.com
-  port: 587
-  username: ireon.mail@gmail.com
-  password: vcaqyweytwimwqno
-  properties:
+   host: smtp.gmail.com
+   port: 587
+   username: ireon.mail@gmail.com
+   password: vcaqyweytwimwqno
+   properties:
       mail:
         smtp:
           auth: true
