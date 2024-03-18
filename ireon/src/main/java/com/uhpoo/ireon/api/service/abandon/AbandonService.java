@@ -1,6 +1,7 @@
 package com.uhpoo.ireon.api.service.abandon;
 
 import com.uhpoo.ireon.api.service.abandon.dto.CreateAbandonDto;
+import com.uhpoo.ireon.api.service.abandon.dto.EditAbandonDto;
 import com.uhpoo.ireon.domain.abandon.repository.AbandonRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,10 @@ public class AbandonService {
      * @return 등록된 PK 값
      */
     public Long createAbandon(CreateAbandonDto dto, String nickname, MultipartFile file) {
+        return null;
+    }
+
+    public Long editAbandon(EditAbandonDto dto, String nickname, MultipartFile file) {
         return null;
     }
 }
