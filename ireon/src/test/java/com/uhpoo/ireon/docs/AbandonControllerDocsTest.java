@@ -36,8 +36,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -418,6 +417,41 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                                         .description("상세 주소"),
                                 fieldWithPath("phoneNumber").type(JsonFieldType.STRING)
                                         .description("연락처")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NUMBER)
+                                        .description("수정된 유기동물 게시글 PK 값")
+                        )
+                ));
+    }
+
+    @DisplayName("유기동물 게시글 삭제 API")
+    @Test
+    @WithMockUser
+    void deleteAbandon() throws Exception {
+
+        Long abandonId = 1L;
+
+        given(abandonService.deleteAbandon(anyLong(), anyString()))
+                .willReturn(abandonId);
+
+        mockMvc.perform(
+                        delete("/abandon/{abandonId}", abandonId)
+                                .header("Authentication", "authentication")
+                )
+                .andDo(print())
+                .andExpect(status().isFound())
+                .andDo(document("delete-abandon",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("abandonId").description("유기동물 게시글 PK")
                         ),
                         responseFields(
                                 fieldWithPath("code").type(JsonFieldType.NUMBER)
