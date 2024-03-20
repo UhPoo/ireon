@@ -33,3 +33,15 @@ include::{snippets}/get-abandon/path-parameters.adoc[]
 ==== HTTP Response
 include::{snippets}/get-abandon/http-response.adoc[]
 include::{snippets}/get-abandon/response-fields.adoc[]
+
+[[edit-abandon]]
+=== 유기동물 게시글 수정
+
+==== HTTP Request
+include::{snippets}/edit-abandon/http-request.adoc[]
+include::{snippets}/edit-abandon/request-part-request-fields.adoc[]
+include::{snippets}/edit-abandon/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/edit-abandon/http-response.adoc[]
+include::{snippets}/edit-abandon/response-fields.adoc[]
