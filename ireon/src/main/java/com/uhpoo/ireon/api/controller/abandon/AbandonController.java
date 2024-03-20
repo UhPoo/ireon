@@ -89,6 +89,14 @@ public class AbandonController {
         return ApiResponse.ok(response);
     }
 
+    /**
+     * 유기동물 게시글 수정 API
+     *
+     * @param abandonId 수정할 유기동물 게시글 PK
+     * @param request   유기동물 게시글 정보
+     * @param file      첨부파일
+     * @return 수정된 PK 값
+     */
     @PatchMapping("/{abandonId}")
     public ApiResponse<Long> editAbandon(@PathVariable(name = "abandonId") Long abandonId,
                                          @Valid @RequestPart(name = "request") EditAbandonRequest request,
@@ -104,5 +112,26 @@ public class AbandonController {
         log.debug("editId={}", editId);
 
         return ApiResponse.ok(editId);
+    }
+
+    /**
+     * 유기동물 게시글 삭제 API
+     *
+     * @param abandonId 유기동물 게시글 PK
+     * @return 삭제된 유기동물 게시글 PK
+     */
+    @DeleteMapping("/{abandonId}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ApiResponse<Long> deleteAbandon(@PathVariable(name = "abandonId") Long abandonId) {
+        log.debug("AbandonController#deleteAbandon called.");
+        log.debug("abandonId={}", abandonId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long deleteId = abandonService.deleteAbandon(abandonId, nickname);
+        log.debug("deleteId={}", deleteId);
+
+        return ApiResponse.found(deleteId);
     }
 }
