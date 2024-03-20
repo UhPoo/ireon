@@ -15,7 +15,7 @@ public class EditAbandonRequest {
     private String animalDetail;
     private String animalGender;
     private Integer age;
-    private String vaccinateStatus;
+    private String vaccinationStatus;
     private Boolean neutralized;
     private String abandonStatus;
     private String zipcode;
@@ -26,7 +26,7 @@ public class EditAbandonRequest {
 
     @Builder
     public EditAbandonRequest(String title, String content, String animalType, String animalDetail, String animalGender,
-                              Integer age, String vaccinateStatus, Boolean neutralized, String abandonStatus,
+                              Integer age, String vaccinationStatus, Boolean neutralized, String abandonStatus,
                               String zipcode, String road, String jibun, String detail, String phoneNumber) {
         this.title = title;
         this.content = content;
@@ -34,7 +34,7 @@ public class EditAbandonRequest {
         this.animalDetail = animalDetail;
         this.animalGender = animalGender;
         this.age = age;
-        this.vaccinateStatus = vaccinateStatus;
+        this.vaccinationStatus = vaccinationStatus;
         this.neutralized = neutralized;
         this.abandonStatus = abandonStatus;
         this.zipcode = zipcode;
@@ -52,7 +52,7 @@ public class EditAbandonRequest {
                 .animalDetail(this.animalDetail)
                 .animalGender(this.animalGender)
                 .age(this.age)
-                .vaccinateStatus(this.vaccinateStatus)
+                .vaccinationStatus(this.vaccinationStatus)
                 .neutralized(this.neutralized)
                 .abandonStatus(this.abandonStatus)
                 .zipcode(this.zipcode)

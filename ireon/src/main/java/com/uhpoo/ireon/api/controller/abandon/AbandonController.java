@@ -90,7 +90,7 @@ public class AbandonController {
     }
 
     @PatchMapping("/{abandonId}")
-    public ApiResponse<Long> editAbandon(@PathVariable Long abandonId,
+    public ApiResponse<Long> editAbandon(@PathVariable(name = "abandonId") Long abandonId,
                                          @Valid @RequestPart(name = "request") EditAbandonRequest request,
                                          @RequestPart(required = false, name = "file") MultipartFile file) {
         log.debug("AbandonController#editAbandon called.");

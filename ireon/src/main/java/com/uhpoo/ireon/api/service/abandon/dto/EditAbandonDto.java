@@ -14,7 +14,7 @@ public class EditAbandonDto {
     private String animalDetail;
     private String animalGender;
     private Integer age;
-    private String vaccinateStatus;
+    private String vaccinationStatus;
     private Boolean neutralized;
     private String abandonStatus;
     private String zipcode;
@@ -25,7 +25,7 @@ public class EditAbandonDto {
 
     @Builder
     public EditAbandonDto(String title, String content, String animalType, String animalDetail, String animalGender,
-                          Integer age, String vaccinateStatus, Boolean neutralized, String abandonStatus,
+                          Integer age, String vaccinationStatus, Boolean neutralized, String abandonStatus,
                           String zipcode, String road, String jibun, String detail, String phoneNumber) {
         this.title = title;
         this.content = content;
@@ -33,7 +33,7 @@ public class EditAbandonDto {
         this.animalDetail = animalDetail;
         this.animalGender = animalGender;
         this.age = age;
-        this.vaccinateStatus = vaccinateStatus;
+        this.vaccinationStatus = vaccinationStatus;
         this.neutralized = neutralized;
         this.abandonStatus = abandonStatus;
         this.zipcode = zipcode;

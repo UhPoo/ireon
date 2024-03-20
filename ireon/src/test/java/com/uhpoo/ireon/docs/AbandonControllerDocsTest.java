@@ -3,22 +3,29 @@ package com.uhpoo.ireon.docs;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.abandon.AbandonController;
 import com.uhpoo.ireon.api.controller.abandon.request.CreateAbandonRequest;
+import com.uhpoo.ireon.api.controller.abandon.request.EditAbandonRequest;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonDetailResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
 import com.uhpoo.ireon.api.service.abandon.AbandonQueryService;
 import com.uhpoo.ireon.api.service.abandon.AbandonService;
 import com.uhpoo.ireon.api.service.abandon.dto.CreateAbandonDto;
+import com.uhpoo.ireon.api.service.abandon.dto.EditAbandonDto;
 import com.uhpoo.ireon.domain.abandon.AbandonStatus;
+import com.uhpoo.ireon.domain.abandon.VaccinationStatus;
 import com.uhpoo.ireon.domain.common.animal.AnimalType;
 import com.uhpoo.ireon.domain.common.animal.Gender;
-import com.uhpoo.ireon.domain.abandon.VaccinationStatus;
+import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -132,7 +139,7 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                                 fieldWithPath("message").type(JsonFieldType.STRING)
                                         .description("메시지"),
                                 fieldWithPath("data").type(JsonFieldType.NUMBER)
-                                        .description("등록된 PK 값")
+                                        .description("등록된 유기동물 게시글 PK 값")
                         )
                 ));
 
@@ -314,5 +321,114 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                         )
                 ));
 
+    }
+
+    @DisplayName("유기동물 수정 API")
+    @Test
+    @WithMockUser
+    void editAbandon() throws Exception {
+
+        Long abandonId = 1L;
+
+        EditAbandonRequest request = EditAbandonRequest.builder()
+                .title("입양해가실분")
+                .content("찾아용")
+                .animalType(AnimalType.DOG.getText())
+                .animalDetail("믹스견")
+                .animalGender(Gender.MALE.getText())
+                .age(3)
+                .vaccinationStatus(VaccinationStatus.FIRST.getText())
+                .neutralized(true)
+                .abandonStatus(AbandonStatus.SEARCHING.getText())
+                .zipcode("11111")
+                .road("서울시 송파구 토성로")
+                .jibun("서울시 송파구 풍납동")
+                .detail("비밀")
+                .phoneNumber("010-1234-5678")
+                .build();
+
+        given(abandonService.editAbandon(any(EditAbandonDto.class), anyString(), any(MultipartFile.class)))
+                .willReturn(abandonId);
+
+        MockMultipartFile file = new MockMultipartFile("file", "image.jpg",
+                MediaType.IMAGE_JPEG_VALUE, "image data".getBytes());
+
+        String jsonRequest = objectMapper.writeValueAsString(request);
+        MockMultipartFile jsonRequestPart = new MockMultipartFile("request", "request.json",
+                APPLICATION_JSON_VALUE, jsonRequest.getBytes(UTF_8));
+
+        // multipart 는 기본적으로 POST 요청을 위한 처리로만 사용되므로 다음과 같이 Override 해서 요청을 만들어줘야함
+        MockMultipartHttpServletRequestBuilder builder =
+                RestDocumentationRequestBuilders.
+                        multipart("/abandon/{abandonId}", abandonId);
+
+        builder.with(new RequestPostProcessor() {
+            @Override
+            public @NotNull MockHttpServletRequest postProcessRequest(@NotNull MockHttpServletRequest request) {
+                request.setMethod("PATCH");
+                return request;
+            }
+        });
+
+        mockMvc.perform(
+                        builder
+                                .file(file)
+                                .file(jsonRequestPart)
+                                .header("Authentication", "authentication")
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("edit-abandon",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("abandonId").description("유기동물 게시글 PK")
+                        ),
+                        requestParts(
+                                partWithName("file").description("유기동물 이미지"),
+                                partWithName("request").description("유기동물 게시글 정보")
+                        ),
+                        requestPartFields("request",
+                                fieldWithPath("title").type(JsonFieldType.STRING)
+                                        .description("게시글 제목"),
+                                fieldWithPath("content").type(JsonFieldType.STRING)
+                                        .description("게시글 내용"),
+                                fieldWithPath("animalType").type(JsonFieldType.STRING)
+                                        .description("동물 종류"),
+                                fieldWithPath("animalDetail").type(JsonFieldType.STRING)
+                                        .description("세부 동물 종류"),
+                                fieldWithPath("animalGender").type(JsonFieldType.STRING)
+                                        .description("동물 성별"),
+                                fieldWithPath("age").type(JsonFieldType.NUMBER)
+                                        .description("동물 나이"),
+                                fieldWithPath("vaccinationStatus").type(JsonFieldType.STRING)
+                                        .description("접종 상태"),
+                                fieldWithPath("neutralized").type(JsonFieldType.BOOLEAN)
+                                        .description("중성화 여부"),
+                                fieldWithPath("abandonStatus").type(JsonFieldType.STRING)
+                                        .description("유기동물 상태"),
+                                fieldWithPath("zipcode").type(JsonFieldType.STRING)
+                                        .description("우편번호"),
+                                fieldWithPath("road").type(JsonFieldType.STRING)
+                                        .description("도로명 주소"),
+                                fieldWithPath("jibun").type(JsonFieldType.STRING)
+                                        .description("지번 주소"),
+                                fieldWithPath("detail").type(JsonFieldType.STRING)
+                                        .description("상세 주소"),
+                                fieldWithPath("phoneNumber").type(JsonFieldType.STRING)
+                                        .description("연락처")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NUMBER)
+                                        .description("수정된 유기동물 게시글 PK 값")
+                        )
+                ));
     }
 }
