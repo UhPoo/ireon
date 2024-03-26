@@ -1,0 +1,10 @@
+[[create-lost]]
+=== 실종동물 게시글 등록
+
+include::{snippets}/create-lost/http-request.adoc[]
+include::{snippets}/create-lost/request-parts.adoc[]
+include::{snippets}/create-lost/request-part-request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/create-lost/http-response.adoc[]
+include::{snippets}/create-lost/response-fields.adoc[]
