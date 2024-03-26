@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum LostStatus {
-    LOST("잃어버림"),
+    LOST("찾고있음"),
     DISCOVERED("발견됨"),
     PROTECTING("임시보호 중"),
     UNKNOWN("확인불가"),
