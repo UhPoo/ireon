@@ -19,7 +19,7 @@ public class CreateLostDto {
     private String animalType;
     private String animalDetail;
     private String animalGender;
-    private String animalAge;
+    private Integer animalAge;
     private Boolean neutralized;
     private String lostStatus;
     private String zipcode;
@@ -31,7 +31,7 @@ public class CreateLostDto {
     private String phoneNumber;
     @Builder
     public CreateLostDto(String title, String content, String animalType, String animalDetail,
-                         String animalGender, String animalAge, Boolean neutralized, String lostStatus,
+                         String animalGender, Integer animalAge, Boolean neutralized, String lostStatus,
                          String zipcode, String roadAddress, String jibunAddress, String detailAddress,
                          BigDecimal latitude, BigDecimal longitude, String phoneNumber) {
         this.title = title;
