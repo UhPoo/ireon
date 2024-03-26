@@ -41,11 +41,10 @@ public class Lost extends TimeBaseEntity {
     private LostStatus lostStatus;
 
     @Embedded
-    private Address address;
+    private LostAddress lostAddress;
 
     @Column(nullable = false, length = 13)
     private String phoneNumber;
-
 
     @Column(nullable = false)
     private Boolean active;
@@ -56,14 +55,14 @@ public class Lost extends TimeBaseEntity {
 
     @Builder
     private Lost(String title, String content, AnimalInfo animalInfo, Boolean neutralized,
-                 LostStatus lostStatus, Address address, String phoneNumber,
+                 LostStatus lostStatus, LostAddress lostAddress, String phoneNumber,
                  Boolean active, Member member) {
         this.title = title;
         this.content = content;
         this.animalInfo = animalInfo;
         this.neutralized = neutralized;
         this.lostStatus = lostStatus;
-        this.address = address;
+        this.lostAddress = lostAddress;
         this.phoneNumber = phoneNumber;
         this.active = active;
         this.member = member;
