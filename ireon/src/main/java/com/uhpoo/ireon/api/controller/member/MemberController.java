@@ -1,9 +1,7 @@
 package com.uhpoo.ireon.api.controller.member;
 
 import com.uhpoo.ireon.api.ApiResponse;
-import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
-import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
-import com.uhpoo.ireon.api.controller.member.request.MemberUpdateRequest;
+import com.uhpoo.ireon.api.controller.member.request.*;
 import com.uhpoo.ireon.api.controller.member.response.EmailVerificationResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
@@ -90,7 +88,7 @@ public class MemberController {
     public ApiResponse sendCodeToEmail(@RequestParam("email") @Email String email) {
         log.debug("MemberController#sendMessage called.");
         log.debug("email={}",email);
-
+        //TODO: 회원이 존재하는지 확인 => 존재하지 않는 경우 없는 회원입니다.
         memberService.sendCodeToEmail(email);
 
         return ApiResponse.ok(null);
@@ -108,5 +106,25 @@ public class MemberController {
 
         return ApiResponse.ok(response);
 
+    }
+
+    @PatchMapping("/password")
+    public ApiResponse<Object> updatePassword(@RequestBody @Valid MemeberUpdatePasswordRequest request) {
+        log.debug("MemberController#updatePassword called.");
+        log.debug("request={}",request);
+        // TODO: 이메일 + 인증코드 인증 여부 확인
+        memberService.updatePassword(request.getEmail(), request.getPassword());
+
+        return ApiResponse.ok(null);
+    }
+
+    @PatchMapping("/login/password")
+    public ApiResponse<Object> updateLoginPassword(@RequestBody @Valid MemberLoginUpdatePasswordRequest request) {
+        log.debug("MemberController#updateLoginPassword called.");
+        log.debug("request={}",request);
+        // TODO: 이메일 + 비밀번호 일치 여부 확인
+        memberService.updatePassword(request.getEmail(), request.getNewPwd());
+
+        return ApiResponse.ok(null);
     }
 }
