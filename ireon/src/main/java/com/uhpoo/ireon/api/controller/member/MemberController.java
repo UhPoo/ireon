@@ -109,7 +109,7 @@ public class MemberController {
     }
 
     @PatchMapping("/password")
-    public ApiResponse<Object> updatePassword(@RequestBody @Valid MemeberUpdatePasswordRequest request) {
+    public ApiResponse<Object> updatePassword(@RequestBody @Valid MemberUpdatePasswordRequest request) {
         log.debug("MemberController#updatePassword called.");
         log.debug("request={}",request);
         // TODO: 이메일 + 인증코드 인증 여부 확인

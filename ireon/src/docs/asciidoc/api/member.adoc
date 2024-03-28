@@ -85,3 +85,31 @@ include::{snippets}/member-verifiedCodeFromEmail/query-parameters.adoc[]
 ==== HTTP Response
 include::{snippets}/member-verifiedCodeFromEmail/http-response.adoc[]
 include::{snippets}/member-verifiedCodeFromEmail/response-fields.adoc[]
+
+
+[[member-updatePassword]]
+=== 로그인 하지 않은 멤버의 비밀번호 수정
+
+==== HTTP Request
+include::{snippets}/member-updatePassword/http-request.adoc[]
+request body
+include::{snippets}/member-updatePassword/request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/member-updatePassword/http-response.adoc[]
+include::{snippets}/member-updatePassword/response-fields.adoc[]
+
+
+[[member-updateLoginPassword]]
+=== 로그인 한 멤버의 비밀번호 수정
+
+==== HTTP Request
+include::{snippets}/member-updateLoginPassword/http-request.adoc[]
+request header
+include::{snippets}/member-updateLoginPassword/request-headers.adoc[]
+request body
+include::{snippets}/member-updateLoginPassword/request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/member-updateLoginPassword/http-response.adoc[]
+include::{snippets}/member-updateLoginPassword/response-fields.adoc[]

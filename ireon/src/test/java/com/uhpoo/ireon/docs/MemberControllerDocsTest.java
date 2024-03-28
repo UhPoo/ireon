@@ -1,9 +1,8 @@
 package com.uhpoo.ireon.docs;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.uhpoo.ireon.api.controller.member.MemberController;
-import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
-import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
-import com.uhpoo.ireon.api.controller.member.request.MemberUpdateRequest;
+import com.uhpoo.ireon.api.controller.member.request.*;
 import com.uhpoo.ireon.api.controller.member.response.EmailVerificationResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
@@ -342,6 +341,78 @@ public class MemberControllerDocsTest extends RestDocsSupport{
                                 fieldWithPath("data.authCode").type(JsonFieldType.STRING).description("인증 번호"),
                                 fieldWithPath("data.result").type(JsonFieldType.BOOLEAN).description("결과")
                         )
+                ));
+    }
+
+    @DisplayName("회원 비밀번호 수정 API (로그인x)")
+    @Test
+    void updatePassword() throws Exception {
+        MemberUpdatePasswordRequest request  = MemberUpdatePasswordRequest.builder()
+                .email("email@email.com")
+                .authCode("12345")
+                .password("newPassword")
+                .build();
+
+        mockMvc.perform(
+                        patch("/member/password")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("member-updatePassword",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestFields(
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                fieldWithPath("authCode").type(JsonFieldType.STRING).description("인증 번호"),
+                                fieldWithPath("password").type(JsonFieldType.STRING).description("새로운 비밀번호")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER).description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING).description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NULL).description("응답 데이터")
+                        )
+
+                ));
+    }
+
+    @DisplayName("회원 비밀번호 수정 API (로그인o)")
+    @Test
+    void updateLoginPassword() throws Exception {
+        MemberLoginUpdatePasswordRequest request  = MemberLoginUpdatePasswordRequest.builder()
+                .email("email@email.com")
+                .curPwd("curPassword")
+                .newPwd("newPassword")
+                .build();
+
+        mockMvc.perform(
+                        patch("/member/login/password")
+                                .header("Authorization","Bearer ******")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("member-updateLoginPassword",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Basic Auth Credentials")
+                        ),
+                        requestFields(
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                fieldWithPath("curPwd").type(JsonFieldType.STRING).description("기존 비밀번호"),
+                                fieldWithPath("newPwd").type(JsonFieldType.STRING).description("새로운 비밀번호")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER).description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING).description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NULL).description("응답 데이터")
+                        )
+
                 ));
     }
 
