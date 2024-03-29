@@ -1,5 +1,6 @@
 package com.uhpoo.ireon.api.service.member;
 
+import com.uhpoo.ireon.api.controller.member.request.MemberDeleteRequest;
 import com.uhpoo.ireon.api.controller.member.response.EmailVerificationResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberResponse;
 import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
@@ -47,5 +48,8 @@ public class MemberService {
 
     public void updatePassword(String email, String pwd) {
 
+    }
+
+    public void deleteMember(MemberDeleteRequest request) {
     }
 }

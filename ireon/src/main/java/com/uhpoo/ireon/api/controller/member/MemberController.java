@@ -127,4 +127,15 @@ public class MemberController {
 
         return ApiResponse.ok(null);
     }
+
+    @DeleteMapping("/memeber")
+    public ApiResponse<Object> deleteMember(@RequestBody @Valid MemberDeleteRequest request) {
+        log.debug("MemberController#deleteMember called.");
+        log.debug("request={}",request);
+
+        memberService.deleteMember(request);
+
+        return ApiResponse.ok(null);
+    }
+
 }
