@@ -417,4 +417,40 @@ public class MemberControllerDocsTest extends RestDocsSupport{
     }
 
 
+    @DisplayName("회원 탈퇴")
+    @Test
+    void deleteMember() throws Exception {
+        MemberDeleteRequest request  = MemberDeleteRequest.builder()
+                .email("email@email.com")
+                .password("password")
+                .build();
+
+        mockMvc.perform(
+                        delete("/member")
+                                .header("Authorization","Bearer ******")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("member-deleteMember",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Basic Auth Credentials")
+                        ),
+                        requestFields(
+                                fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER).description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING).description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NULL).description("응답 데이터")
+                        )
+
+                ));
+    }
+
 }

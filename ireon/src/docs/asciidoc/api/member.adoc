@@ -113,3 +113,18 @@ include::{snippets}/member-updateLoginPassword/request-fields.adoc[]
 ==== HTTP Response
 include::{snippets}/member-updateLoginPassword/http-response.adoc[]
 include::{snippets}/member-updateLoginPassword/response-fields.adoc[]
+
+
+[[member-deleteMember]]
+=== 회원 탈퇴
+
+==== HTTP Request
+include::{snippets}/member-deleteMember/http-request.adoc[]
+request header
+include::{snippets}/member-deleteMember/request-headers.adoc[]
+request body
+include::{snippets}/member-deleteMember/request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/member-deleteMember/http-response.adoc[]
+include::{snippets}/member-deleteMember/response-fields.adoc[]
