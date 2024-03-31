@@ -1,12 +1,8 @@
 package com.uhpoo.ireon.docs;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.uhpoo.ireon.api.controller.member.MemberController;
 import com.uhpoo.ireon.api.controller.member.request.*;
-import com.uhpoo.ireon.api.controller.member.response.EmailVerificationResponse;
-import com.uhpoo.ireon.api.controller.member.response.MemberResponse;
-import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
-import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
+import com.uhpoo.ireon.api.controller.member.response.*;
 import com.uhpoo.ireon.api.service.member.MemberService;
 import com.uhpoo.ireon.api.service.member.dto.MemberLoginDto;
 import com.uhpoo.ireon.api.service.member.dto.MemberSignUpDto;
@@ -15,7 +11,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.web.multipart.MultipartFile;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -453,4 +451,50 @@ public class MemberControllerDocsTest extends RestDocsSupport{
                 ));
     }
 
+
+    @DisplayName("회원 프로필 등록 및 수정 API")
+    @Test
+    void updateMemberProfileImage() throws Exception {
+        String email = "email@email.com";
+        MockMultipartFile file = new MockMultipartFile("file", "image.jpg",
+                MediaType.IMAGE_JPEG_VALUE, "image data".getBytes());
+
+        MemberProfileImageResponse response = MemberProfileImageResponse.builder()
+                .email("email@email.com")
+                .publicUrl("Amazon S3 public url")
+                .build();
+
+        given(memberService.updateMemberProfileImage(any(String.class), any(MultipartFile.class)))
+                .willReturn(response);
+
+        mockMvc.perform(
+                        multipart("/member/profile")
+                                .file(file)
+                                .header("Authorization","Bearer ******")
+                                .queryParam("email", email)
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("member-updateMemberProfileImage",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Basic Auth Credentials")
+                        ),
+                        queryParameters(
+                                parameterWithName("email").description("이메일")
+                        ),
+                        requestParts(
+                                partWithName("file").description("프로필 이미지")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER).description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING).description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NULL).description("응답 데이터")
+                        )
+
+                ));
+    }
 }

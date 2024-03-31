@@ -137,7 +137,7 @@ public class MemberController {
     }
 
     @PostMapping("/profile")
-    public ApiResponse<?> updateMemberProfileImage(@RequestParam @Email String email,
+    public ApiResponse<?> updateMemberProfileImage(@RequestParam("email") @Email String email,
                                                    @RequestPart(value = "image", required = false) MultipartFile image) {
 
 
