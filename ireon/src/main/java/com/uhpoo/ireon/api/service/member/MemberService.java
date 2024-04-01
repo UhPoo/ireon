@@ -54,4 +54,7 @@ public class MemberService {
     public MemberProfileImageResponse updateMemberProfileImage(String email, MultipartFile image) {
         return null;
     }
+
+    public void deleteMemberProfileImage(String email) {
+    }
 }

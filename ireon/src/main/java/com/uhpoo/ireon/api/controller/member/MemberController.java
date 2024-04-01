@@ -137,7 +137,7 @@ public class MemberController {
     }
 
     @PostMapping("/profile")
-    public ApiResponse<?> updateMemberProfileImage(@RequestParam("email") @Email String email,
+    public ApiResponse<MemberProfileImageResponse> updateMemberProfileImage(@RequestParam("email") @Email String email,
                                                    @RequestPart(value = "image", required = false) MultipartFile image) {
 
 
@@ -148,7 +148,21 @@ public class MemberController {
         // TODO: 로그인 인증, 이메일 존재 여부 확인
         MemberProfileImageResponse response = memberService.updateMemberProfileImage(email, image);
 
+        log.debug("response={}",response);
+
         return ApiResponse.ok(response);
+    }
+
+    @DeleteMapping("/profile")
+    public ApiResponse<?> deleteMemberProfileImage(@RequestParam("email") @Email String email) {
+        log.debug("MemberController#deleteMemberProfileImage called.");
+        log.debug("email={}",email);
+
+        // TODO: 로그인 인증, 이메일 존재 여부 확인
+        memberService.deleteMemberProfileImage(email);
+
+
+        return ApiResponse.ok(null);
     }
 
 }
