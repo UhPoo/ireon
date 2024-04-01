@@ -497,4 +497,36 @@ public class MemberControllerDocsTest extends RestDocsSupport{
 
                 ));
     }
+
+    @DisplayName("회원 프로필 이미지 삭제 API")
+    @Test
+    void deleteMemberProfileImage() throws Exception {
+        String email = "email@email.com";
+
+        mockMvc.perform(
+                        delete("/member/profile")
+                                .header("Authorization","Bearer ******")
+                                .queryParam("email", email)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("member-deleteMemberProfileImage",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(
+                                headerWithName("Authorization").description("Basic Auth Credentials")
+                        ),
+                        queryParameters(
+                                parameterWithName("email").description("이메일")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER).description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING).description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NULL).description("응답 데이터")
+                        )
+
+                ));
+    }
 }

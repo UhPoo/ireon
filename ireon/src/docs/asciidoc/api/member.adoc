@@ -144,3 +144,18 @@ include::{snippets}/member-updateMemberProfileImage/request-parts.adoc[]
 ==== HTTP Response
 include::{snippets}/member-updateMemberProfileImage/http-response.adoc[]
 include::{snippets}/member-updateMemberProfileImage/response-fields.adoc[]
+
+
+[[member-deleteMemberProfileImage]]
+=== 회원 프로필 삭제
+
+==== HTTP Request
+include::{snippets}/member-deleteMemberProfileImage/http-request.adoc[]
+request header
+include::{snippets}/member-deleteMemberProfileImage/request-headers.adoc[]
+request param
+include::{snippets}/member-deleteMemberProfileImage/query-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/member-deleteMemberProfileImage/http-response.adoc[]
+include::{snippets}/member-deleteMemberProfileImage/response-fields.adoc[]
