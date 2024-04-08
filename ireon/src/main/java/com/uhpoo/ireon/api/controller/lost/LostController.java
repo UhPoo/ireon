@@ -2,6 +2,7 @@ package com.uhpoo.ireon.api.controller.lost;
 
 import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.controller.lost.request.CreateLostRequest;
+import com.uhpoo.ireon.api.controller.lost.request.EditLostRequest;
 import com.uhpoo.ireon.api.service.lost.LostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class LostController {
      *
      * @param request   실종동물 게시글 정보
      * @param file      첨부파일
-     * @return 등록된 PK 값
+     * @return 등록 된 PK 값
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -44,5 +45,27 @@ public class LostController {
         log.debug("saveId={}", saveId);
 
         return ApiResponse.created(saveId);
+    }
+
+    /**
+     * 실종동물 게시글 수정 API
+     *
+     * @param request   실종동물 게시글 수정 정보
+     * @param file      첨부파일
+     * @return 수정 된 PK 값
+     */
+    @PostMapping
+    public ApiResponse<Long> editLost(@Valid @RequestPart(name = "request") EditLostRequest request, @RequestPart(required = false, name = "file") MultipartFile file) {
+        log.debug("LostController#editLost called.");
+        log.debug("EditLostRequest={}", request);
+        log.debug("MultipartFile={}", file);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long editId = lostService.editLost(request.toDto(), nickname, file);
+        log.debug("editId={}", editId);
+
+        return ApiResponse.ok(editId);
     }
 }
