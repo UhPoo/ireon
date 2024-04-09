@@ -54,9 +54,13 @@ public class LostController {
      * @param file      첨부파일
      * @return 수정 된 PK 값
      */
-    @PostMapping
-    public ApiResponse<Long> editLost(@Valid @RequestPart(name = "request") EditLostRequest request, @RequestPart(required = false, name = "file") MultipartFile file) {
+
+    @PatchMapping("/{lostId}")
+    public ApiResponse<Long> editLost(@PathVariable(name = "lostId") Long lostId,
+                                      @Valid @RequestPart(name = "request") EditLostRequest request,
+                                      @RequestPart(required = false, name = "file") MultipartFile file) {
         log.debug("LostController#editLost called.");
+        log.debug("lostId={}", lostId);
         log.debug("EditLostRequest={}", request);
         log.debug("MultipartFile={}", file);
 
