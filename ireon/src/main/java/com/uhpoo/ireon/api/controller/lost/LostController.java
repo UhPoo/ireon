@@ -4,6 +4,7 @@ import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.lost.request.CreateLostRequest;
 import com.uhpoo.ireon.api.controller.lost.request.EditLostRequest;
+import com.uhpoo.ireon.api.controller.lost.response.LostDetailResponse;
 import com.uhpoo.ireon.api.controller.lost.response.LostResponse;
 import com.uhpoo.ireon.api.service.lost.LostQueryService;
 import com.uhpoo.ireon.api.service.lost.LostService;
@@ -109,11 +110,29 @@ public class LostController {
     @GetMapping
     public ApiResponse<PageResponse<List<LostResponse>>> getLosts() {
         // TODO: 검색조건 추가 필요
-        log.debug("LostController#getLost called.");
+        log.debug("LostController#getLosts called.");
 
         PageResponse<List<LostResponse>> pageResponses = lostQueryService.getLosts();
         log.debug("pageResponses={}", pageResponses);
 
         return ApiResponse.ok(pageResponses);
+    }
+
+    /**
+     * 실종동물 상세 게시글 조회 API
+     *
+     * @param lostId 실종동물 게시글 PK
+     *
+     * @return PK에 해당하는 실종동물 게시글 정보
+     */
+    @GetMapping("/{lostId}")
+    public ApiResponse<LostDetailResponse> getLost(@PathVariable(name = "lostId") Long lostId) {
+        log.debug("LostController#getLost called.");
+        log.debug("lostId={}", lostId);
+
+        LostDetailResponse lostDetailResponse = lostQueryService.getLost(lostId);
+        log.debug("lostDetailResponse={}", lostDetailResponse);
+
+        return ApiResponse.ok(lostDetailResponse);
     }
 }
