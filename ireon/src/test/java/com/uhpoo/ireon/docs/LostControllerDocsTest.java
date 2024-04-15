@@ -5,6 +5,7 @@ import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.lost.LostController;
 import com.uhpoo.ireon.api.controller.lost.request.CreateLostRequest;
 import com.uhpoo.ireon.api.controller.lost.request.EditLostRequest;
+import com.uhpoo.ireon.api.controller.lost.response.LostDetailResponse;
 import com.uhpoo.ireon.api.controller.lost.response.LostResponse;
 import com.uhpoo.ireon.api.service.lost.LostQueryService;
 import com.uhpoo.ireon.api.service.lost.LostService;
@@ -385,6 +386,101 @@ public class LostControllerDocsTest extends RestDocsSupport  {
                                 fieldWithPath("data.items[].clipped").type(JsonFieldType.BOOLEAN)
                                         .description("스크랩 여부"),
                                 fieldWithPath("data.items[].createdDate").type(JsonFieldType.STRING)
+                                        .description("작성일")
+                        )
+                ));
+
+    }
+
+    @DisplayName("실종동물 상세 조회 API")
+    @Test
+    @WithMockUser
+    void getLost() throws Exception {
+
+        LostDetailResponse response = LostDetailResponse.builder()
+                .lostId(1L)
+                .title("멍멍이 봤어요")
+                .author("선량한 작성자")
+                .content("경복궁에서 멍멍이 봤어요")
+                .animalType("개")
+                .animalDetail("포메")
+                .animalGender("암컷")
+                .animalAge(0)
+                .neutralized(false)
+                .lostStatus(LostStatus.DISCOVERED.getText())
+                .zipcode("03045")
+                .roadAddress("서울 종로구 사직로 161")
+                .jibunAddress("서울 종로구 세종로 1-1")
+                .detailAddress("경복궁")
+                .latitude(BigDecimal.valueOf(37.576987703009536))
+                .longitude(BigDecimal.valueOf(126.98023424093205))
+                .phoneNumber("010-8765-4321")
+                .clipped(true)
+                .createdDate("2024-04-02")
+                .build();
+
+
+        given(lostQueryService.getLost(anyLong()))
+                .willReturn(response);
+
+        mockMvc.perform(
+                        get("/lost/{lostId}", response.getLostId())
+                                .header("Authentication", "authentication")
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("get-lost",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("lostId").description("실종동물 게시글 PK")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.OBJECT)
+                                        .description("실종동물 상세 조회 결과"),
+                                fieldWithPath("data.lostId").type(JsonFieldType.NUMBER)
+                                        .description("실종동물 게시글 PK"),
+                                fieldWithPath("data.title").type(JsonFieldType.STRING)
+                                        .description("글 제목"),
+                                fieldWithPath("data.author").type(JsonFieldType.STRING)
+                                        .description("작성자"),
+                                fieldWithPath("data.content").type(JsonFieldType.STRING)
+                                        .description("게시글 내용"),
+                                fieldWithPath("data.animalType").type(JsonFieldType.STRING)
+                                        .description("동물 종류"),
+                                fieldWithPath("data.animalDetail").type(JsonFieldType.STRING)
+                                        .description("동물 종류 상세"),
+                                fieldWithPath("data.animalGender").type(JsonFieldType.STRING)
+                                        .description("동물 성별"),
+                                fieldWithPath("data.animalAge").type(JsonFieldType.NUMBER)
+                                        .description("동물 나이"),
+                                fieldWithPath("data.neutralized").type(JsonFieldType.BOOLEAN)
+                                        .description("중성화 여부"),
+                                fieldWithPath("data.lostStatus").type(JsonFieldType.STRING)
+                                        .description("실종동물 상태"),
+                                fieldWithPath("data.zipcode").type(JsonFieldType.STRING)
+                                        .description("우편번호"),
+                                fieldWithPath("data.roadAddress").type(JsonFieldType.STRING)
+                                        .description("도로명 주소"),
+                                fieldWithPath("data.jibunAddress").type(JsonFieldType.STRING)
+                                        .description("지번 주소"),
+                                fieldWithPath("data.detailAddress").type(JsonFieldType.STRING)
+                                        .description("상세 주소"),
+                                fieldWithPath("data.latitude").type(JsonFieldType.NUMBER)
+                                        .description("발견 위도"),
+                                fieldWithPath("data.longitude").type(JsonFieldType.NUMBER)
+                                        .description("발견 경도"),
+                                fieldWithPath("data.phoneNumber").type(JsonFieldType.STRING)
+                                        .description("연락처"),
+                                fieldWithPath("data.clipped").type(JsonFieldType.BOOLEAN)
+                                        .description("스크랩 여부"),
+                                fieldWithPath("data.createdDate").type(JsonFieldType.STRING)
                                         .description("작성일")
                         )
                 ));
