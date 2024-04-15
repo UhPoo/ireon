@@ -43,4 +43,13 @@ public class LostService {
     public Long editLost(EditLostDto dto, String nickname, MultipartFile file) {
         return null;
     }
+
+    /**
+     *  실종동물 게시물 삭제
+     *
+     * @param LostId 삭제할 실종동물 게시글 PK 값
+     * @param nickname 현재 로그인 중인 회원 닉네임
+     * @return 삭제 된 PK 값
+     */
+    public Long deleteLost(Long LostId, String nickname) { return null; }
 }

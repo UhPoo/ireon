@@ -50,11 +50,11 @@ public class LostController {
     /**
      * 실종동물 게시글 수정 API
      *
+     * @param lostId    수정할 실종동굴 게시글 PK
      * @param request   실종동물 게시글 수정 정보
      * @param file      첨부파일
      * @return 수정 된 PK 값
      */
-
     @PatchMapping("/{lostId}")
     public ApiResponse<Long> editLost(@PathVariable(name = "lostId") Long lostId,
                                       @Valid @RequestPart(name = "request") EditLostRequest request,
@@ -71,5 +71,26 @@ public class LostController {
         log.debug("editId={}", editId);
 
         return ApiResponse.ok(editId);
+    }
+
+    /**
+     * 실종동물 게시글 삭제 API
+     *
+     * @param lostId 삭제할 실종동물 게시글 PK
+     * @return 삭제 된 PK 값
+     */
+    @DeleteMapping("/{lostId}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ApiResponse<Long> deleteLost(@PathVariable(name = "lostId") Long lostId){
+        log.debug("LostController#deleteLost called.");
+        log.debug("lostId={}", lostId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long deleteId = lostService.deleteLost(lostId, nickname);
+        log.debug("deleteId={}", deleteId);
+
+        return ApiResponse.found(deleteId);
     }
 }
