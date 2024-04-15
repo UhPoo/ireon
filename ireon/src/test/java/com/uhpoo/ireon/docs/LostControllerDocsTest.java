@@ -31,6 +31,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -145,6 +146,9 @@ public class LostControllerDocsTest extends RestDocsSupport  {
     @Test
     @WithMockUser
     void editLost() throws Exception {
+
+        Long lostId = 1L;
+
         EditLostRequest request = EditLostRequest.builder()
                 .title("(수정)믹스견을 찾습니다.")
                 .content("며칠에 어디서 어쩌구 잃어버렸어요. +어쩌구는 저쩌시 어쩌구예요.")
@@ -171,11 +175,11 @@ public class LostControllerDocsTest extends RestDocsSupport  {
                 APPLICATION_JSON_VALUE, jsonRequest.getBytes(UTF_8));
 
         given(lostService.editLost(any(EditLostDto.class), anyString(), any(MultipartFile.class)))
-                .willReturn(1L);
+                .willReturn(lostId);
 
         //PATCH용 overriding
         MockMultipartHttpServletRequestBuilder builder =
-                RestDocumentationRequestBuilders.multipart("/lost/{lostId}", 1L);
+                RestDocumentationRequestBuilders.multipart("/lost/{lostId}", lostId);
         builder.with(new RequestPostProcessor() {
             @Override
             public @NotNull MockHttpServletRequest postProcessRequest(@NotNull MockHttpServletRequest request) {
@@ -195,7 +199,11 @@ public class LostControllerDocsTest extends RestDocsSupport  {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("edit-lost",
+                        preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("lostId").description("실종동물 게시글 PK")
+                        ),
                         requestParts(
                                 partWithName("file").description("첨부파일"),
                                 partWithName("request").description("실종동물 게시글 정보")
@@ -244,5 +252,39 @@ public class LostControllerDocsTest extends RestDocsSupport  {
                         )
                 ));
 
+    }
+
+    @DisplayName("실종동물 게시글 삭제 API")
+    @Test
+    @WithMockUser
+    void deleteLost() throws Exception {
+        Long lostId = 1L;
+
+        given(lostService.deleteLost(anyLong(), anyString()))
+                .willReturn(lostId);
+
+        mockMvc.perform(
+                        delete("/lost/{lostId}", lostId)
+                                .header("Authentication", "authentication")
+                )
+                .andDo(print())
+                .andExpect(status().isFound())
+                .andDo(document("delete-lost",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("lostId").description("실종동물 게시글 PK")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NUMBER)
+                                        .description("삭제된 실종동물 게시글 PK 값")
+                        )
+                ));
     }
 }

@@ -10,14 +10,26 @@ include::{snippets}/create-lost/request-part-request-fields.adoc[]
 include::{snippets}/create-lost/http-response.adoc[]
 include::{snippets}/create-lost/response-fields.adoc[]
 
-[[edit-lsot]]
+[[edit-lost]]
 === 실종동물 게시글 수정
 
 ==== HTTP Request
 include::{snippets}/edit-lost/http-request.adoc[]
+include::{snippets}/edit-lost/path-parameters.adoc[]
 include::{snippets}/edit-lost/request-parts.adoc[]
 include::{snippets}/edit-lost/request-part-request-fields.adoc[]
 
 ==== HTTP Response
 include::{snippets}/edit-lost/http-response.adoc[]
 include::{snippets}/edit-lost/response-fields.adoc[]
+
+[[delete-lost]]
+=== 실종동물 게시글 삭제
+
+==== HTTP Request
+include::{snippets}/delete-lost/http-request.adoc[]
+include::{snippets}/delete-lost/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/delete-lost/http-response.adoc[]
+include::{snippets}/delete-lost/response-fields.adoc[]
