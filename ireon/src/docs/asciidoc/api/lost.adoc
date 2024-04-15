@@ -33,3 +33,13 @@ include::{snippets}/delete-lost/path-parameters.adoc[]
 ==== HTTP Response
 include::{snippets}/delete-lost/http-response.adoc[]
 include::{snippets}/delete-lost/response-fields.adoc[]
+
+[[get-losts]]
+=== 실종동물 게시글 전체 조회
+
+==== HTTP Request
+include::{snippets}/get-losts/http-request.adoc[]
+
+==== HTTP Response
+include::{snippets}/get-losts/http-response.adoc[]
+include::{snippets}/get-losts/response-fields.adoc[]
