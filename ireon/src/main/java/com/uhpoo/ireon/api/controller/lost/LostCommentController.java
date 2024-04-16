@@ -25,7 +25,7 @@ public class LostCommentController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<Long> createLostComment(@Valid @RequestPart(name = "request")CreateLostCommentRequest request) {
+    public ApiResponse<Long> createLostComment(@Valid @RequestBody CreateLostCommentRequest request) {
         log.debug("LostCommentController#createLostComment called.");
         log.debug("CreateLostCommentRequest={}", request);
 
