@@ -3,6 +3,7 @@ package com.uhpoo.ireon.api.controller.abandon;
 import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.abandon.request.CreateAbandonCommentRequest;
+import com.uhpoo.ireon.api.controller.abandon.request.EditAbandonCommentRequest;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonCommentResponse;
 import com.uhpoo.ireon.api.service.abandon.AbandonCommentQueryService;
 import com.uhpoo.ireon.api.service.abandon.AbandonCommentService;
@@ -70,5 +71,25 @@ public class AbandonCommentController {
         PageResponse<List<AbandonCommentResponse>> pageResponse = commentQueryService.getComment(abandonId, lastCommentId);
 
         return ApiResponse.ok(pageResponse);
+    }
+
+    /**
+     * 유기동물 댓글 수정
+     *
+     * @param request      수정할 댓글 정보
+     * @return 수정된 PK 값
+     */
+    @PatchMapping
+    public ApiResponse<Long> editComment(@Valid EditAbandonCommentRequest request) {
+        log.debug("AbandonCommentController#editComment called.");
+        log.debug("request={}", request);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long editId = commentService.editComment(request.toDto(), nickname);
+        log.debug("editId={}", editId);
+
+        return ApiResponse.ok(editId);
     }
 }
