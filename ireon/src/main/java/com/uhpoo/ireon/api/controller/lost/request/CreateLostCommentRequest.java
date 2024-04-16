@@ -14,19 +14,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateLostCommentRequest {
 
+    private Long lostId;
     private String comment;
-    private Boolean active;
 
     @Builder
-    public CreateLostCommentRequest(String comment, Boolean active) {
+    public CreateLostCommentRequest(Long lostId, String comment) {
+        this.lostId = lostId;
         this.comment = comment;
-        this.active = active;
     }
 
     public CreateLostCommentDto toDto() {
         return CreateLostCommentDto.builder()
+                .lostId(this.lostId)
                 .comment(this.comment)
-                .active(this.active)
                 .build();
     }
 }
