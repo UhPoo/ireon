@@ -65,4 +65,25 @@ public class LostCommentController {
 
         return ApiResponse.ok(editId);
     }
+
+    /**
+     * 실종동물 게시글 삭제 API
+     *
+     * @param lostCommentId 삭제할 실종동물 게시글 PK
+     * @return 삭제 된 PK 값
+     */
+    @DeleteMapping("/{lostCommentId}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ApiResponse<Long> deleteCommentLost(@PathVariable(name = "lostCommentId") Long lostCommentId){
+        log.debug("LostController#deleteLostComment called.");
+        log.debug("lostCommentId={}", lostCommentId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long deleteId = lostCommentService.deleteLostComment(lostCommentId, nickname);
+        log.debug("deleteId={}", deleteId);
+
+        return ApiResponse.found(deleteId);
+    }
 }
