@@ -33,3 +33,16 @@ include::{snippets}/edit-abandon-comment/request-fields.adoc[]
 ==== HTTP Response
 include::{snippets}/edit-abandon-comment/http-response.adoc[]
 include::{snippets}/edit-abandon-comment/response-fields.adoc[]
+
+[[delete-abandon-comment]]
+
+==== HTTP Request
+
+include::{snippets}/delete-abandon-comment/http-request.adoc[]
+include::{snippets}/delete-abandon-comment/path-parameters.adoc[]
+
+
+==== HTTP Response
+
+include::{snippets}/delete-abandon-comment/http-response.adoc[]
+include::{snippets}/delete-abandon-comment/response-fields.adoc[]
