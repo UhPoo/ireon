@@ -1,0 +1,10 @@
+[[add-lost-comment]]
+=== 실종동물 스크랩 추가
+
+==== HTTP Request
+include::{snippets}/add-lost-scrap/http-request.adoc[]
+include::{snippets}/add-lost-scrap/request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/add-lost-scrap/http-response.adoc[]
+include::{snippets}/add-lost-scrap/response-fields.adoc[]

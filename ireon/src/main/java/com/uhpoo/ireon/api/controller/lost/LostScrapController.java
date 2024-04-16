@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/lost/scrap")
 public class LostScrapController {
 
-    private LostScrapService lostScrapService;
+    private final LostScrapService lostScrapService;
 
     /**
      * 실종동물 스크랩 추가 API
