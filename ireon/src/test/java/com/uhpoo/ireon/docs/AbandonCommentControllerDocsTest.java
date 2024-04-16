@@ -3,10 +3,12 @@ package com.uhpoo.ireon.docs;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.abandon.AbandonCommentController;
 import com.uhpoo.ireon.api.controller.abandon.request.CreateAbandonCommentRequest;
+import com.uhpoo.ireon.api.controller.abandon.request.EditAbandonCommentRequest;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonCommentResponse;
 import com.uhpoo.ireon.api.service.abandon.AbandonCommentQueryService;
 import com.uhpoo.ireon.api.service.abandon.AbandonCommentService;
 import com.uhpoo.ireon.api.service.abandon.dto.CreateAbandonCommentDto;
+import com.uhpoo.ireon.api.service.abandon.dto.EditAbandonCommentDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,8 +22,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -112,10 +113,10 @@ public class AbandonCommentControllerDocsTest extends RestDocsSupport {
                 .willReturn(response);
 
         mockMvc.perform(
-                get("/abandon/comment/{abandonId}", 1L)
-                        .header("Authentication", "authentication")
-                        .queryParam("lastCommentId", "0")
-        )
+                        get("/abandon/comment/{abandonId}", 1L)
+                                .header("Authentication", "authentication")
+                                .queryParam("lastCommentId", "0")
+                )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("get-abandon-comment",
@@ -148,6 +149,48 @@ public class AbandonCommentControllerDocsTest extends RestDocsSupport {
                                         .description("댓글 내용"),
                                 fieldWithPath("data.items[].createdTime").type(JsonFieldType.STRING)
                                         .description("작성일")
+                        )
+                ));
+    }
+
+    @DisplayName("유기동물 게시판 댓글 수정 API")
+    @Test
+    @WithMockUser
+    void editAbandonComment() throws Exception {
+        EditAbandonCommentRequest request = EditAbandonCommentRequest.builder()
+                .commentId(1L)
+                .content("댓글 수정 테스트")
+                .build();
+
+        given(commentService.editComment(any(EditAbandonCommentDto.class), anyString()))
+                .willReturn(1L);
+
+        mockMvc.perform(
+                        patch("/abandon/comment")
+                                .header("Authentication", "authentication")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("edit-abandon-comment",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestFields(
+                                fieldWithPath("commentId").type(JsonFieldType.NUMBER)
+                                        .description("댓글  PK"),
+                                fieldWithPath("content").type(JsonFieldType.STRING)
+                                        .description("수정할 댓글 내용")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NUMBER)
+                                        .description("수정된 댓글 PK 값")
                         )
                 ));
     }

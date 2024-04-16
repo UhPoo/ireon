@@ -22,3 +22,14 @@ include::{snippets}/get-abandon-comment/query-parameters.adoc[]
 ==== HTTP Response
 include::{snippets}/get-abandon-comment/http-response.adoc[]
 include::{snippets}/get-abandon-comment/response-fields.adoc[]
+
+[[edit-abandon-comment]]
+
+==== HTTP Request
+
+include::{snippets}/edit-abandon-comment/http-request.adoc[]
+include::{snippets}/edit-abandon-comment/request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/edit-abandon-comment/http-response.adoc[]
+include::{snippets}/edit-abandon-comment/response-fields.adoc[]
