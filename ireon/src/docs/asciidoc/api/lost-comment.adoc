@@ -28,3 +28,14 @@ include::{snippets}/delete-lost-comment/path-parameters.adoc[]
 ==== HTTP Response
 include::{snippets}/delete-lost-comment/http-response.adoc[]
 include::{snippets}/delete-lost-comment/response-fields.adoc[]
+
+=== 실종동물 댓글 조회
+
+==== HTTP Request
+include::{snippets}/get-lost-comments/http-request.adoc[]
+include::{snippets}/get-lost-comments/path-parameters.adoc[]
+include::{snippets}/get-lost-comments/query-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/get-lost-comments/http-response.adoc[]
+include::{snippets}/get-lost-comments/response-fields.adoc[]
