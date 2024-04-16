@@ -9,3 +9,12 @@ include::{snippets}/create-board/request-part-request-fields.adoc[]
 ==== HTTP Response
 include::{snippets}/create-board/http-response.adoc[]
 include::{snippets}/create-board/response-fields.adoc[]
+
+[[get-boards]]
+=== 자유게시판 게시글 목록 조회
+
+==== HTTP Request
+include::{snippets}/get-boards/http-request.adoc[]
+
+include::{snippets}/get-boards/http-response.adoc[]
+include::{snippets}/get-boards/response-fields.adoc[]
