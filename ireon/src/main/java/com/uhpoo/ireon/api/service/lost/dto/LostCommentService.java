@@ -29,4 +29,14 @@ public class LostCommentService {
     {
         return null;
     }
+
+    /**
+     * 실종동물 댓글 수정
+     * @param dto       실종동물 댓글 정보
+     * @param nickname  현재 로그인 중인 회원 닉네임
+     * @return 수정 된 PK 값
+     */
+    public Long editLostComment(EditLostCommentDto dto, String nickname) {
+        return null;
+    }
 }
