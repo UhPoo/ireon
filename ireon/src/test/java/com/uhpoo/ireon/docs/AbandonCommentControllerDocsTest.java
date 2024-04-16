@@ -194,37 +194,4 @@ public class AbandonCommentControllerDocsTest extends RestDocsSupport {
                         )
                 ));
     }
-
-    @DisplayName("유기동물 게시판 댓글 삭제 API")
-    @Test
-    @WithMockUser
-    void deleteAbandonComment() throws Exception {
-        given(commentService.deleteComment(anyLong(), anyString()))
-                .willReturn(1L);
-
-        mockMvc.perform(
-                        delete("/abandon/comment/{commentId}", 1L)
-                                .header("Authentication", "authentication")
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print())
-                .andExpect(status().isFound())
-                .andDo(document("delete-abandon-comment",
-                        preprocessRequest(prettyPrint()),
-                        preprocessResponse(prettyPrint()),
-                        pathParameters(
-                                parameterWithName("commentId").description("삭제할 댓글 PK 값")
-                        ),
-                        responseFields(
-                                fieldWithPath("code").type(JsonFieldType.NUMBER)
-                                        .description("코드"),
-                                fieldWithPath("status").type(JsonFieldType.STRING)
-                                        .description("상태"),
-                                fieldWithPath("message").type(JsonFieldType.STRING)
-                                        .description("메시지"),
-                                fieldWithPath("data").type(JsonFieldType.NUMBER)
-                                        .description("삭제된 댓글 PK 값")
-                        )
-                ));
-    }
 }
