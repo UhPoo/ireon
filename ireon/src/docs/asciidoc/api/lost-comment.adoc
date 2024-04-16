@@ -9,7 +9,7 @@ include::{snippets}/create-lost-comment/request-fields.adoc[]
 include::{snippets}/create-lost-comment/http-response.adoc[]
 include::{snippets}/create-lost-comment/response-fields.adoc[]
 
-=== 실종동물 댓글 삭제
+=== 실종동물 댓글 수정
 
 ==== HTTP Request
 include::{snippets}/edit-lost-comment/http-request.adoc[]
@@ -18,3 +18,13 @@ include::{snippets}/edit-lost-comment/request-fields.adoc[]
 ==== HTTP Response
 include::{snippets}/edit-lost-comment/http-response.adoc[]
 include::{snippets}/edit-lost-comment/response-fields.adoc[]
+
+=== 실종동물 댓글 삭제
+
+==== HTTP Request
+include::{snippets}/delete-lost-comment/http-request.adoc[]
+include::{snippets}/delete-lost-comment/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/delete-lost-comment/http-response.adoc[]
+include::{snippets}/delete-lost-comment/response-fields.adoc[]
