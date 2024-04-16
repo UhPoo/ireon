@@ -18,3 +18,14 @@ include::{snippets}/get-boards/http-request.adoc[]
 
 include::{snippets}/get-boards/http-response.adoc[]
 include::{snippets}/get-boards/response-fields.adoc[]
+
+[[get-board]]
+=== 자유게시판 게시글 상세 조회
+
+==== HTTP Request
+include::{snippets}/get-board/http-request.adoc[]
+include::{snippets}/get-board/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/get-board/http-response.adoc[]
+include::{snippets}/get-board/response-fields.adoc[]

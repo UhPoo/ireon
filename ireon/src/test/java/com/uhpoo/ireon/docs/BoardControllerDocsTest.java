@@ -3,6 +3,7 @@ package com.uhpoo.ireon.docs;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.board.BoardController;
 import com.uhpoo.ireon.api.controller.board.request.CreateBoardRequest;
+import com.uhpoo.ireon.api.controller.board.response.BoardDetailResponse;
 import com.uhpoo.ireon.api.controller.board.response.BoardResponse;
 import com.uhpoo.ireon.api.service.board.BoardQueryService;
 import com.uhpoo.ireon.api.service.board.BoardService;
@@ -19,8 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -29,8 +29,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -99,7 +98,7 @@ public class BoardControllerDocsTest extends RestDocsSupport {
                 ));
     }
 
-    @DisplayName("유기동물 전체 조회 API")
+    @DisplayName("게시글 전체 조회 API")
     @Test
     @WithMockUser
     void getAbandons() throws Exception {
@@ -158,6 +157,62 @@ public class BoardControllerDocsTest extends RestDocsSupport {
                                 fieldWithPath("data.items[].clipped").type(JsonFieldType.BOOLEAN)
                                         .description("스크랩 여부"),
                                 fieldWithPath("data.items[].createdDate").type(JsonFieldType.STRING)
+                                        .description("작성일")
+                        )
+                ));
+
+    }
+
+    @DisplayName("자유게시판 상세 조회 API")
+    @Test
+    @WithMockUser
+    void getBoard() throws Exception {
+
+        BoardDetailResponse response = BoardDetailResponse.builder()
+                .boardId(1L)
+                .title("제목1")
+                .author("작성자1")
+                .content("내용1")
+                .clipped(true)
+                .createdDate("2024-03-05")
+                .build();
+
+
+        given(boardQueryService.getBoard(anyLong(), anyString()))
+                .willReturn(response);
+
+        mockMvc.perform(
+                        get("/board/{boardId}", 1L)
+                                .header("Authentication", "authentication")
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("get-board",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("boardId").description("자유게시판 게시글 PK")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.OBJECT)
+                                        .description("자유게시판 상세 조회 결과"),
+                                fieldWithPath("data.boardId").type(JsonFieldType.NUMBER)
+                                        .description("자유게시판 게시글 PK"),
+                                fieldWithPath("data.title").type(JsonFieldType.STRING)
+                                        .description("글 제목"),
+                                fieldWithPath("data.author").type(JsonFieldType.STRING)
+                                        .description("작성자"),
+                                fieldWithPath("data.content").type(JsonFieldType.STRING)
+                                        .description("글 내용"),
+                                fieldWithPath("data.clipped").type(JsonFieldType.BOOLEAN)
+                                        .description("스크랩 여부"),
+                                fieldWithPath("data.createdDate").type(JsonFieldType.STRING)
                                         .description("작성일")
                         )
                 ));
