@@ -3,18 +3,25 @@ package com.uhpoo.ireon.docs;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.board.BoardController;
 import com.uhpoo.ireon.api.controller.board.request.CreateBoardRequest;
+import com.uhpoo.ireon.api.controller.board.request.EditBoardRequest;
 import com.uhpoo.ireon.api.controller.board.response.BoardDetailResponse;
 import com.uhpoo.ireon.api.controller.board.response.BoardResponse;
 import com.uhpoo.ireon.api.service.board.BoardQueryService;
 import com.uhpoo.ireon.api.service.board.BoardService;
 import com.uhpoo.ireon.api.service.board.dto.CreateBoardDto;
+import com.uhpoo.ireon.api.service.board.dto.EditBoardDto;
+import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -217,5 +224,78 @@ public class BoardControllerDocsTest extends RestDocsSupport {
                         )
                 ));
 
+    }
+
+    @DisplayName("자유게시판 수정 API")
+    @Test
+    @WithMockUser
+    void editBoard() throws Exception {
+
+        Long boardId = 1L;
+
+        EditBoardRequest request = EditBoardRequest.builder()
+                .title("수정할 제목")
+                .content("이에용")
+                .build();
+
+        given(boardService.editBoard(any(EditBoardDto.class), anyString(), any(MultipartFile.class)))
+                .willReturn(boardId);
+
+        MockMultipartFile file = new MockMultipartFile("file", "image.jpg",
+                MediaType.IMAGE_JPEG_VALUE, "image data".getBytes());
+
+        String jsonRequest = objectMapper.writeValueAsString(request);
+        MockMultipartFile jsonRequestPart = new MockMultipartFile("request", "request.json",
+                APPLICATION_JSON_VALUE, jsonRequest.getBytes(UTF_8));
+
+        // multipart 는 기본적으로 POST 요청을 위한 처리로만 사용되므로 다음과 같이 Override 해서 요청을 만들어줘야함
+        MockMultipartHttpServletRequestBuilder builder =
+                RestDocumentationRequestBuilders.
+                        multipart("/board/{boardId}", boardId);
+
+        builder.with(new RequestPostProcessor() {
+            @Override
+            public @NotNull MockHttpServletRequest postProcessRequest(@NotNull MockHttpServletRequest request) {
+                request.setMethod("PATCH");
+                return request;
+            }
+        });
+
+        mockMvc.perform(
+                        builder
+                                .file(file)
+                                .file(jsonRequestPart)
+                                .header("Authentication", "authentication")
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("edit-board",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("boardId").description("자유게시판 게시글 PK")
+                        ),
+                        requestParts(
+                                partWithName("file").description("첨부파일"),
+                                partWithName("request").description("자유게시판 게시글 정보")
+                        ),
+                        requestPartFields("request",
+                                fieldWithPath("title").type(JsonFieldType.STRING)
+                                        .description("게시글 제목"),
+                                fieldWithPath("content").type(JsonFieldType.STRING)
+                                        .description("게시글 내용")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NUMBER)
+                                        .description("수정된 자유게시판 게시글 PK 값")
+                        )
+                ));
     }
 }
