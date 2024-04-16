@@ -1,14 +1,19 @@
 package com.uhpoo.ireon.api.controller.lost;
 
 import com.uhpoo.ireon.api.ApiResponse;
+import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.lost.request.CreateLostCommentRequest;
 import com.uhpoo.ireon.api.controller.lost.request.EditLostCommentRequest;
+import com.uhpoo.ireon.api.controller.lost.response.LostCommentResponse;
+import com.uhpoo.ireon.api.service.lost.LostCommentQueryService;
 import com.uhpoo.ireon.api.service.lost.dto.LostCommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 실종동물 댓글 API 컨트롤러
@@ -22,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 public class LostCommentController {
 
     private final LostCommentService lostCommentService;
+    private final LostCommentQueryService lostCommentQueryService;
 
     /**
      * 실종동물 댓글 등록 API
@@ -85,5 +91,27 @@ public class LostCommentController {
         log.debug("deleteId={}", deleteId);
 
         return ApiResponse.found(deleteId);
+    }
+    /**
+     * 실종동물 게시글 댓글 목록 조회 API
+     *
+     * @param lostId     조회하려는 게시글 PK
+     * @param lastCommentId 마지막으로 조회된 댓글 PK
+     * @return PK에 해당하는 실종돌물 게시글 댓글 목록
+     */
+    @GetMapping("/{lostId}")
+    public ApiResponse<PageResponse<List<LostCommentResponse>>> getLostComment(
+            @PathVariable(name = "lostId") Long lostId,
+            @RequestParam(name = "lastCommentId", defaultValue = "0") Long lastCommentId) {
+        log.debug("LostCommentController#getLostComment called.");
+        log.debug("lostId={}", lostId);
+        log.debug("lastCommentId={}", lastCommentId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        PageResponse<List<LostCommentResponse>> pageResponse = lostCommentQueryService.getLostComment(lostId, lastCommentId);
+
+        return ApiResponse.ok(pageResponse);
     }
 }
