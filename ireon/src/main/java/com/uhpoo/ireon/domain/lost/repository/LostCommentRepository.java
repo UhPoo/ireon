@@ -1,6 +1,5 @@
 package com.uhpoo.ireon.domain.lost.repository;
 
-import com.uhpoo.ireon.domain.lost.Lost;
 import com.uhpoo.ireon.domain.lost.LostComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
