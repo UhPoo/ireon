@@ -42,4 +42,15 @@ public class AbandonCommentService {
     public Long editComment(EditAbandonCommentDto dto, String nickname) {
         return null;
     }
+
+    /**
+     * 유기동물 댓글 삭제
+     *
+     * @param commentId 삭제할 댓글 PK
+     * @param nickname  현재 로그인 중인 회원 닉네임
+     * @return 삭제된 PK 값
+     */
+    public Long deleteComment(Long commentId, String nickname) {
+        return null;
+    }
 }
