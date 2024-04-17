@@ -194,4 +194,37 @@ public class BoardCommentControllerDocsTest extends RestDocsSupport {
                         )
                 ));
     }
+
+    @DisplayName("자유게시판 댓글 삭제 API")
+    @Test
+    @WithMockUser
+    void deleteBoardComment() throws Exception {
+        given(boardCommentService.deleteBoardComment(anyLong(), anyString()))
+                .willReturn(1L);
+
+        mockMvc.perform(
+                        delete("/board/comment/{boardCommentId}", 1L)
+                                .header("Authentication", "authentication")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isFound())
+                .andDo(document("delete-board-comment",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("boardCommentId").description("삭제할 댓글 PK 값")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NUMBER)
+                                        .description("삭제된 댓글 PK 값")
+                        )
+                ));
+    }
 }

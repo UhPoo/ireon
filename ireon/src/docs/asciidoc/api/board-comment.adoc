@@ -31,3 +31,14 @@ include::{snippets}/edit-board-comment/request-fields.adoc[]
 ==== HTTP Response
 include::{snippets}/edit-board-comment/http-response.adoc[]
 include::{snippets}/edit-board-comment/response-fields.adoc[]
+
+[[delete-board-comment]]
+=== 자유게시판 댓글 삭제
+
+==== HTTP Request
+include::{snippets}/delete-board-comment/http-request.adoc[]
+include::{snippets}/delete-board-comment/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/delete-board-comment/http-response.adoc[]
+include::{snippets}/delete-board-comment/response-fields.adoc[]
