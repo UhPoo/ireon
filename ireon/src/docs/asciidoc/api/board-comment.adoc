@@ -8,3 +8,15 @@ include::{snippets}/create-board-comment/request-fields.adoc[]
 ==== HTTP Response
 include::{snippets}/create-board-comment/http-response.adoc[]
 include::{snippets}/create-board-comment/response-fields.adoc[]
+
+[[get-board-comments]]
+=== 자유게시판 댓글 조회
+
+==== HTTP Request
+include::{snippets}/get-board-comments/http-request.adoc[]
+include::{snippets}/get-board-comments/path-parameters.adoc[]
+include::{snippets}/get-board-comments/query-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/get-board-comments/http-response.adoc[]
+include::{snippets}/get-board-comments/response-fields.adoc[]
