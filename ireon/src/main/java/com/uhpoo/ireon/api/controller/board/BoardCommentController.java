@@ -94,4 +94,25 @@ public class BoardCommentController {
 
         return ApiResponse.ok(editId);
     }
+
+    /**
+     * 자유게시판 댓글 삭제 API
+     *
+     * @param boardCommentId 삭제할 댓글 PK
+     * @return 삭제된 댓글 PK
+     */
+    @DeleteMapping("/{boardCommentId}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ApiResponse<Long> deleteBoardComment(@PathVariable(name = "boardCommentId") Long boardCommentId) {
+        log.debug("BoardCommentController#editBoardComment called.");
+        log.debug("boardCommentId={}", boardCommentId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long deleteId = boardCommentService.deleteBoardComment(boardCommentId, nickname);
+        log.debug("deleteId={}", deleteId);
+
+        return ApiResponse.found(deleteId);
+    }
 }
