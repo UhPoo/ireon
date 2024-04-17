@@ -20,8 +20,8 @@ public class LostScrap extends TimeBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "crap_id")
-    private Long scrapId;
+    @Column(name = "scrap_id")
+    private Long id;
 
     @Column(nullable = false)
     private Boolean active;
@@ -35,8 +35,8 @@ public class LostScrap extends TimeBaseEntity {
     private Member member;
 
     @Builder
-    public LostScrap(Long scrapId, Boolean active, Lost lost, Member member) {
-        this.scrapId = scrapId;
+    public LostScrap(Long id, Boolean active, Lost lost, Member member) {
+        this.id = id;
         this.active = active;
         this.lost = lost;
         this.member = member;
