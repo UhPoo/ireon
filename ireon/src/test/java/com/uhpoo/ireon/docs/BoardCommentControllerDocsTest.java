@@ -3,10 +3,12 @@ package com.uhpoo.ireon.docs;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.board.BoardCommentController;
 import com.uhpoo.ireon.api.controller.board.request.CreateBoardCommentRequest;
+import com.uhpoo.ireon.api.controller.board.request.EditBoardCommentRequest;
 import com.uhpoo.ireon.api.controller.board.response.BoardCommentResponse;
 import com.uhpoo.ireon.api.service.board.BoardCommentQueryService;
 import com.uhpoo.ireon.api.service.board.BoardCommentService;
 import com.uhpoo.ireon.api.service.board.dto.CreateBoardCommentDto;
+import com.uhpoo.ireon.api.service.board.dto.EditBoardCommentDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,8 +22,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -148,6 +149,48 @@ public class BoardCommentControllerDocsTest extends RestDocsSupport {
                                         .description("댓글 내용"),
                                 fieldWithPath("data.items[].createdTime").type(JsonFieldType.STRING)
                                         .description("작성일")
+                        )
+                ));
+    }
+
+    @DisplayName("자유게시판 댓글 수정 API")
+    @Test
+    @WithMockUser
+    void editBoardComment() throws Exception {
+        EditBoardCommentRequest request = EditBoardCommentRequest.builder()
+                .boardCommentId(1L)
+                .content("댓글 수정 테스트")
+                .build();
+
+        given(boardCommentService.editComment(any(EditBoardCommentDto.class), anyString()))
+                .willReturn(1L);
+
+        mockMvc.perform(
+                        patch("/board/comment")
+                                .header("Authentication", "authentication")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("edit-board-comment",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestFields(
+                                fieldWithPath("boardCommentId").type(JsonFieldType.NUMBER)
+                                        .description("댓글  PK"),
+                                fieldWithPath("content").type(JsonFieldType.STRING)
+                                        .description("수정할 댓글 내용")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NUMBER)
+                                        .description("수정된 댓글 PK 값")
                         )
                 ));
     }
