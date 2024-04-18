@@ -3,11 +3,13 @@ package com.uhpoo.ireon.docs;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.notice.NoticeController;
 import com.uhpoo.ireon.api.controller.notice.request.CreateNoticeRequest;
+import com.uhpoo.ireon.api.controller.notice.request.EditNoticeRequest;
 import com.uhpoo.ireon.api.controller.notice.response.NoticeDetailResponse;
 import com.uhpoo.ireon.api.controller.notice.response.NoticeResponse;
 import com.uhpoo.ireon.api.service.notice.NoticeQueryService;
 import com.uhpoo.ireon.api.service.notice.NoticeService;
 import com.uhpoo.ireon.api.service.notice.dto.CreateNoticeDto;
+import com.uhpoo.ireon.api.service.notice.dto.EditNoticeDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -19,10 +21,10 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -203,5 +205,53 @@ public class NoticeControllerDocsTest extends RestDocsSupport {
                         )
                 ));
 
+    }
+
+    @DisplayName("공지사항 수정 API")
+    @Test
+    @WithMockUser
+    void editNotice() throws Exception {
+
+        Long noticeId = 1L;
+
+        EditNoticeRequest request = EditNoticeRequest.builder()
+                .noticeId(1L)
+                .title("수정할 제목")
+                .content("입니당")
+                .build();
+
+        given(noticeService.editNotice(any(EditNoticeDto.class), anyString()))
+                .willReturn(noticeId);
+
+        mockMvc.perform(
+                        patch("/notice")
+                                .header("Authentication", "authentication")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("edit-notice",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestFields(
+                                fieldWithPath("noticeId").type(JsonFieldType.NUMBER)
+                                        .description("게시글 PK"),
+                                fieldWithPath("title").type(JsonFieldType.STRING)
+                                        .description("게시글 제목"),
+                                fieldWithPath("content").type(JsonFieldType.STRING)
+                                        .description("게시글 내용")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NUMBER)
+                                        .description("수정된 공지사항 게시글 PK 값")
+                        )
+                ));
     }
 }
