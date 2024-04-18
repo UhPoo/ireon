@@ -3,6 +3,7 @@ package com.uhpoo.ireon.api.controller.notice;
 import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.notice.request.CreateNoticeRequest;
+import com.uhpoo.ireon.api.controller.notice.request.EditNoticeRequest;
 import com.uhpoo.ireon.api.controller.notice.response.NoticeDetailResponse;
 import com.uhpoo.ireon.api.controller.notice.response.NoticeResponse;
 import com.uhpoo.ireon.api.service.notice.NoticeQueryService;
@@ -90,5 +91,19 @@ public class NoticeController {
         log.debug("response={}", response);
 
         return ApiResponse.ok(response);
+    }
+
+    @PatchMapping
+    public ApiResponse<Long> editNotice(@Valid @RequestBody EditNoticeRequest request) {
+        log.debug("NoticeController#editNotice called.");
+        log.debug("EditNoticeRequest={}", request);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long editId = noticeService.editNotice(request.toDto(), nickname);
+        log.debug("editId={}", editId);
+
+        return ApiResponse.ok(editId);
     }
 }
