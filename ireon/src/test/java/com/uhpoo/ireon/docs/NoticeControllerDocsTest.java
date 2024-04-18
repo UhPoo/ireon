@@ -3,6 +3,7 @@ package com.uhpoo.ireon.docs;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.notice.NoticeController;
 import com.uhpoo.ireon.api.controller.notice.request.CreateNoticeRequest;
+import com.uhpoo.ireon.api.controller.notice.response.NoticeDetailResponse;
 import com.uhpoo.ireon.api.controller.notice.response.NoticeResponse;
 import com.uhpoo.ireon.api.service.notice.NoticeQueryService;
 import com.uhpoo.ireon.api.service.notice.NoticeService;
@@ -24,8 +25,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -146,6 +146,59 @@ public class NoticeControllerDocsTest extends RestDocsSupport {
                                 fieldWithPath("data.items[].author").type(JsonFieldType.STRING)
                                         .description("작성자"),
                                 fieldWithPath("data.items[].createdDate").type(JsonFieldType.STRING)
+                                        .description("작성일")
+                        )
+                ));
+
+    }
+
+    @DisplayName("공지사항 상세 조회 API")
+    @Test
+    @WithMockUser
+    void getNotice() throws Exception {
+
+        NoticeDetailResponse response = NoticeDetailResponse.builder()
+                .noticeId(1L)
+                .title("제목1")
+                .author("작성자1")
+                .content("내용1")
+                .createdDate("2024-03-05")
+                .build();
+
+
+        given(noticeQueryService.getNotice(anyLong(), anyString()))
+                .willReturn(response);
+
+        mockMvc.perform(
+                        get("/notice/{noticeId}", 1L)
+                                .header("Authentication", "authentication")
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("get-notice",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("noticeId").description("공지사항 게시글 PK")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.OBJECT)
+                                        .description("응답 데이터"),
+                                fieldWithPath("data.noticeId").type(JsonFieldType.NUMBER)
+                                        .description("공지사항 게시글 PK"),
+                                fieldWithPath("data.title").type(JsonFieldType.STRING)
+                                        .description("글 제목"),
+                                fieldWithPath("data.author").type(JsonFieldType.STRING)
+                                        .description("작성자"),
+                                fieldWithPath("data.content").type(JsonFieldType.STRING)
+                                        .description("글 내용"),
+                                fieldWithPath("data.createdDate").type(JsonFieldType.STRING)
                                         .description("작성일")
                         )
                 ));
