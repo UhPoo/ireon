@@ -3,6 +3,7 @@ package com.uhpoo.ireon.api.controller.notice;
 import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.notice.request.CreateNoticeRequest;
+import com.uhpoo.ireon.api.controller.notice.response.NoticeDetailResponse;
 import com.uhpoo.ireon.api.controller.notice.response.NoticeResponse;
 import com.uhpoo.ireon.api.service.notice.NoticeQueryService;
 import com.uhpoo.ireon.api.service.notice.NoticeService;
@@ -49,6 +50,12 @@ public class NoticeController {
         return ApiResponse.created(saveId);
     }
 
+    /**
+     * 공지사항 목록 조회 API
+     *
+     * @param lastNoticeId 마지막으로 조회된 공지사항 PK
+     * @return 공지사항 목록
+     */
     @GetMapping
     public ApiResponse<PageResponse<List<NoticeResponse>>> getNotices(
             @RequestParam(name = "lastNoticeId", defaultValue = "0") Long lastNoticeId) {
@@ -60,6 +67,26 @@ public class NoticeController {
         log.debug("nickname={}", nickname);
 
         PageResponse<List<NoticeResponse>> response = noticeQueryService.getNotices(lastNoticeId);
+        log.debug("response={}", response);
+
+        return ApiResponse.ok(response);
+    }
+
+    /**
+     * 공지사항 상세 조회 API
+     *
+     * @param noticeId 조회할 공지사항 PK
+     * @return 공지사항 상세 정보
+     */
+    @GetMapping("/{noticeId}")
+    public ApiResponse<NoticeDetailResponse> getNotice(@PathVariable(name = "noticeId") Long noticeId) {
+        log.debug("NoticeController#getNotice called.");
+        log.debug("noticeId={}", noticeId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        NoticeDetailResponse response = noticeQueryService.getNotice(noticeId, nickname);
         log.debug("response={}", response);
 
         return ApiResponse.ok(response);
