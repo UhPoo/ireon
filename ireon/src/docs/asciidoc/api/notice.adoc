@@ -49,3 +49,16 @@ include::{snippets}/edit-notice/request-fields.adoc[]
 
 include::{snippets}/edit-notice/http-response.adoc[]
 include::{snippets}/edit-notice/response-fields.adoc[]
+
+[[delete-notice]]
+=== 공지사항 삭제
+
+==== HTTP Request
+
+include::{snippets}/delete-notice/http-request.adoc[]
+include::{snippets}/delete-notice/path-parameters.adoc[]
+
+==== HTTP Response
+
+include::{snippets}/delete-notice/http-response.adoc[]
+include::{snippets}/delete-notice/response-fields.adoc[]
