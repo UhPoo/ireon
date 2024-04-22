@@ -1,6 +1,7 @@
 package com.uhpoo.ireon.api.service.abandon;
 
 import com.uhpoo.ireon.api.service.abandon.dto.CreateAbandonCommentDto;
+import com.uhpoo.ireon.api.service.abandon.dto.EditAbandonCommentDto;
 import com.uhpoo.ireon.domain.abandon.repository.AbandonCommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,17 @@ public class AbandonCommentService {
      * @return 등록된 PK 값
      */
     public Long createComment(CreateAbandonCommentDto dto, String nickname) {
+        return null;
+    }
+
+    /**
+     * 유기동물 댓글 수정
+     *
+     * @param dto      수정할 댓글 정보
+     * @param nickname 현재 로그인 중인 회원 닉네임
+     * @return 수정된 PK 값
+     */
+    public Long editComment(EditAbandonCommentDto dto, String nickname) {
         return null;
     }
 }
