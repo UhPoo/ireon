@@ -1,6 +1,7 @@
 package com.uhpoo.ireon.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.uhpoo.ireon.global.excpetion.MailException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -68,6 +69,16 @@ public class ApiControllerAdvice {
     public ApiResponse<Object> jsonProcessingException(JsonProcessingException e) {
         return ApiResponse.of(
                 HttpStatus.BAD_REQUEST,
+                e.getMessage(),
+                null
+        );
+    }
+
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    @ExceptionHandler(MailException.class)
+    public ApiResponse<Object> mailExcpetion(MailException e) {
+        return ApiResponse.of(
+                HttpStatus.SERVICE_UNAVAILABLE,
                 e.getMessage(),
                 null
         );

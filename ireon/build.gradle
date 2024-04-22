@@ -61,6 +61,13 @@ dependencies {
 
 	// Amazon S3
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+	// Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// SMTP
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.0.5'
+
 }
 
 tasks.named('test') {

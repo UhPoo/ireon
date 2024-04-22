@@ -1,19 +1,17 @@
 package com.uhpoo.ireon.api.controller.member;
 
 import com.uhpoo.ireon.api.ApiResponse;
-import com.uhpoo.ireon.api.controller.member.request.MemberLoginRequest;
-import com.uhpoo.ireon.api.controller.member.request.MemberSignUpRequest;
-import com.uhpoo.ireon.api.controller.member.request.MemberUpdateRequest;
-import com.uhpoo.ireon.api.controller.member.response.MemberResponse;
-import com.uhpoo.ireon.api.controller.member.response.MemberSignUpResponse;
-import com.uhpoo.ireon.api.controller.member.response.TokenResponse;
+import com.uhpoo.ireon.api.controller.member.request.*;
+import com.uhpoo.ireon.api.controller.member.response.*;
 import com.uhpoo.ireon.api.service.member.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -72,7 +70,7 @@ public class MemberController {
         return ApiResponse.ok(response);
     }
 
-    @PostMapping("info")
+    @PostMapping("/info")
     public ApiResponse<MemberResponse> updateMember(@Valid @RequestBody MemberUpdateRequest request) {
         log.debug("MemberController#updateMember called.");
         log.debug("MemberUpdateRequest={}",request);
@@ -84,5 +82,87 @@ public class MemberController {
         return ApiResponse.ok(response);
     }
 
+    @PostMapping("/email/verification-request")
+    public ApiResponse sendCodeToEmail(@RequestParam("email") @Email String email) {
+        log.debug("MemberController#sendMessage called.");
+        log.debug("email={}",email);
+        //TODO: 회원이 존재하는지 확인 => 존재하지 않는 경우 없는 회원입니다.
+        memberService.sendCodeToEmail(email);
+
+        return ApiResponse.ok(null);
+    }
+
+    @GetMapping("/email/verifications")
+    public ApiResponse<EmailVerificationResponse> verifiedCodeFromEmail(@RequestParam("email") @Email String email,
+                                                                        @RequestParam("code") String authCode) {
+        log.debug("MemberController#verifiedCodeFromEmail called.");
+        log.debug("email={}, authCode={}",email, authCode);
+
+        EmailVerificationResponse response = memberService.verifiedCodeFromEmail(email, authCode);
+
+        log.debug("response={}", response);
+
+        return ApiResponse.ok(response);
+
+    }
+
+    @PatchMapping("/password")
+    public ApiResponse<Object> updatePassword(@RequestBody @Valid MemberUpdatePasswordRequest request) {
+        log.debug("MemberController#updatePassword called.");
+        log.debug("request={}",request);
+        // TODO: 이메일 + 인증코드 인증 여부 확인
+        memberService.updatePassword(request.getEmail(), request.getPassword());
+
+        return ApiResponse.ok(null);
+    }
+
+    @PatchMapping("/login/password")
+    public ApiResponse<Object> updateLoginPassword(@RequestBody @Valid MemberLoginUpdatePasswordRequest request) {
+        log.debug("MemberController#updateLoginPassword called.");
+        log.debug("request={}",request);
+        // TODO: 이메일 + 비밀번호 일치 여부 확인
+        memberService.updatePassword(request.getEmail(), request.getNewPwd());
+
+        return ApiResponse.ok(null);
+    }
+
+    @DeleteMapping("")
+    public ApiResponse<Object> deleteMember(@RequestBody @Valid MemberDeleteRequest request) {
+        log.debug("MemberController#deleteMember called.");
+        log.debug("request={}",request);
+
+        memberService.deleteMember(request);
+
+        return ApiResponse.ok(null);
+    }
+
+    @PostMapping("/profile")
+    public ApiResponse<MemberProfileImageResponse> updateMemberProfileImage(@RequestParam("email") @Email String email,
+                                                   @RequestPart(value = "image", required = false) MultipartFile image) {
+
+
+        log.debug("MemberController#updateMemberProfileImage called.");
+        log.debug("email={}", email);
+        log.debug("MultipartFile={}",image);
+
+        // TODO: 로그인 인증, 이메일 존재 여부 확인
+        MemberProfileImageResponse response = memberService.updateMemberProfileImage(email, image);
+
+        log.debug("response={}",response);
+
+        return ApiResponse.ok(response);
+    }
+
+    @DeleteMapping("/profile")
+    public ApiResponse<?> deleteMemberProfileImage(@RequestParam("email") @Email String email) {
+        log.debug("MemberController#deleteMemberProfileImage called.");
+        log.debug("email={}",email);
+
+        // TODO: 로그인 인증, 이메일 존재 여부 확인
+        memberService.deleteMemberProfileImage(email);
+
+
+        return ApiResponse.ok(null);
+    }
 
 }
