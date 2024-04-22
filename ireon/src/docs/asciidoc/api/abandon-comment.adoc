@@ -1,0 +1,11 @@
+[[crate-abandon-comment]]
+=== 유기동물 게시판 댓글 등록
+
+==== HTTP Request
+
+include::{snippets}/create-abandon-comment/http-request.adoc[]
+include::{snippets}/create-abandon-comment/request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/create-abandon-comment/http-response.adoc[]
+include::{snippets}/create-abandon-comment/response-fields.adoc[]
