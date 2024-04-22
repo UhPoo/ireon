@@ -3,6 +3,7 @@ package com.uhpoo.ireon.api.controller.abandon;
 import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.abandon.request.CreateAbandonRequest;
+import com.uhpoo.ireon.api.controller.abandon.request.EditAbandonRequest;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonDetailResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
 import com.uhpoo.ireon.api.service.abandon.AbandonQueryService;
@@ -86,5 +87,22 @@ public class AbandonController {
         log.debug("response={}", response);
 
         return ApiResponse.ok(response);
+    }
+
+    @PatchMapping("/{abandonId}")
+    public ApiResponse<Long> editAbandon(@PathVariable(name = "abandonId") Long abandonId,
+                                         @Valid @RequestPart(name = "request") EditAbandonRequest request,
+                                         @RequestPart(required = false, name = "file") MultipartFile file) {
+        log.debug("AbandonController#editAbandon called.");
+        log.debug("abandonId={}", abandonId);
+        log.debug("request={}", request);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long editId = abandonService.editAbandon(request.toDto(), nickname, file);
+        log.debug("editId={}", editId);
+
+        return ApiResponse.ok(editId);
     }
 }
