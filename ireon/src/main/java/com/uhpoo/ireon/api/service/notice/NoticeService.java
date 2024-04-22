@@ -42,4 +42,15 @@ public class NoticeService {
     public Long editNotice(EditNoticeDto dto, String nickname) {
         return null;
     }
+
+    /**
+     * 공지사항 삭제
+     *
+     * @param noticeId 삭제할 공지사항 PK
+     * @param nickname 현재 로그인 중인 회원의 닉네임
+     * @return 삭제된 공지사항 PK
+     */
+    public Long deleteNotice(Long noticeId, String nickname) {
+        return null;
+    }
 }

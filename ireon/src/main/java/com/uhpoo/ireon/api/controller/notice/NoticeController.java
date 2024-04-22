@@ -93,6 +93,12 @@ public class NoticeController {
         return ApiResponse.ok(response);
     }
 
+    /**
+     * 공지사항 수정 API
+     *
+     * @param request 수정할 공지사항 정보
+     * @return 수정된 공지사항 PK
+     */
     @PatchMapping
     public ApiResponse<Long> editNotice(@Valid @RequestBody EditNoticeRequest request) {
         log.debug("NoticeController#editNotice called.");
@@ -105,5 +111,26 @@ public class NoticeController {
         log.debug("editId={}", editId);
 
         return ApiResponse.ok(editId);
+    }
+
+    /**
+     * 공지사항 삭제 API
+     *
+     * @param noticeId 삭제할 공지사항 PK
+     * @return 삭제된 공지사항 PK
+     */
+    @DeleteMapping("/{noticeId}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ApiResponse<Long> deleteNotice(@PathVariable(name = "noticeId") Long noticeId) {
+        log.debug("NoticeController#deleteNotice called.");
+        log.debug("noticeId={}", noticeId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long deleteId = noticeService.deleteNotice(noticeId, nickname);
+        log.debug("deleteId={}", deleteId);
+
+        return ApiResponse.found(deleteId);
     }
 }

@@ -254,4 +254,39 @@ public class NoticeControllerDocsTest extends RestDocsSupport {
                         )
                 ));
     }
+
+    @DisplayName("공지사항 게시글 삭제 API")
+    @Test
+    @WithMockUser
+    void deleteAbandon() throws Exception {
+
+        Long noticeId = 1L;
+
+        given(noticeService.deleteNotice(anyLong(), anyString()))
+                .willReturn(noticeId);
+
+        mockMvc.perform(
+                        delete("/notice/{noticeId}", noticeId)
+                                .header("Authentication", "authentication")
+                )
+                .andDo(print())
+                .andExpect(status().isFound())
+                .andDo(document("delete-notice",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("noticeId").description("공지사항 게시글 PK")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NUMBER)
+                                        .description("삭제된 공지사항 게시글 PK 값")
+                        )
+                ));
+    }
 }
