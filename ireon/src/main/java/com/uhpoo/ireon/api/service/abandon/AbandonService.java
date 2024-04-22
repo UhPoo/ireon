@@ -34,7 +34,26 @@ public class AbandonService {
         return null;
     }
 
+    /**
+     * 유기동물 게시글 수정
+     *
+     * @param dto      유기동물 게시글 정보
+     * @param nickname 현재 로그인 중인 회원 닉네임
+     * @param file     첨부파일
+     * @return 수정된 PK 값
+     */
     public Long editAbandon(EditAbandonDto dto, String nickname, MultipartFile file) {
+        return null;
+    }
+
+    /**
+     * 유기동물 게시글 삭제
+     *
+     * @param abandonId 삭제할 유기동물 게시글 PK
+     * @param nickname  현재 로그인 중인 회원 닉네임
+     * @return 삭제된 PK 값
+     */
+    public Long deleteAbandon(Long abandonId, String nickname) {
         return null;
     }
 }
