@@ -1,14 +1,18 @@
 
 package com.uhpoo.ireon.docs;
 
+import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.lost.LostController;
 import com.uhpoo.ireon.api.controller.lost.request.CreateLostRequest;
 import com.uhpoo.ireon.api.controller.lost.request.EditLostRequest;
+import com.uhpoo.ireon.api.controller.lost.response.LostResponse;
+import com.uhpoo.ireon.api.service.lost.LostQueryService;
 import com.uhpoo.ireon.api.service.lost.LostService;
 import com.uhpoo.ireon.api.service.lost.dto.CreateLostDto;
 import com.uhpoo.ireon.api.service.lost.dto.EditLostDto;
 import com.uhpoo.ireon.domain.common.animal.AnimalType;
 import com.uhpoo.ireon.domain.common.animal.Gender;
+import com.uhpoo.ireon.domain.lost.LostStatus;
 import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +28,7 @@ import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.mockito.ArgumentMatchers.*;
@@ -31,8 +36,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -43,10 +47,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class LostControllerDocsTest extends RestDocsSupport  {
 
     private final LostService lostService = mock(LostService.class);
+    private final LostQueryService lostQueryService = mock(LostQueryService.class);
 
     @Override
     protected Object initController() {
-        return new LostController(lostService);
+        return new LostController(lostService, lostQueryService);
     }
 
     @DisplayName("실종동물 게시글 등록 API")
@@ -286,5 +291,103 @@ public class LostControllerDocsTest extends RestDocsSupport  {
                                         .description("삭제된 실종동물 게시글 PK 값")
                         )
                 ));
+    }
+
+    @DisplayName("실종동물 전체 조회 API")
+    @Test
+    @WithMockUser
+    void getLosts() throws Exception {
+
+        LostResponse item1 = LostResponse.builder()
+                .LostId(3L)
+                .title("멍멍이 찾아요")
+                .author("애타는 주인")
+                .animalType("개")
+                .lostStatus(LostStatus.LOST.getText())
+                .latitude(BigDecimal.valueOf(37.576987703009536))
+                .longitude(BigDecimal.valueOf(126.98023424093205))
+                .phoneNumber("010-1234-5678")
+                .clipped(true)
+                .createdDate("2024-04-01")
+                .build();
+
+        LostResponse item2 = LostResponse.builder()
+                .LostId(1L)
+                .title("멍멍이 봤어요")
+                .author("선랑햔 시민")
+                .animalType("개")
+                .lostStatus(LostStatus.DISCOVERED.getText())
+                .latitude(BigDecimal.valueOf(33.576987703009536))
+                .longitude(BigDecimal.valueOf(126.98023424093205))
+                .phoneNumber("011-8765-4321")
+                .clipped(true)
+                .createdDate("2024-04-02")
+                .build();
+
+        LostResponse item3 = LostResponse.builder()
+                .LostId(2L)
+                .title("고양이 임보중이에요")
+                .author("고양이 세이버")
+                .animalType("고양이")
+                .lostStatus(LostStatus.PROTECTING.getText())
+                .latitude(BigDecimal.valueOf(31.576987703009536))
+                .longitude(BigDecimal.valueOf(126.98023424093205))
+                .phoneNumber("010-8282-2828")
+                .clipped(false)
+                .createdDate("2024-04-15")
+                .build();
+
+        List<LostResponse> items = List.of(item1, item2, item3);
+
+        PageResponse<List<LostResponse>> response = PageResponse.of(false, items);
+
+        given(lostQueryService.getLosts())
+                .willReturn(response);
+
+        mockMvc.perform(
+                        get("/lost")
+                                .header("Authentication", "authentication")
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("get-losts",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.OBJECT)
+                                        .description("응답 데이터"),
+                                fieldWithPath("data.hasNext").type(JsonFieldType.BOOLEAN)
+                                        .description("다음 페이지 존재 여부"),
+                                fieldWithPath("data.items").type(JsonFieldType.ARRAY)
+                                        .description("게시글 목록"),
+                                fieldWithPath("data.items[].lostId").type(JsonFieldType.NUMBER)
+                                        .description("실종동물 게시글 PK"),
+                                fieldWithPath("data.items[].title").type(JsonFieldType.STRING)
+                                        .description("글 제목"),
+                                fieldWithPath("data.items[].author").type(JsonFieldType.STRING)
+                                        .description("작성자"),
+                                fieldWithPath("data.items[].animalType").type(JsonFieldType.STRING)
+                                        .description("동물 종류"),
+                                fieldWithPath("data.items[].lostStatus").type(JsonFieldType.STRING)
+                                        .description("실종동물 상태"),
+                                fieldWithPath("data.items[].latitude").type(JsonFieldType.NUMBER)
+                                        .description("발견 위도"),
+                                fieldWithPath("data.items[].longitude").type(JsonFieldType.NUMBER)
+                                        .description("발견 경도"),
+                                fieldWithPath("data.items[].phoneNumber").type(JsonFieldType.STRING)
+                                        .description("연락처"),
+                                fieldWithPath("data.items[].clipped").type(JsonFieldType.BOOLEAN)
+                                        .description("스크랩 여부"),
+                                fieldWithPath("data.items[].createdDate").type(JsonFieldType.STRING)
+                                        .description("작성일")
+                        )
+                ));
+
     }
 }

@@ -1,8 +1,11 @@
 package com.uhpoo.ireon.api.controller.lost;
 
 import com.uhpoo.ireon.api.ApiResponse;
+import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.lost.request.CreateLostRequest;
 import com.uhpoo.ireon.api.controller.lost.request.EditLostRequest;
+import com.uhpoo.ireon.api.controller.lost.response.LostResponse;
+import com.uhpoo.ireon.api.service.lost.LostQueryService;
 import com.uhpoo.ireon.api.service.lost.LostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 실종동물 게시판 API 컨트롤러
@@ -23,6 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class LostController {
 
     private final LostService lostService;
+    private final LostQueryService lostQueryService;
+
     /**
      * 실종동물 게시글 등록 API
      *
@@ -92,5 +99,21 @@ public class LostController {
         log.debug("deleteId={}", deleteId);
 
         return ApiResponse.found(deleteId);
+    }
+
+    /**
+     * 실종동물 게시글 목록 조회 API
+     *
+     * @return 검색 조건에 해당하는 실종동물 게시글 목록
+     */
+    @GetMapping
+    public ApiResponse<PageResponse<List<LostResponse>>> getLosts() {
+        // TODO: 검색조건 추가 필요
+        log.debug("LostController#getLost called.");
+
+        PageResponse<List<LostResponse>> pageResponses = lostQueryService.getLosts();
+        log.debug("pageResponses={}", pageResponses);
+
+        return ApiResponse.ok(pageResponses);
     }
 }
