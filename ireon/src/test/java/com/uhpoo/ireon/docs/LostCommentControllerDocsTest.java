@@ -13,13 +13,15 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -123,6 +125,40 @@ public class LostCommentControllerDocsTest extends RestDocsSupport  {
                                         .description("메시지"),
                                 fieldWithPath("data").type(JsonFieldType.NUMBER)
                                         .description("수정된 PK 값")
+                        )
+                ));
+    }
+
+    @DisplayName("실종동물 댓글 삭제 API")
+    @Test
+    @WithMockUser
+    void deleteLostComment() throws Exception{
+
+        given(lostCommentService.deleteLostComment(anyLong(), anyString()))
+                .willReturn(2L);
+
+        mockMvc.perform(
+                        delete("/lost/comment/{lostCommentId}", 2L)
+                                .header("Authentication", "authentication")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isFound())
+                .andDo(document("delete-lost-comment",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("lostCommentId").description("삭제할 실종동물 댓글 PK 값")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NUMBER)
+                                        .description("삭제된 PK 값")
                         )
                 ));
     }
