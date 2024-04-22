@@ -3,6 +3,7 @@ package com.uhpoo.ireon.api.controller.board;
 import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.board.request.CreateBoardRequest;
+import com.uhpoo.ireon.api.controller.board.request.EditBoardRequest;
 import com.uhpoo.ireon.api.controller.board.response.BoardDetailResponse;
 import com.uhpoo.ireon.api.controller.board.response.BoardResponse;
 import com.uhpoo.ireon.api.service.board.BoardQueryService;
@@ -82,6 +83,7 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public ApiResponse<BoardDetailResponse> getBoard(@PathVariable(name = "boardId") Long boardId) {
         log.debug("BoardController#getBoard called.");
+        log.debug("boardId={}", boardId);
 
         String nickname = "nickname";
         log.debug("nickname={}", nickname);
@@ -90,5 +92,27 @@ public class BoardController {
         log.debug("response={}", response);
 
         return ApiResponse.ok(response);
+    }
+
+    /**
+     * 자유게시판 게시글 수정 API
+     *
+     * @param boardId 수정할 게시글 PK
+     * @return 수정된 게시글 PK
+     */
+    @PatchMapping("/{boardId}")
+    public ApiResponse<Long> editBoard(@PathVariable(name = "boardId") Long boardId,
+                                       @Valid @RequestPart(name = "request") EditBoardRequest request,
+                                       @RequestPart(required = false, name = "file") MultipartFile file) {
+        log.debug("BoardController#editBoard called.");
+        log.debug("boardId={}", boardId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long editId = boardService.editBoard(request.toDto(), nickname, file);
+        log.debug("editId={}", editId);
+
+        return ApiResponse.ok(editId);
     }
 }

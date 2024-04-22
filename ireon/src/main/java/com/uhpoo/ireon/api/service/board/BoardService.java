@@ -1,6 +1,7 @@
 package com.uhpoo.ireon.api.service.board;
 
 import com.uhpoo.ireon.api.service.board.dto.CreateBoardDto;
+import com.uhpoo.ireon.api.service.board.dto.EditBoardDto;
 import com.uhpoo.ireon.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,18 @@ public class BoardService {
      * @return 등록된 게시글 PK
      */
     public Long createBoard(CreateBoardDto dto, String nickname, MultipartFile file) {
+        return null;
+    }
+
+    /**
+     * 자유게시판 게시글 수정
+     *
+     * @param dto      수정할 게시글 정보
+     * @param nickname 현재 로그인 중인 회원 닉네임
+     * @param file     첨부파일
+     * @return 수정된 게시글 PK
+     */
+    public Long editBoard(EditBoardDto dto, String nickname, MultipartFile file) {
         return null;
     }
 }
