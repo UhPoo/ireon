@@ -1,0 +1,10 @@
+[[crate-board-comment]]
+=== 자유게시판 댓글 등록
+
+==== HTTP Request
+include::{snippets}/create-board-comment/http-request.adoc[]
+include::{snippets}/create-board-comment/request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/create-board-comment/http-response.adoc[]
+include::{snippets}/create-board-comment/response-fields.adoc[]

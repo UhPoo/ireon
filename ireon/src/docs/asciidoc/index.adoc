@@ -26,3 +26,7 @@ include::{docdir}/api/abandon-comment.adoc[]
 [[Board-API]]
 == 자유게시판 API
 include::{docdir}/api/board.adoc[]
+
+[[Board-Comment-API]]
+== 자유게시판 댓글 API
+include::{docdir}/api/board-comment.adoc[]
