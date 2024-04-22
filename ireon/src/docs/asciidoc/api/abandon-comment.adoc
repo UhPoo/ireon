@@ -9,3 +9,16 @@ include::{snippets}/create-abandon-comment/request-fields.adoc[]
 ==== HTTP Response
 include::{snippets}/create-abandon-comment/http-response.adoc[]
 include::{snippets}/create-abandon-comment/response-fields.adoc[]
+
+[[get-abandon-comment]]
+=== 유기동물 게시글 댓글 조회
+
+==== HTTP Request
+
+include::{snippets}/get-abandon-comment/http-request.adoc[]
+include::{snippets}/get-abandon-comment/path-parameters.adoc[]
+include::{snippets}/get-abandon-comment/query-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/get-abandon-comment/http-response.adoc[]
+include::{snippets}/get-abandon-comment/response-fields.adoc[]

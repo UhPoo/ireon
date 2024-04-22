@@ -1,13 +1,18 @@
 package com.uhpoo.ireon.api.controller.abandon;
 
 import com.uhpoo.ireon.api.ApiResponse;
+import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.abandon.request.CreateAbandonCommentRequest;
+import com.uhpoo.ireon.api.controller.abandon.response.AbandonCommentResponse;
+import com.uhpoo.ireon.api.service.abandon.AbandonCommentQueryService;
 import com.uhpoo.ireon.api.service.abandon.AbandonCommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 유기동물 게시판 댓글 API 컨트롤러
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class AbandonCommentController {
 
     private final AbandonCommentService commentService;
+    private final AbandonCommentQueryService commentQueryService;
 
     /**
      * 유기동물 게시글 댓글 등록 API
@@ -41,5 +47,28 @@ public class AbandonCommentController {
         log.debug("saveId={}", saveId);
 
         return ApiResponse.created(saveId);
+    }
+
+    /**
+     * 유기동물 게시글 댓글 목록 조회 API
+     *
+     * @param abandonId     조회하려는 게시글 PK
+     * @param lastCommentId 마지막으로 조회된 댓글 PK
+     * @return 유기돌물 게시글 댓글 목록
+     */
+    @GetMapping("/{abandonId}")
+    public ApiResponse<PageResponse<List<AbandonCommentResponse>>> getComment(
+            @PathVariable(name = "abandonId") Long abandonId,
+            @RequestParam(name = "lastCommentId", defaultValue = "0") Long lastCommentId) {
+        log.debug("AbandonCommentController#getComment called.");
+        log.debug("abandonId={}", abandonId);
+        log.debug("lastCommentId={}", lastCommentId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        PageResponse<List<AbandonCommentResponse>> pageResponse = commentQueryService.getComment(abandonId, lastCommentId);
+
+        return ApiResponse.ok(pageResponse);
     }
 }
