@@ -36,3 +36,16 @@ include::{snippets}/get-notice/path-parameters.adoc[]
 
 include::{snippets}/get-notice/http-response.adoc[]
 include::{snippets}/get-notice/response-fields.adoc[]
+
+[[edit-notice]]
+=== 공지사항 수정
+
+==== HTTP Request
+
+include::{snippets}/edit-notice/http-request.adoc[]
+include::{snippets}/edit-notice/request-fields.adoc[]
+
+==== HTTP Response
+
+include::{snippets}/edit-notice/http-response.adoc[]
+include::{snippets}/edit-notice/response-fields.adoc[]
