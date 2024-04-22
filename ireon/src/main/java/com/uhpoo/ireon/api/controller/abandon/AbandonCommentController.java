@@ -74,9 +74,9 @@ public class AbandonCommentController {
     }
 
     /**
-     * 유기동물 댓글 수정
+     * 유기동물 댓글 수정 API
      *
-     * @param request      수정할 댓글 정보
+     * @param request 수정할 댓글 정보
      * @return 수정된 PK 값
      */
     @PatchMapping
@@ -91,5 +91,26 @@ public class AbandonCommentController {
         log.debug("editId={}", editId);
 
         return ApiResponse.ok(editId);
+    }
+
+    /**
+     * 유기동물 댓글 삭제 API
+     *
+     * @param commentId 삭제할 댓글 PK 값
+     * @return 삭제된 댓글 PK 값
+     */
+    @DeleteMapping("/{commentId}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ApiResponse<Long> deleteComment(@PathVariable(name = "commentId") Long commentId) {
+        log.debug("AbandonCommentController#deleteComment called.");
+        log.debug("commentId={}", commentId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long deleteId = commentService.deleteComment(commentId, nickname);
+        log.debug("deleteId={}", deleteId);
+
+        return ApiResponse.found(deleteId);
     }
 }
