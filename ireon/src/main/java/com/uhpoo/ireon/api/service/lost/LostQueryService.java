@@ -3,6 +3,7 @@ package com.uhpoo.ireon.api.service.lost;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.lost.response.LostDetailResponse;
 import com.uhpoo.ireon.api.controller.lost.response.LostResponse;
+import com.uhpoo.ireon.domain.lost.repository.LostQueryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class LostQueryService {
 
-    private final LostQueryService lostQueryService;
+    private final LostQueryRepository lostQueryRepository;
 
     /**
      * 실종동물 목록 조회
