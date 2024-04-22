@@ -30,3 +30,7 @@ include::{docdir}/api/board.adoc[]
 [[Board-Comment-API]]
 == 자유게시판 댓글 API
 include::{docdir}/api/board-comment.adoc[]
+
+[[Notice-API]]
+== 공지사항 API
+include::{docdir}/api/notice.adoc[]
