@@ -42,3 +42,14 @@ include::{snippets}/edit-board/request-part-request-fields.adoc[]
 ==== HTTP Response
 include::{snippets}/edit-board/http-response.adoc[]
 include::{snippets}/edit-board/response-fields.adoc[]
+
+[[delete-board]]
+=== 자유게시판 게시글 삭제
+
+==== HTTP Request
+include::{snippets}/delete-board/http-request.adoc[]
+include::{snippets}/delete-board/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/delete-board/http-response.adoc[]
+include::{snippets}/delete-board/response-fields.adoc[]

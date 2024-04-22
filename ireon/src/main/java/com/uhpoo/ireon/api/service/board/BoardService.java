@@ -45,4 +45,15 @@ public class BoardService {
     public Long editBoard(EditBoardDto dto, String nickname, MultipartFile file) {
         return null;
     }
+
+    /**
+     * 자유게시판 게시글 삭제
+     *
+     * @param boardId  삭제할 게시글 PK
+     * @param nickname 현재 로그인 중인 회원 닉네임
+     * @return 삭제된 게시글 PK
+     */
+    public Long deleteBoard(Long boardId, String nickname) {
+        return null;
+    }
 }

@@ -115,4 +115,25 @@ public class BoardController {
 
         return ApiResponse.ok(editId);
     }
+
+    /**
+     * 자유게시판 게시글 삭제 API
+     *
+     * @param boardId 삭제할 게시글 PK
+     * @return 삭제된 게시글 PK
+     */
+    @DeleteMapping("/{boardId}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ApiResponse<Long> deleteBoard(@PathVariable(name = "boardId") Long boardId) {
+        log.debug("BoardController#deleteBoard called.");
+        log.debug("boardId={}", boardId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long deleteId = boardService.deleteBoard(boardId, nickname);
+        log.debug("deleteId={}", deleteId);
+
+        return ApiResponse.ok(deleteId);
+    }
 }
