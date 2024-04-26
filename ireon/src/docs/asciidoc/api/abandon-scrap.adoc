@@ -1,0 +1,10 @@
+[[scrap-abandon]]
+=== 유기동물 게시글 스크랩
+
+==== HTTP Request
+include::{snippets}/abandon-scrap/http-request.adoc[]
+include::{snippets}/abandon-scrap/request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/abandon-scrap/http-response.adoc[]
+include::{snippets}/abandon-scrap/response-fields.adoc[]
