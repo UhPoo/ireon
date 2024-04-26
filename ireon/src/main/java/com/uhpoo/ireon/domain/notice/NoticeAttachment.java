@@ -27,6 +27,7 @@ public class NoticeAttachment extends TimeBaseEntity {
     private UploadFile uploadFile;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "notice_id")
     private Notice notice;
 
     @Column(nullable = false)
