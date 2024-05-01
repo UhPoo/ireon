@@ -42,4 +42,14 @@ public class AbandonQueryService {
     public AbandonDetailResponse getAbandon(Long abandonId) {
         return null;
     }
+
+    /**
+     * 스크랩한 유기동물 목록 조회
+     * 
+     * @param nickname 현재 로그인 중인 회원 닉네임
+     * @return 현재 로그인 중인 회원이 스크랩한 유기동물 목록
+     */
+    public PageResponse<List<AbandonResponse>> getScrappedAbandons(String nickname) {
+        return null;
+    }
 }
