@@ -34,3 +34,7 @@ include::{docdir}/api/board-comment.adoc[]
 [[Notice-API]]
 == 공지사항 API
 include::{docdir}/api/notice.adoc[]
+
+[[Abandon-Report-API]]
+== 유기동물 신고 API
+include::{docdir}/api/abandon-report.adoc[]
