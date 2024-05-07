@@ -57,7 +57,7 @@ public class LostScrapControllerDocsTest extends RestDocsSupport  {
                 .build();
 
 
-        given(lostScrapService.addLostScrap(any(AddLostScrapDto.class)))
+        given(lostScrapService.scrap(any(AddLostScrapDto.class)))
                 .willReturn(1L);
 
         mockMvc.perform(

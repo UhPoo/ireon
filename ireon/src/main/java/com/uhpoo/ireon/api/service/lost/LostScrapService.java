@@ -25,7 +25,7 @@ public class LostScrapService {
      * @param dto       실종동물 게시글 정보
      * @return 등록 된 PK 값
      */
-    public Long addLostScrap(AddLostScrapDto dto){
+    public Long scrap(AddLostScrapDto dto){
         return null;
     }
 }

@@ -29,10 +29,11 @@ public class LostScrapController {
     private final LostQueryService lostQueryService;
 
     /**
-     * 실종동물 스크랩 추가 API
+     * 실종동물 스크랩 등록 / 취소 API
+     * 이미 스크랩한 경우 스크랩을 취소하고 스크랩하지 않았으면 스크랩을 새롭게 등록
      *
-     * @param request 실종동물 스크랩 게시글 정보
-     * @return  등록 된 PK 값
+     * @param request 실종동물 스크랩 게시글 PK
+     * @return  등록/취소 된 PK 값
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -40,10 +41,13 @@ public class LostScrapController {
         log.debug("LostScrapController#addLostScrap called.");
         log.debug("AddLostScrapRequest={}", request);
 
-        Long addId = lostScrapService.addLostScrap(request.toDto());
-        log.debug("addId={}", addId);
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
 
-        return ApiResponse.created(addId);
+        Long scrapId = lostScrapService.scrap(request.toDto());
+        log.debug("scrapId={}", scrapId);
+
+        return ApiResponse.created(scrapId);
     }
 
     /**
