@@ -1,11 +1,16 @@
 package com.uhpoo.ireon.api.controller.lost;
 
 import com.uhpoo.ireon.api.ApiResponse;
+import com.uhpoo.ireon.api.PageResponse;
+import com.uhpoo.ireon.api.controller.lost.response.LostReportResponse;
+import com.uhpoo.ireon.api.service.lost.LostReportQueryService;
 import com.uhpoo.ireon.api.service.lost.LostReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 실종동물 게시글 신고 API 컨트롤러
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/lost/report")
 public class LostReportController {
     private final LostReportService lostReportService;
+    private final LostReportQueryService lostReportQueryService;
 
     /**
      * 실종동물 게시글 신고 등록 API
@@ -59,5 +65,23 @@ public class LostReportController {
         log.debug("deleteId={}", deleteId);
 
         return ApiResponse.found(deleteId);
+    }
+
+    /**
+     * 실종동물 게시글 신고 목록 조회 API
+     *
+     * @return 신고한 실종동물 게시글 목록
+     */
+    @GetMapping
+    public ApiResponse<PageResponse<List<LostReportResponse>>> getLostReports() {
+        log.debug("LostReportController#getLostReports called.");
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        PageResponse<List<LostReportResponse>> response = lostReportQueryService.getLostReports(nickname);
+        log.debug("response={}", response);
+
+        return ApiResponse.ok(response);
     }
 }
