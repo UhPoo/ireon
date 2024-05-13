@@ -28,4 +28,15 @@ public class LostReportService {
     public Long createLostReport(Long lostId, String nickname) {
         return null;
     }
+
+    /**
+     * 실종동물 게시글 신고 삭제
+     *
+     * @param lostReportId 실종동물 게시글 신고 PK
+     * @param nickname 현재 로그인 중인 회원 닉네임
+     * @return 삭제된 신고 PK 값
+     */
+    public Long deleteLostReport(Long lostReportId, String nickname) {
+        return null;
+    }
 }

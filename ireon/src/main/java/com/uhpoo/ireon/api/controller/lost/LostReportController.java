@@ -39,4 +39,25 @@ public class LostReportController {
 
         return ApiResponse.created(saveId);
     }
+
+    /**
+     * 실종동물 게시글 신고 삭제 API
+     *
+     * @param lostReportId 삭제할 실종동물 게시글 신고 PK
+     * @return 삭제 된 PK 값
+     */
+    @DeleteMapping("/{lostReportId}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ApiResponse<Long> deleteLostReport(@PathVariable(name = "lostReportId") Long lostReportId){
+        log.debug("LostReportController#deleteLostReport called.");
+        log.debug("lostReportId={}", lostReportId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long deleteId = lostReportService.deleteLostReport(lostReportId, nickname);
+        log.debug("deleteId={}", deleteId);
+
+        return ApiResponse.found(deleteId);
+    }
 }
