@@ -35,6 +35,10 @@ include::{docdir}/api/lost-comment.adoc[]
 == 실종동물 스크랩 API
 include::{docdir}/api/lost-scrap.adoc[]
 
+[[Lost-Report-API]]
+== 실종동물 신고 API
+include::{docdir}/api/lost-report.adoc[]
+
 [[Board-API]]
 == 자유게시판 API
 include::{docdir}/api/board.adoc[]

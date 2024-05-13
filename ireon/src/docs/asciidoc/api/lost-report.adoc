@@ -1,0 +1,11 @@
+[[create-lost-report]]
+=== 실종동물 게시글 신고 등록
+
+==== HTTP Request
+
+include::{snippets}/create-lost-report/http-request.adoc[]
+include::{snippets}/create-lost-report/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/create-lost-report/http-response.adoc[]
+include::{snippets}/create-lost-report/response-fields.adoc[]
