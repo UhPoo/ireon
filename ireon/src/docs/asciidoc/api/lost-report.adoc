@@ -9,3 +9,14 @@ include::{snippets}/create-lost-report/path-parameters.adoc[]
 ==== HTTP Response
 include::{snippets}/create-lost-report/http-response.adoc[]
 include::{snippets}/create-lost-report/response-fields.adoc[]
+
+=== 실종동물 게시글 신고 삭제
+
+==== HTTP Request
+include::{snippets}/delete-lost-report/http-request.adoc[]
+include::{snippets}/delete-lost-report/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/delete-lost-report/http-response.adoc[]
+include::{snippets}/delete-lost-report/response-fields.adoc[]
+
