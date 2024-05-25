@@ -2,9 +2,11 @@ package com.uhpoo.ireon.docs;
 
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.lost.LostReportController;
+import com.uhpoo.ireon.api.controller.lost.request.CreateLostReportRequest;
 import com.uhpoo.ireon.api.controller.lost.response.LostReportResponse;
 import com.uhpoo.ireon.api.service.lost.LostReportQueryService;
 import com.uhpoo.ireon.api.service.lost.LostReportService;
+import com.uhpoo.ireon.api.service.lost.dto.CreateLostReportDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,15 +16,13 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -46,12 +46,19 @@ public class LostReportControllerDocsTest extends RestDocsSupport{
     @Test
     @WithMockUser
     void createLostReport() throws Exception{
-        given(lostReportService.createLostReport(anyLong(), anyString()))
+
+        CreateLostReportRequest request = CreateLostReportRequest.builder()
+                        .lostId(1L)
+                        .content("펫숍 광고입니다.")
+                        .build();
+
+        given(lostReportService.createLostReport(any(CreateLostReportDto.class), anyString()))
                 .willReturn(1L);
 
         mockMvc.perform(
                         post("/lost/report/{lostId}", 1L)
                                 .header("Authentication", "authentication")
+                                .content(objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
@@ -59,8 +66,11 @@ public class LostReportControllerDocsTest extends RestDocsSupport{
                 .andDo(document("create-lost-report",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
-                        pathParameters(
-                                parameterWithName("lostId").description("실종동물 게시글 PK")
+                        requestFields(
+                                fieldWithPath("lostId").type(JsonFieldType.NUMBER)
+                                        .description("신고할 실종동물 게시글 PK"),
+                                fieldWithPath("content").type(JsonFieldType.STRING)
+                                        .description("신고 사유")
                         ),
                         responseFields(
                                 fieldWithPath("code").type(JsonFieldType.NUMBER)
@@ -115,14 +125,14 @@ public class LostReportControllerDocsTest extends RestDocsSupport{
         LostReportResponse item1 = LostReportResponse.builder()
                 .lostReportId(1L)
                 .lostId(10L)
-                .content("거짓 신고글")
+                .title("강아지 봤어요 뻥이에요.")
                 .createdTime("2024-05-01")
                 .build();
 
         LostReportResponse item2 = LostReportResponse.builder()
                 .lostReportId(2L)
                 .lostId(11L)
-                .content("펫숍 광고글")
+                .title("우리 펫숍 이용하세요~")
                 .createdTime("2024-05-02")
                 .build();
 
@@ -159,8 +169,8 @@ public class LostReportControllerDocsTest extends RestDocsSupport{
                                         .description("실종동물 게시글 신고 PK"),
                                 fieldWithPath("data.items[].lostId").type(JsonFieldType.NUMBER)
                                         .description("실종동물 게시글 PK"),
-                                fieldWithPath("data.items[].content").type(JsonFieldType.STRING)
-                                        .description("신고 글 내용"),
+                                fieldWithPath("data.items[].title").type(JsonFieldType.STRING)
+                                        .description("신고 글 제목"),
                                 fieldWithPath("data.items[].createdTime").type(JsonFieldType.STRING)
                                         .description("작성일")
                         )

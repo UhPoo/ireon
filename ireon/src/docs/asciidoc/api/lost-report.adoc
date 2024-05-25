@@ -4,7 +4,7 @@
 ==== HTTP Request
 
 include::{snippets}/create-lost-report/http-request.adoc[]
-include::{snippets}/create-lost-report/path-parameters.adoc[]
+include::{snippets}/create-lost-report/request-fields.adoc[]
 
 ==== HTTP Response
 include::{snippets}/create-lost-report/http-response.adoc[]
