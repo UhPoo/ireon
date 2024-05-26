@@ -14,18 +14,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateLostReportRequest {
     private long lostId;
-    private String content;
+    private String reason;
 
     @Builder
-    public CreateLostReportRequest(long lostId, String content) {
+    public CreateLostReportRequest(long lostId, String reason) {
         this.lostId = lostId;
-        this.content = content;
+        this.reason = reason;
     }
 
     public CreateLostReportDto toDto() {
         return CreateLostReportDto.builder()
                 .lostId(this.lostId)
-                .content(this.content)
+                .reason(this.reason)
                 .build();
     }
 }

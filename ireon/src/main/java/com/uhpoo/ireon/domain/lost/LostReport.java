@@ -23,7 +23,7 @@ public class LostReport extends TimeBaseEntity {
     private Long id;
 
     @Column(columnDefinition = "LONGTEXT")
-    private String content;
+    private String reason;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "lost_id")
@@ -34,8 +34,8 @@ public class LostReport extends TimeBaseEntity {
     private Member member;
 
     @Builder
-    public LostReport(String content, Lost lost, Member member) {
-        this.content = content;
+    public LostReport(String reason, Lost lost, Member member) {
+        this.reason = reason;
         this.lost = lost;
         this.member = member;
     }

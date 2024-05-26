@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateLostReportDto {
     private Long lostId;
-    private String content;
+    private String reason;
 
     @Builder
 
-    public CreateLostReportDto(Long lostId, String content) {
+    public CreateLostReportDto(Long lostId, String reason) {
         this.lostId = lostId;
-        this.content = content;
+        this.reason = reason;
     }
 }
