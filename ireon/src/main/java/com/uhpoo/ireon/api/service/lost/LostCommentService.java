@@ -1,5 +1,7 @@
-package com.uhpoo.ireon.api.service.lost.dto;
+package com.uhpoo.ireon.api.service.lost;
 
+import com.uhpoo.ireon.api.service.lost.dto.CreateLostCommentDto;
+import com.uhpoo.ireon.api.service.lost.dto.EditLostCommentDto;
 import com.uhpoo.ireon.domain.lost.repository.LostCommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
