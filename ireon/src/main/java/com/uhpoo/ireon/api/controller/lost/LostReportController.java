@@ -3,6 +3,7 @@ package com.uhpoo.ireon.api.controller.lost;
 import com.uhpoo.ireon.api.ApiResponse;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.lost.request.CreateLostReportRequest;
+import com.uhpoo.ireon.api.controller.lost.response.LostDetailReportResponse;
 import com.uhpoo.ireon.api.controller.lost.response.LostReportResponse;
 import com.uhpoo.ireon.api.service.lost.LostReportQueryService;
 import com.uhpoo.ireon.api.service.lost.LostReportService;
@@ -85,5 +86,23 @@ public class LostReportController {
         log.debug("response={}", response);
 
         return ApiResponse.ok(response);
+    }
+
+    /**
+     * 실종동물 게시글 신고 상세 조회 API
+     *
+     * @param lostReportId 실종동물 게시글 신고 PK
+     *
+     * @return PK에 해당하는 실종동물 신고 게시글 정보
+     */
+    @GetMapping("/{lostReportId}")
+    public ApiResponse<LostDetailReportResponse> getLostReport(@PathVariable(name = "lostReportId") Long lostReportId) {
+        log.debug("LostReportController#getLostReport called.");
+        log.debug("lostRerportId={}", lostReportId);
+
+        LostDetailReportResponse lostDetailReportResponse = lostReportQueryService.getLostReport(lostReportId);
+        log.debug("lostDetailReportResponse={}", lostDetailReportResponse);
+
+        return ApiResponse.ok(lostDetailReportResponse);
     }
 }
