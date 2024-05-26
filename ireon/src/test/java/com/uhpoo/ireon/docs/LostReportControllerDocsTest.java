@@ -3,10 +3,12 @@ package com.uhpoo.ireon.docs;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.lost.LostReportController;
 import com.uhpoo.ireon.api.controller.lost.request.CreateLostReportRequest;
+import com.uhpoo.ireon.api.controller.lost.response.LostDetailReportResponse;
 import com.uhpoo.ireon.api.controller.lost.response.LostReportResponse;
 import com.uhpoo.ireon.api.service.lost.LostReportQueryService;
 import com.uhpoo.ireon.api.service.lost.LostReportService;
 import com.uhpoo.ireon.api.service.lost.dto.CreateLostReportDto;
+import com.uhpoo.ireon.domain.lost.LostStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -49,7 +52,7 @@ public class LostReportControllerDocsTest extends RestDocsSupport{
 
         CreateLostReportRequest request = CreateLostReportRequest.builder()
                         .lostId(1L)
-                        .content("펫숍 광고입니다.")
+                        .reason("펫숍 광고입니다.")
                         .build();
 
         given(lostReportService.createLostReport(any(CreateLostReportDto.class), anyString()))
@@ -172,6 +175,105 @@ public class LostReportControllerDocsTest extends RestDocsSupport{
                                 fieldWithPath("data.items[].title").type(JsonFieldType.STRING)
                                         .description("신고 글 제목"),
                                 fieldWithPath("data.items[].createdTime").type(JsonFieldType.STRING)
+                                        .description("작성일")
+                        )
+                ));
+    }
+
+    @DisplayName("실종동물 게시글 신고 상세 조회 API")
+    @Test
+    @WithMockUser
+    void getReport() throws Exception {
+        LostDetailReportResponse response = LostDetailReportResponse.builder()
+                .lostReportId(1L)
+                .reason("펫숍 광고입니다.")
+                .lostId(2L)
+                .title("우리 펫숍 이용하세요~")
+                .author("광고하는 업자")
+                .content("광고시작 했다\n광고 끝났다")
+                .animalType("개")
+                .animalDetail("포메")
+                .animalGender("암컷")
+                .animalAge(0)
+                .neutralized(false)
+                .lostStatus(LostStatus.DISCOVERED.getText())
+                .zipcode("03045")
+                .roadAddress("서울 종로구 사직로 161")
+                .jibunAddress("서울 종로구 세종로 1-1")
+                .detailAddress("경복궁")
+                .latitude(BigDecimal.valueOf(37.576987703009536))
+                .longitude(BigDecimal.valueOf(126.98023424093205))
+                .phoneNumber("010-8765-4321")
+                .clipped(true)
+                .createdDate("2024-04-02")
+                .build();
+
+        given(lostReportQueryService.getLostReport(anyLong()))
+                .willReturn(response);
+
+        mockMvc.perform(
+                get("/lost/report/{lostReportId}", response.getLostReportId())
+                        .header("Authentication", "authentication")
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("get-lost-report",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("lostReportId").description("실종동물 게시글 신고 PK")
+                        ),
+                        responseFields(
+
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.OBJECT)
+                                        .description("실종동물 게시물 신고 상세 조회 결과"),
+                                fieldWithPath("data.lostReportId").type(JsonFieldType.NUMBER)
+                                        .description("실종동물 게시글 신고 PK"),
+                                fieldWithPath("data.reason").type(JsonFieldType.STRING)
+                                        .description("신고 사유"),
+                                fieldWithPath("data.lostId").type(JsonFieldType.NUMBER)
+                                        .description("실종동물 게시글 PK"),
+                                fieldWithPath("data.title").type(JsonFieldType.STRING)
+                                        .description("글 제목"),
+                                fieldWithPath("data.author").type(JsonFieldType.STRING)
+                                        .description("작성자"),
+                                fieldWithPath("data.content").type(JsonFieldType.STRING)
+                                        .description("게시글 내용"),
+                                fieldWithPath("data.animalType").type(JsonFieldType.STRING)
+                                        .description("동물 종류"),
+                                fieldWithPath("data.animalDetail").type(JsonFieldType.STRING)
+                                        .description("동물 종류 상세"),
+                                fieldWithPath("data.animalGender").type(JsonFieldType.STRING)
+                                        .description("동물 성별"),
+                                fieldWithPath("data.animalAge").type(JsonFieldType.NUMBER)
+                                        .description("동물 나이"),
+                                fieldWithPath("data.neutralized").type(JsonFieldType.BOOLEAN)
+                                        .description("중성화 여부"),
+                                fieldWithPath("data.lostStatus").type(JsonFieldType.STRING)
+                                        .description("실종동물 상태"),
+                                fieldWithPath("data.zipcode").type(JsonFieldType.STRING)
+                                        .description("우편번호"),
+                                fieldWithPath("data.roadAddress").type(JsonFieldType.STRING)
+                                        .description("도로명 주소"),
+                                fieldWithPath("data.jibunAddress").type(JsonFieldType.STRING)
+                                        .description("지번 주소"),
+                                fieldWithPath("data.detailAddress").type(JsonFieldType.STRING)
+                                        .description("상세 주소"),
+                                fieldWithPath("data.latitude").type(JsonFieldType.NUMBER)
+                                        .description("발견 위도"),
+                                fieldWithPath("data.longitude").type(JsonFieldType.NUMBER)
+                                        .description("발견 경도"),
+                                fieldWithPath("data.phoneNumber").type(JsonFieldType.STRING)
+                                        .description("연락처"),
+                                fieldWithPath("data.clipped").type(JsonFieldType.BOOLEAN)
+                                        .description("스크랩 여부"),
+                                fieldWithPath("data.createdDate").type(JsonFieldType.STRING)
                                         .description("작성일")
                         )
                 ));

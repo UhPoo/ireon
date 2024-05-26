@@ -28,3 +28,13 @@ include::{snippets}/get-lost-reports/http-request.adoc[]
 ==== HTTP Response
 include::{snippets}/get-lost-reports/http-response.adoc[]
 include::{snippets}/get-lost-reports/response-fields.adoc[]
+
+=== 실종동물 게시글 신고 상세 조회
+
+==== HTTP Request
+include::{snippets}/get-lost-report/http-request.adoc[]
+include::{snippets}/get-lost-report/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/get-lost-report/http-response.adoc[]
+include::{snippets}/get-lost-report/response-fields.adoc[]
