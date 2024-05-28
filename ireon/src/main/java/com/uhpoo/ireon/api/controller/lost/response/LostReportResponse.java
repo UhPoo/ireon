@@ -14,14 +14,14 @@ import lombok.NoArgsConstructor;
 public class LostReportResponse {
     private Long lostReportId;
     private Long lostId;
-    private String content;
+    private String title;
     private String createdTime;
 
     @Builder
-    public LostReportResponse(Long lostReportId, Long lostId, String content, String createdTime) {
+    public LostReportResponse(Long lostReportId, Long lostId, String title, String createdTime) {
         this.lostReportId = lostReportId;
         this.lostId = lostId;
-        this.content = content;
+        this.title = title;
         this.createdTime = createdTime;
     }
 }

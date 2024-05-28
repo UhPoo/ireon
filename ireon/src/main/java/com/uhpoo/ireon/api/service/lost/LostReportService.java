@@ -1,5 +1,6 @@
 package com.uhpoo.ireon.api.service.lost;
 
+import com.uhpoo.ireon.api.service.lost.dto.CreateLostReportDto;
 import com.uhpoo.ireon.domain.lost.repository.LostReportRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +22,11 @@ public class LostReportService {
     /**
      * 실종동물 게시글 신고 등록
      *
-     * @param lostId 실종동물 게시글 PK
+     * @param dto 실종동물 게시글 신고 정보 Dto
      * @param nickname  현재 로그인 중인 회원의 닉네임
      * @return 등록된 신고 PK
      */
-    public Long createLostReport(Long lostId, String nickname) {
+    public Long createLostReport(CreateLostReportDto dto, String nickname) {
         return null;
     }
 
