@@ -23,6 +23,22 @@ include::{docdir}/api/abandon.adoc[]
 == 유기동물 댓글 API
 include::{docdir}/api/abandon-comment.adoc[]
 
+[[Lost-API]]
+== 실종동물 API
+include::{docdir}/api/lost.adoc[]
+
+[[Lost-Comment-API]]
+== 실종동물 댓글 API
+include::{docdir}/api/lost-comment.adoc[]
+
+[[Lost-Scrap-API]]
+== 실종동물 스크랩 API
+include::{docdir}/api/lost-scrap.adoc[]
+
+[[Lost-Report-API]]
+== 실종동물 신고 API
+include::{docdir}/api/lost-report.adoc[]
+
 [[Board-API]]
 == 자유게시판 API
 include::{docdir}/api/board.adoc[]

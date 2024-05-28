@@ -42,4 +42,14 @@ public class LostQueryService {
     public LostDetailResponse getLost(Long lostId) {
         return null;
     }
+
+    /**
+     * 스크랩 실종동물 목록 조회
+     *
+     * @param nickname 현재 로그인 중인 회원 닉네임
+     * @return 현재 로그인 중인 회원이 스크랩한 실종동물 목록
+     */
+    public PageResponse<List<LostResponse>> getLostScraps(String nickname) {
+        return null;
+    }
 }
