@@ -22,10 +22,10 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -262,6 +262,41 @@ public class AbandonReportControllerDocsTest extends RestDocsSupport {
                                         .description("연락처"),
                                 fieldWithPath("data.createdDate").type(JsonFieldType.STRING)
                                         .description("작성일")
+                        )
+                ));
+    }
+
+    @DisplayName("유기동물 게시글 삭제 API")
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void deleteAbandonReport() throws Exception {
+
+        Long abandonReportId = 1L;
+
+        given(abandonReportService.deleteAbandonReport(anyLong(), anyString()))
+                .willReturn(abandonReportId);
+
+        mockMvc.perform(
+                        delete("/abandon/report/{abandonReportId}", abandonReportId)
+                                .header("Authentication", "authentication")
+                )
+                .andDo(print())
+                .andExpect(status().isFound())
+                .andDo(document("delete-abandon-report",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("abandonReportId").description("유기동물 게시글 신고 PK")
+                        ),
+                        responseFields(
+                                fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                        .description("코드"),
+                                fieldWithPath("status").type(JsonFieldType.STRING)
+                                        .description("상태"),
+                                fieldWithPath("message").type(JsonFieldType.STRING)
+                                        .description("메시지"),
+                                fieldWithPath("data").type(JsonFieldType.NUMBER)
+                                        .description("삭제된 유기동물 게시글 신고 PK 값")
                         )
                 ));
     }
