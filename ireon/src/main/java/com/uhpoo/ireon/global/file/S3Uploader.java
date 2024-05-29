@@ -21,7 +21,7 @@ import java.util.UUID;
  * @author 최영환
  */
 @Slf4j
-//@Component
+@Component
 @RequiredArgsConstructor
 public class S3Uploader {
     private final AmazonS3Client amazonS3Client;
