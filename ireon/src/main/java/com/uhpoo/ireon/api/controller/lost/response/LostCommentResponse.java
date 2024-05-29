@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 /**
  * 실종동물 댓글 조회 응답 DTO
  *
- * @author yekk1
+ * @author CYJ
  */
 @Data
 @NoArgsConstructor

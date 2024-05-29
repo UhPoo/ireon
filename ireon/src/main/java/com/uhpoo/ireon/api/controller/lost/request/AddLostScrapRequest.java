@@ -5,9 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 /**
- * 실종동물 스크랩 추가 요청 Dto
+ * 실종동물 스크랩 추가 요청 DTO
  *
- * @author yekki
+ * @author CYJ
  */
 @Data
 @NoArgsConstructor

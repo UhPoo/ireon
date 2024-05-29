@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * 실종동물 게시글 신고 CUD 레포지토리
  *
- * @author 최예지
+ * @author CYJ
  */
 @Repository
 public interface LostReportRepository extends JpaRepository<LostReport, Long> {

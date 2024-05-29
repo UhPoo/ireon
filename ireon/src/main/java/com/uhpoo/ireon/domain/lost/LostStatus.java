@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 /**
  * 실종동물 상태
  *
- * @author yekki
+ * @author CYJ
  */
 @Getter
 @RequiredArgsConstructor

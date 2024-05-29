@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * 실종동물 게시글 생성 DTO
  *
- * @author yekk1
+ * @author CYJ
  */
 @Data
 @NoArgsConstructor

@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 실종동물 댓글 서비스
+ * 실종동물 게시글 댓글 서비스
  *
- * @author yekk1
+ * @author CYJ
  */
 @Slf4j
 @Service

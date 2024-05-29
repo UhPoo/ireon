@@ -6,6 +6,11 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+/**
+ * 실종동물 게시글 수정 DTO
+ *
+ * @author CYJ
+ */
 @Data
 @NoArgsConstructor
 public class EditLostDto {
