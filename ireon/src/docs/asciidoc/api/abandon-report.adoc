@@ -9,3 +9,26 @@ include::{snippets}/create-abandon-report/path-parameters.adoc[]
 ==== HTTP Response
 include::{snippets}/create-abandon-report/http-response.adoc[]
 include::{snippets}/create-abandon-report/response-fields.adoc[]
+
+[[get-abandon-reports]]
+=== 유기동물 게시글 신고 목록 조회
+
+==== HTTP Request
+
+include::{snippets}/get-abandon-reports/http-request.adoc[]
+
+==== HTTP Response
+include::{snippets}/get-abandon-reports/http-response.adoc[]
+include::{snippets}/get-abandon-reports/response-fields.adoc[]
+
+[[get-abandon-report]]
+=== 유기동물 게시글 신고 상세 조회
+
+==== HTTP Request
+
+include::{snippets}/get-abandon-report/http-request.adoc[]
+include::{snippets}/get-abandon-report/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/get-abandon-report/http-response.adoc[]
+include::{snippets}/get-abandon-report/response-fields.adoc[]
