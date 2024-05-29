@@ -72,7 +72,7 @@ public class LostReportControllerDocsTest extends RestDocsSupport{
                         requestFields(
                                 fieldWithPath("lostId").type(JsonFieldType.NUMBER)
                                         .description("신고할 실종동물 게시글 PK"),
-                                fieldWithPath("content").type(JsonFieldType.STRING)
+                                fieldWithPath("reason").type(JsonFieldType.STRING)
                                         .description("신고 사유")
                         ),
                         responseFields(

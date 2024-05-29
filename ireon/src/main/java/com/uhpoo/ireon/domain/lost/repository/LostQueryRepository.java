@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 /**
  * 실종동물 게시글 조회 레포지토리
  *
- * @author yekk1
+ * @author CYJ
  */
 @Slf4j
 @Repository

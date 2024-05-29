@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 /**
  * 실종동물 게시글 신고 엔티티
  *
- * @author 최예지
+ * @author CYJ
  */
 @Entity
 @Getter

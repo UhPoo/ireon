@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 실종동물 게시글 신고 API 컨트롤러
  *
- * @author 최예지
+ * @author CYJ
  */
 @Slf4j
 @RestController

@@ -6,9 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 /**
- * 실종동물 댓글 조회 레포지토리
+ * 실종동물 게시판 댓글 조회 레포지토리
  *
- * @author yekk1
+ * @author CYJ
  */
 @Slf4j
 @Repository

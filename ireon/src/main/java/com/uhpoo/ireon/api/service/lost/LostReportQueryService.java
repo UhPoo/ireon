@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 실종동물 게시글 신고 조회 서비스
  *
- * @author 최예지
+ * @author CYJ
  */
 @Slf4j
 @Service
