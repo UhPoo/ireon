@@ -32,3 +32,15 @@ include::{snippets}/get-abandon-report/path-parameters.adoc[]
 ==== HTTP Response
 include::{snippets}/get-abandon-report/http-response.adoc[]
 include::{snippets}/get-abandon-report/response-fields.adoc[]
+
+[[delete-abandon-report]]
+=== 유기동물 게시글 신고 삭제
+
+==== HTTP Request
+
+include::{snippets}/delete-abandon-report/http-request.adoc[]
+include::{snippets}/delete-abandon-report/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/delete-abandon-report/http-response.adoc[]
+include::{snippets}/delete-abandon-report/response-fields.adoc[]
