@@ -1,0 +1,11 @@
+[[create-abandon-report]]
+=== 유기동물 게시글 신고 등록
+
+==== HTTP Request
+
+include::{snippets}/create-abandon-report/http-request.adoc[]
+include::{snippets}/create-abandon-report/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/create-abandon-report/http-response.adoc[]
+include::{snippets}/create-abandon-report/response-fields.adoc[]
