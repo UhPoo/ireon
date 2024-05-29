@@ -24,6 +24,7 @@ include::{snippets}/get-abandon-comment/http-response.adoc[]
 include::{snippets}/get-abandon-comment/response-fields.adoc[]
 
 [[edit-abandon-comment]]
+=== 유기동물 게시글 댓글 수정
 
 ==== HTTP Request
 
@@ -35,6 +36,7 @@ include::{snippets}/edit-abandon-comment/http-response.adoc[]
 include::{snippets}/edit-abandon-comment/response-fields.adoc[]
 
 [[delete-abandon-comment]]
+=== 유기동물 게시글 댓글 삭제
 
 ==== HTTP Request
 

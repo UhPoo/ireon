@@ -461,7 +461,7 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                                 fieldWithPath("message").type(JsonFieldType.STRING)
                                         .description("메시지"),
                                 fieldWithPath("data").type(JsonFieldType.NUMBER)
-                                        .description("수정된 유기동물 게시글 PK 값")
+                                        .description("삭제된 유기동물 게시글 PK 값")
                         )
                 ));
     }
