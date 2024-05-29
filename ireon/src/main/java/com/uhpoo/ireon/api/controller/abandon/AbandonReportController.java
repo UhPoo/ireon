@@ -82,4 +82,25 @@ public class AbandonReportController {
 
         return ApiResponse.ok(response);
     }
+
+    /**
+     * 유기동물 게시글 신고 삭제 API
+     *
+     * @param abandonReportId 유기동물 게시글 신고 PK
+     * @return 삭제된 신고 PK
+     */
+    @DeleteMapping("/{abandonReportId}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ApiResponse<Long> deleteAbandonReport(@PathVariable(name = "abandonReportId") Long abandonReportId) {
+        log.debug("AbandonReportController#deleteAbandonReport called.");
+        log.debug("abandonReportId={}", abandonReportId);
+
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        Long deleteId = abandonReportService.deleteAbandonReport(abandonReportId, nickname);
+        log.debug("deleteId={}", deleteId);
+
+        return ApiResponse.found(deleteId);
+    }
 }
