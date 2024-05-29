@@ -9,9 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 실종동물 게시글 덧글 엔티티
+ * 실종동물 게시글 댓글 엔티티
  *
- * @author yekki
+ * @author CYJ
  */
 
 @Entity

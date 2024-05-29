@@ -8,7 +8,7 @@ import com.uhpoo.ireon.api.controller.lost.response.LostCommentResponse;
 import com.uhpoo.ireon.api.service.lost.LostCommentQueryService;
 import com.uhpoo.ireon.api.service.lost.dto.CreateLostCommentDto;
 import com.uhpoo.ireon.api.service.lost.dto.EditLostCommentDto;
-import com.uhpoo.ireon.api.service.lost.dto.LostCommentService;
+import com.uhpoo.ireon.api.service.lost.LostCommentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

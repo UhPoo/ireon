@@ -8,6 +8,11 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+/**
+ * 실종동물 게시판 위도/경도 엔티티
+ *
+ * @author CYJ
+ */
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LostAddress extends Address {

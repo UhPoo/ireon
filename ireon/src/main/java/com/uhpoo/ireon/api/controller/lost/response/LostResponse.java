@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 /**
- * 실종동물 게시글 조회 응답 DTO
+ * 실종동물 게시글 목록 조회 응답 DTO
  *
- * @author yekk1
+ * @author CYJ
  */
 @Data
 @NoArgsConstructor

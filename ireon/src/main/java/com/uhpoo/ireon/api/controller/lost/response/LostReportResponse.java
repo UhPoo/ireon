@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 실종동물 게시글 신고 조회 응답 DTO
+ * 실종동물 게시글 신고 목록 조회 응답 DTO
  *
- * @author 최예지
+ * @author CYJ
  */
 @Data
 @NoArgsConstructor

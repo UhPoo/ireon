@@ -6,7 +6,7 @@ import com.uhpoo.ireon.api.controller.lost.request.CreateLostCommentRequest;
 import com.uhpoo.ireon.api.controller.lost.request.EditLostCommentRequest;
 import com.uhpoo.ireon.api.controller.lost.response.LostCommentResponse;
 import com.uhpoo.ireon.api.service.lost.LostCommentQueryService;
-import com.uhpoo.ireon.api.service.lost.dto.LostCommentService;
+import com.uhpoo.ireon.api.service.lost.LostCommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 실종동물 댓글 API 컨트롤러
  *
- * @author yekki
+ * @author CYJ
  */
 @Slf4j
 @RestController

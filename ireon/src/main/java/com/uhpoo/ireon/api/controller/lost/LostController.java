@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 실종동물 게시판 API 컨트롤러
  *
- * @author yekk1
+ * @author CYJ
  */
 @Slf4j
 @RestController

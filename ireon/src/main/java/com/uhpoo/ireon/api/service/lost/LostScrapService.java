@@ -8,9 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
- * 실종동물 스크랩 서비스
+ * 실종동물 게시글 스크랩 서비스
  *
- * @author yekk1
+ * @author CYJ
  */
 @Slf4j
 @Service

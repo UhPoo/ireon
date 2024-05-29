@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 /**
  * 실종동물 게시글 신고 생성 요청 DTO
  *
- * @author 최예지
+ * @author CYJ
  */
 @Data
 @NoArgsConstructor

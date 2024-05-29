@@ -4,6 +4,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 실종동물 게시글 댓글 수정 DTO
+ *
+ * @author CYJ
+ */
 @Data
 @NoArgsConstructor
 public class EditLostCommentDto {

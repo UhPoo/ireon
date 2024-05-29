@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 실종동물 스크랩 API 컨트롤러
  *
- * @author yekki
+ * @author CYJ
  */
 @Slf4j
 @RestController

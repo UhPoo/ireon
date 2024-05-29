@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * 실종동물 스크랩 레포지토리
  *
- * @author yekki
+ * @author CYJ
  */
 @Repository
 public interface LostScrapRepository  extends JpaRepository<LostScrap, Long> {

@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * 실종동물 게시글 서비스
  *
- * @author yekk1
+ * @author CYJ
  */
 @Slf4j
 @Service

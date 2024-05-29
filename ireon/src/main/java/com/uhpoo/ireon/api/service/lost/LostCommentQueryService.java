@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 실종동물 댓글 조회 서비스
+ * 실종동물 게시글 댓글 조회 서비스
  *
- * @author yekk1
+ * @author CYJ
  */
 @Slf4j
 @Service
