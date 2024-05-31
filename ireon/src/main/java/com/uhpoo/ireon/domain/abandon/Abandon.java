@@ -1,6 +1,7 @@
 package com.uhpoo.ireon.domain.abandon;
 
 import com.uhpoo.ireon.domain.common.Address;
+import com.uhpoo.ireon.domain.common.DeSexing;
 import com.uhpoo.ireon.domain.common.TimeBaseEntity;
 import com.uhpoo.ireon.domain.common.animal.AnimalInfo;
 import com.uhpoo.ireon.domain.member.Member;
@@ -38,7 +39,7 @@ public class Abandon extends TimeBaseEntity {
     private VaccinationStatus vaccinationStatus;
 
     @Column(nullable = false)
-    private Boolean neutralized;
+    private DeSexing deSexing;
 
     @Column(nullable = false, length = 20)
     private AbandonStatus abandonStatus;
@@ -58,17 +59,16 @@ public class Abandon extends TimeBaseEntity {
 
     @Builder
     private Abandon(String title, String content, AnimalInfo animalInfo, VaccinationStatus vaccinationStatus,
-                    Boolean neutralized, AbandonStatus abandonStatus, Address address, String phoneNumber,
-                    Boolean active, Member member) {
+                    DeSexing deSexing, AbandonStatus abandonStatus, Address address, String phoneNumber, Member member) {
         this.title = title;
         this.content = content;
         this.animalInfo = animalInfo;
         this.vaccinationStatus = vaccinationStatus;
-        this.neutralized = neutralized;
+        this.deSexing = deSexing;
         this.abandonStatus = abandonStatus;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.active = active;
+        this.active = true;
         this.member = member;
     }
 }

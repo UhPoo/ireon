@@ -1,5 +1,6 @@
 package com.uhpoo.ireon.api.service.abandon.dto;
 
+import com.uhpoo.ireon.domain.common.DeSexing;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ public class CreateAbandonDto {
     private String animalGender;
     private Integer animalAge;
     private String vaccinationStatus;
-    private Boolean neutralized;
+    private DeSexing deSexing;
     private String abandonStatus;
     private String zipcode;
     private String roadAddress;
@@ -30,7 +31,7 @@ public class CreateAbandonDto {
 
     @Builder
     public CreateAbandonDto(String title, String content, String animalType, String animalDetail, String animalGender,
-                            Integer animalAge, String vaccinationStatus, Boolean neutralized, String abandonStatus,
+                            Integer animalAge, String vaccinationStatus, DeSexing deSexing, String abandonStatus,
                             String zipcode, String roadAddress, String jibunAddress, String detailAddress,
                             String phoneNumber) {
         this.title = title;
@@ -40,7 +41,7 @@ public class CreateAbandonDto {
         this.animalGender = animalGender;
         this.animalAge = animalAge;
         this.vaccinationStatus = vaccinationStatus;
-        this.neutralized = neutralized;
+        this.deSexing = deSexing;
         this.abandonStatus = abandonStatus;
         this.zipcode = zipcode;
         this.roadAddress = roadAddress;
