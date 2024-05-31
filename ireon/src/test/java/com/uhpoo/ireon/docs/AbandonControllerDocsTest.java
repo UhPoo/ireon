@@ -66,7 +66,7 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                 .animalGender(Gender.MALE.getText())
                 .animalAge(3)
                 .vaccinationStatus(VaccinationStatus.FIRST.getText())
-                .neutralized(true)
+                .deSexing("미완료")
                 .abandonStatus(AbandonStatus.SEARCHING.getText())
                 .zipcode("11111")
                 .roadAddress("서울시 송파구 토성로")

@@ -21,7 +21,7 @@ public class CreateAbandonRequest {
     private String animalGender;
     private Integer animalAge;
     private String vaccinationStatus;
-    private Boolean neutralized;
+    private String deSexing;
     private String abandonStatus;
     private String zipcode;
     private String roadAddress;
@@ -31,7 +31,7 @@ public class CreateAbandonRequest {
 
     @Builder
     public CreateAbandonRequest(String title, String content, String animalType, String animalDetail,
-                                String animalGender, Integer animalAge, String vaccinationStatus, Boolean neutralized,
+                                String animalGender, Integer animalAge, String vaccinationStatus, String deSexing,
                                 String abandonStatus, String zipcode, String roadAddress, String jibunAddress,
                                 String detailAddress, String phoneNumber) {
         this.title = title;
@@ -41,7 +41,7 @@ public class CreateAbandonRequest {
         this.animalGender = animalGender;
         this.animalAge = animalAge;
         this.vaccinationStatus = vaccinationStatus;
-        this.neutralized = neutralized;
+        this.deSexing = deSexing;
         this.abandonStatus = abandonStatus;
         this.zipcode = zipcode;
         this.roadAddress = roadAddress;
@@ -59,7 +59,7 @@ public class CreateAbandonRequest {
                 .animalGender(this.animalGender)
                 .animalAge(this.animalAge)
                 .vaccinationStatus(this.vaccinationStatus)
-                .neutralized(this.neutralized)
+                .deSexing(this.deSexing)
                 .abandonStatus(this.abandonStatus)
                 .zipcode(this.zipcode)
                 .roadAddress(this.roadAddress)
