@@ -45,3 +45,14 @@ include::{snippets}/edit-abandon/path-parameters.adoc[]
 ==== HTTP Response
 include::{snippets}/edit-abandon/http-response.adoc[]
 include::{snippets}/edit-abandon/response-fields.adoc[]
+
+[[delete-abandon]]
+=== 유기동물 게시글 삭제
+
+==== HTTP Request
+include::{snippets}/delete-abandon/http-request.adoc[]
+include::{snippets}/delete-abandon/path-parameters.adoc[]
+
+==== HTTP Response
+include::{snippets}/delete-abandon/http-response.adoc[]
+include::{snippets}/delete-abandon/response-fields.adoc[]
