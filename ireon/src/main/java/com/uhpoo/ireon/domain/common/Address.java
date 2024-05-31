@@ -3,6 +3,7 @@ package com.uhpoo.ireon.domain.common;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Embeddable
@@ -15,5 +16,13 @@ public class Address {
     @Column(name = "jibun_address")
     private String jibun;
     @Column(name = "detail_address")
-    private String detail;
+   private String detail;
+
+    @Builder
+    public Address(String zipcode, String road, String jibun, String detail) {
+        this.zipcode = zipcode;
+        this.road = road;
+        this.jibun = jibun;
+        this.detail = detail;
+    }
 }
