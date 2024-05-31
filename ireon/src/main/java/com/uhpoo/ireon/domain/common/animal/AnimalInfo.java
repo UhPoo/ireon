@@ -2,6 +2,7 @@ package com.uhpoo.ireon.domain.common.animal;
 
 import jakarta.persistence.Column;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,12 @@ public class AnimalInfo {
 
     @Column(nullable = false)
     private Integer age;
+
+    @Builder
+    public AnimalInfo(AnimalType animalType, String animalDetail, Gender animalGender, Integer age) {
+        this.animalType = animalType;
+        this.animalDetail = animalDetail;
+        this.animalGender = animalGender;
+        this.age = age;
+    }
 }

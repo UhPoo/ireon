@@ -34,9 +34,9 @@ public class AbandonAttachment extends TimeBaseEntity {
     private Boolean active;
 
     @Builder
-    private AbandonAttachment(UploadFile uploadFile, Abandon abandon, Boolean active) {
+    private AbandonAttachment(UploadFile uploadFile, Abandon abandon) {
         this.uploadFile = uploadFile;
         this.abandon = abandon;
-        this.active = active;
+        this.active = true;
     }
 }

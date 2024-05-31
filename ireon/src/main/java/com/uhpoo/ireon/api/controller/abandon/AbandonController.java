@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class AbandonController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<Long> createAbandon(@Valid @RequestPart(name = "request") CreateAbandonRequest request,
-                                           @RequestPart(required = false, name = "file") MultipartFile file) {
+                                           @RequestPart(required = false, name = "file") MultipartFile file) throws IOException {
         log.debug("AbandonController#createAbandon called.");
         log.debug("CreateAbandonRequest={}", request);
         log.debug("MultipartFile={}", file);
