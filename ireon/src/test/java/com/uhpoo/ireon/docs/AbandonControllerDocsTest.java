@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequ
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -154,28 +155,28 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                 .abandonId(3L)
                 .title("제목1")
                 .author("작성자1")
-                .animalType("개")
-                .abandonStatus(AbandonStatus.SEARCHING.getText())
+                .animalType(AnimalType.DOG)
+                .abandonStatus(AbandonStatus.SEARCHING)
                 .roadAddress("서울시 송파구 토성로")
                 .jibunAddress("서울시 송파구 풍납동")
                 .detailAddress("비밀")
                 .phoneNumber("010-1234-5678")
                 .clipped(true)
-                .createdDate("2024-03-05")
+                .createdDate(LocalDateTime.of(2024, 6, 27, 0, 0, 0))
                 .build();
 
         AbandonResponse item2 = AbandonResponse.builder()
                 .abandonId(1L)
                 .title("제목2")
                 .author("작성자2")
-                .animalType("고양이")
-                .abandonStatus(AbandonStatus.SEARCHING.getText())
+                .animalType(AnimalType.CAT)
+                .abandonStatus(AbandonStatus.PROTECTING)
                 .roadAddress("서울시 송파구 토성로")
                 .jibunAddress("서울시 송파구 풍납동")
                 .detailAddress("비밀")
                 .phoneNumber("010-1234-5678")
                 .clipped(false)
-                .createdDate("2024-03-04")
+                .createdDate(LocalDateTime.of(2024, 6, 26, 0, 0, 0))
                 .build();
 
         List<AbandonResponse> items = List.of(item1, item2);

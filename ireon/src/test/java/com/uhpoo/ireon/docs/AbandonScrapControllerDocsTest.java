@@ -8,6 +8,7 @@ import com.uhpoo.ireon.api.service.abandon.AbandonQueryService;
 import com.uhpoo.ireon.api.service.abandon.AbandonScrapService;
 import com.uhpoo.ireon.api.service.abandon.dto.AbandonScrapDto;
 import com.uhpoo.ireon.domain.abandon.AbandonStatus;
+import com.uhpoo.ireon.domain.common.animal.AnimalType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -90,28 +92,28 @@ public class AbandonScrapControllerDocsTest extends RestDocsSupport {
                 .abandonId(3L)
                 .title("제목1")
                 .author("작성자1")
-                .animalType("개")
-                .abandonStatus(AbandonStatus.SEARCHING.getText())
+                .animalType(AnimalType.DOG)
+                .abandonStatus(AbandonStatus.SEARCHING)
                 .roadAddress("서울시 송파구 토성로")
                 .jibunAddress("서울시 송파구 풍납동")
                 .detailAddress("비밀")
                 .phoneNumber("010-1234-5678")
                 .clipped(true)
-                .createdDate("2024-03-05")
+                .createdDate(LocalDateTime.of(2024, 6, 27, 0, 0, 0))
                 .build();
 
         AbandonResponse item2 = AbandonResponse.builder()
                 .abandonId(1L)
                 .title("제목2")
                 .author("작성자2")
-                .animalType("고양이")
-                .abandonStatus(AbandonStatus.SEARCHING.getText())
+                .animalType(AnimalType.CAT)
+                .abandonStatus(AbandonStatus.PROTECTING)
                 .roadAddress("서울시 송파구 토성로")
                 .jibunAddress("서울시 송파구 풍납동")
                 .detailAddress("비밀")
                 .phoneNumber("010-1234-5678")
                 .clipped(true)
-                .createdDate("2024-03-04")
+                .createdDate(LocalDateTime.of(2024, 6, 26, 0, 0, 0))
                 .build();
 
         List<AbandonResponse> items = List.of(item1, item2);
