@@ -3,6 +3,7 @@ package com.uhpoo.ireon.api.service.abandon;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonDetailResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
+import com.uhpoo.ireon.domain.abandon.dto.SearchCondition;
 import com.uhpoo.ireon.domain.abandon.repository.AbandonQueryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class AbandonQueryService {
      *
      * @return 검색 조건에 해당하는 유기동물 목록
      */
-    public PageResponse<List<AbandonResponse>> getAbandons() {
+    public PageResponse<List<AbandonResponse>> getAbandons(SearchCondition condition, Long lastAbandonId, String nickname) {
         return null;
     }
 

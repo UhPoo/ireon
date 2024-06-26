@@ -12,6 +12,7 @@ import com.uhpoo.ireon.api.service.abandon.dto.CreateAbandonDto;
 import com.uhpoo.ireon.api.service.abandon.dto.EditAbandonDto;
 import com.uhpoo.ireon.domain.abandon.AbandonStatus;
 import com.uhpoo.ireon.domain.abandon.VaccinationStatus;
+import com.uhpoo.ireon.domain.abandon.dto.SearchCondition;
 import com.uhpoo.ireon.domain.common.animal.AnimalType;
 import com.uhpoo.ireon.domain.common.animal.Gender;
 import jakarta.validation.constraints.NotNull;
@@ -181,18 +182,24 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
 
         PageResponse<List<AbandonResponse>> response = PageResponse.of(false, items);
 
-        given(abandonQueryService.getAbandons())
+        given(abandonQueryService.getAbandons(any(SearchCondition.class), anyLong(), anyString()))
                 .willReturn(response);
 
         mockMvc.perform(
                         get("/abandon")
                                 .header("Authentication", "authentication")
+                                .param("keyword", "keyword")
+                                .param("lastAbandonId", "")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("get-abandons",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
+                        queryParameters(
+                                parameterWithName("keyword").description("검색어"),
+                                parameterWithName("lastAbandonId").description("마지막으로 조회된 유기동물 게시글 PK")
+                        ),
                         responseFields(
                                 fieldWithPath("code").type(JsonFieldType.NUMBER)
                                         .description("코드"),
