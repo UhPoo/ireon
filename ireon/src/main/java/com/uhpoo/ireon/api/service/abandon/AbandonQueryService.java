@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.uhpoo.ireon.global.constants.SizeConstants.PAGE_SIZE;
+
 /**
  * 유기동물 게시글 조회 서비스
  *
@@ -31,7 +33,22 @@ public class AbandonQueryService {
      * @return 검색 조건에 해당하는 유기동물 목록
      */
     public PageResponse<List<AbandonResponse>> getAbandons(SearchCondition condition, Long lastAbandonId, String nickname) {
-        return null;
+        log.debug("condition={}", condition);
+        log.debug("lastAbandonId={}", lastAbandonId);
+        log.debug("nickname={}", nickname);
+
+        List<AbandonResponse> responses = abandonQueryRepository.getAbandonsByCondition(condition, lastAbandonId, nickname);
+        log.debug("responses={}", responses);
+
+        boolean hasNext = false;
+        if (responses.size() > PAGE_SIZE) {
+            responses.remove(PAGE_SIZE);
+            hasNext = true;
+        }
+        log.debug("response size={}", responses.size());
+        log.debug("hasNext={}", hasNext);
+
+        return PageResponse.of(hasNext, responses);
     }
 
     /**
@@ -46,7 +63,7 @@ public class AbandonQueryService {
 
     /**
      * 스크랩한 유기동물 목록 조회
-     * 
+     *
      * @param nickname 현재 로그인 중인 회원 닉네임
      * @return 현재 로그인 중인 회원이 스크랩한 유기동물 목록
      */
