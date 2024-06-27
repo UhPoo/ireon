@@ -117,7 +117,7 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                                         .description("동물 나이"),
                                 fieldWithPath("vaccinationStatus").type(JsonFieldType.STRING)
                                         .description("접종 상태"),
-                                fieldWithPath("neutralized").type(JsonFieldType.BOOLEAN)
+                                fieldWithPath("deSexing").type(JsonFieldType.STRING)
                                         .description("중성화 여부"),
                                 fieldWithPath("abandonStatus").type(JsonFieldType.STRING)
                                         .description("유기동물 상태"),
@@ -162,6 +162,7 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                 .detailAddress("비밀")
                 .phoneNumber("010-1234-5678")
                 .clipped(true)
+                .thumbnailUrl("IMG_URL")
                 .createdDate(LocalDateTime.of(2024, 6, 27, 0, 0, 0))
                 .build();
 
@@ -176,6 +177,7 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                 .detailAddress("비밀")
                 .phoneNumber("010-1234-5678")
                 .clipped(false)
+                .thumbnailUrl("IMG_URL")
                 .createdDate(LocalDateTime.of(2024, 6, 26, 0, 0, 0))
                 .build();
 
@@ -234,6 +236,8 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                                         .description("연락처"),
                                 fieldWithPath("data.items[].clipped").type(JsonFieldType.BOOLEAN)
                                         .description("스크랩 여부"),
+                                fieldWithPath("data.items[].thumbnailUrl").type(JsonFieldType.STRING)
+                                        .description("썸네일 이미지 저장 경로"),
                                 fieldWithPath("data.items[].createdDate").type(JsonFieldType.STRING)
                                         .description("작성일")
                         )

@@ -99,6 +99,7 @@ public class AbandonScrapControllerDocsTest extends RestDocsSupport {
                 .detailAddress("비밀")
                 .phoneNumber("010-1234-5678")
                 .clipped(true)
+                .thumbnailUrl("IMG_URL")
                 .createdDate(LocalDateTime.of(2024, 6, 27, 0, 0, 0))
                 .build();
 
@@ -113,6 +114,7 @@ public class AbandonScrapControllerDocsTest extends RestDocsSupport {
                 .detailAddress("비밀")
                 .phoneNumber("010-1234-5678")
                 .clipped(true)
+                .thumbnailUrl("IMG_URL")
                 .createdDate(LocalDateTime.of(2024, 6, 26, 0, 0, 0))
                 .build();
 
@@ -165,6 +167,8 @@ public class AbandonScrapControllerDocsTest extends RestDocsSupport {
                                         .description("연락처"),
                                 fieldWithPath("data.items[].clipped").type(JsonFieldType.BOOLEAN)
                                         .description("스크랩 여부"),
+                                fieldWithPath("data.items[].thumbnailUrl").type(JsonFieldType.STRING)
+                                        .description("썸네일 이미지 저장 경로"),
                                 fieldWithPath("data.items[].createdDate").type(JsonFieldType.STRING)
                                         .description("작성일")
                         )

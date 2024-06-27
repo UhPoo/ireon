@@ -2123,7 +2123,7 @@ image data
 Content-Disposition: form-data; name=request; filename=request.json
 Content-Type: application/json
 
-{"title":"입양해가실분","content":"찾아용","animalType":"개","animalDetail":"믹스견","animalGender":"수컷","animalAge":3,"vaccinationStatus":"1차 완료","neutralized":true,"abandonStatus":"입양처 탐색중","zipcode":"11111","roadAddress":"서울시 송파구 토성로","jibunAddress":"서울시 송파구 풍납동","detailAddress":"비밀","phoneNumber":"010-1234-5678"}
+{"title":"입양해가실분","content":"찾아용","animalType":"개","animalDetail":"믹스견","animalGender":"수컷","animalAge":3,"vaccinationStatus":"1차 완료","deSexing":"미완료","abandonStatus":"입양처 탐색중","zipcode":"11111","roadAddress":"서울시 송파구 토성로","jibunAddress":"서울시 송파구 풍납동","detailAddress":"비밀","phoneNumber":"010-1234-5678"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -2199,8 +2199,8 @@ Content-Type: application/json
 <td class="tableblock halign-left valign-top"><p class="tableblock">접종 상태</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>neutralized</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>deSexing</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">중성화 여부</p></td>
 </tr>
 <tr>
@@ -2296,11 +2296,33 @@ Content-Length: 86
 <h4 id="_http_request_14"><a class="link" href="#_http_request_14">HTTP Request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /abandon HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /abandon?keyword=keyword&amp;lastAbandonId= HTTP/1.1
 Authentication: authentication
 Host: localhost:8080</code></pre>
 </div>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>keyword</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색어</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>lastAbandonId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막으로 조회된 유기동물 게시글 PK</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="_http_response_14"><a class="link" href="#_http_response_14">HTTP Response</a></h4>
@@ -2308,7 +2330,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 975
+Content-Length: 1054
 
 {
   "code" : 200,
@@ -2327,19 +2349,21 @@ Content-Length: 975
       "detailAddress" : "비밀",
       "phoneNumber" : "010-1234-5678",
       "clipped" : true,
-      "createdDate" : "2024-03-05"
+      "thumbnailUrl" : "IMG_URL",
+      "createdDate" : "2024-06-27 12:00"
     }, {
       "abandonId" : 1,
       "title" : "제목2",
       "author" : "작성자2",
       "animalType" : "고양이",
-      "abandonStatus" : "입양처 탐색중",
+      "abandonStatus" : "임시보호 중",
       "roadAddress" : "서울시 송파구 토성로",
       "jibunAddress" : "서울시 송파구 풍납동",
       "detailAddress" : "비밀",
       "phoneNumber" : "010-1234-5678",
       "clipped" : false,
-      "createdDate" : "2024-03-04"
+      "thumbnailUrl" : "IMG_URL",
+      "createdDate" : "2024-06-26 12:00"
     } ]
   }
 }</code></pre>
@@ -2438,6 +2462,11 @@ Content-Length: 975
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.items[].clipped</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">스크랩 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.items[].thumbnailUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 이미지 저장 경로</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.items[].createdDate</code></p></td>
@@ -3444,7 +3473,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 974
+Content-Length: 1053
 
 {
   "code" : 200,
@@ -3463,19 +3492,21 @@ Content-Length: 974
       "detailAddress" : "비밀",
       "phoneNumber" : "010-1234-5678",
       "clipped" : true,
-      "createdDate" : "2024-03-05"
+      "thumbnailUrl" : "IMG_URL",
+      "createdDate" : "2024-06-27 12:00"
     }, {
       "abandonId" : 1,
       "title" : "제목2",
       "author" : "작성자2",
       "animalType" : "고양이",
-      "abandonStatus" : "입양처 탐색중",
+      "abandonStatus" : "임시보호 중",
       "roadAddress" : "서울시 송파구 토성로",
       "jibunAddress" : "서울시 송파구 풍납동",
       "detailAddress" : "비밀",
       "phoneNumber" : "010-1234-5678",
       "clipped" : true,
-      "createdDate" : "2024-03-04"
+      "thumbnailUrl" : "IMG_URL",
+      "createdDate" : "2024-06-26 12:00"
     } ]
   }
 }</code></pre>
@@ -3574,6 +3605,11 @@ Content-Length: 974
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.items[].clipped</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">스크랩 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.items[].thumbnailUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 이미지 저장 경로</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.items[].createdDate</code></p></td>
@@ -7739,7 +7775,7 @@ Content-Length: 82
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-05-29 22:49:50 +0900
+Last updated 2024-05-31 20:10:15 +0900
 </div>
 </div>
 </body>
