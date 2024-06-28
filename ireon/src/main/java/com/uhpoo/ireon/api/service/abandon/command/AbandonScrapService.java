@@ -1,7 +1,7 @@
-package com.uhpoo.ireon.api.service.abandon;
+package com.uhpoo.ireon.api.service.abandon.command;
 
 import com.uhpoo.ireon.api.service.abandon.dto.AbandonScrapDto;
-import com.uhpoo.ireon.domain.abandon.repository.AbandonScrapRepository;
+import com.uhpoo.ireon.domain.abandon.repository.command.AbandonScrapRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

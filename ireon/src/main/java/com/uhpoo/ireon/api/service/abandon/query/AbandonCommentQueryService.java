@@ -1,8 +1,8 @@
-package com.uhpoo.ireon.api.service.abandon;
+package com.uhpoo.ireon.api.service.abandon.query;
 
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonCommentResponse;
-import com.uhpoo.ireon.domain.abandon.repository.AbandonCommentQueryRepository;
+import com.uhpoo.ireon.domain.abandon.repository.query.AbandonCommentQueryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.uhpoo.ireon.domain.abandon.repository;
+package com.uhpoo.ireon.domain.abandon.repository.query;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;

@@ -1,4 +1,4 @@
-package com.uhpoo.ireon.domain.abandon.repository;
+package com.uhpoo.ireon.domain.abandon.repository.command;
 
 import com.uhpoo.ireon.IntegrationTestSupport;
 import com.uhpoo.ireon.domain.abandon.Abandon;
@@ -40,17 +40,7 @@ class AbandonRepositoryTest extends IntegrationTestSupport {
         AnimalInfo animalInfo = createAnimalInfo();
         Address address = createAddress();
 
-        Abandon abandon = Abandon.builder()
-                .title("제목")
-                .content("글내용")
-                .animalInfo(animalInfo)
-                .vaccinationStatus(VaccinationStatus.SECOND)
-                .deSexing(DeSexing.UNDONE)
-                .abandonStatus(AbandonStatus.SEARCHING)
-                .address(address)
-                .phoneNumber("010-1234-5678")
-                .member(member)
-                .build();
+        Abandon abandon = createAbandon(animalInfo, address, member);
 
         // when
         Abandon savedAbandon = abandonRepository.save(abandon);
@@ -85,6 +75,20 @@ class AbandonRepositoryTest extends IntegrationTestSupport {
                 .road("서울시 송파구 토성로")
                 .jibun("서울시 송파구 풍납동")
                 .detail("비밀")
+                .build();
+    }
+
+    private Abandon createAbandon(AnimalInfo animalInfo, Address address, Member member) {
+        return Abandon.builder()
+                .title("제목")
+                .content("글내용")
+                .animalInfo(animalInfo)
+                .vaccinationStatus(VaccinationStatus.SECOND)
+                .deSexing(DeSexing.UNDONE)
+                .abandonStatus(AbandonStatus.SEARCHING)
+                .address(address)
+                .phoneNumber("010-1234-5678")
+                .member(member)
                 .build();
     }
 }

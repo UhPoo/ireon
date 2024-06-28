@@ -1,4 +1,4 @@
-package com.uhpoo.ireon.domain.abandon.repository;
+package com.uhpoo.ireon.domain.abandon.repository.query;
 
 import com.uhpoo.ireon.IntegrationTestSupport;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
@@ -7,6 +7,9 @@ import com.uhpoo.ireon.domain.abandon.AbandonAttachment;
 import com.uhpoo.ireon.domain.abandon.AbandonStatus;
 import com.uhpoo.ireon.domain.abandon.VaccinationStatus;
 import com.uhpoo.ireon.domain.abandon.dto.SearchCondition;
+import com.uhpoo.ireon.domain.abandon.repository.command.AbandonAttachmentRepository;
+import com.uhpoo.ireon.domain.abandon.repository.command.AbandonRepository;
+import com.uhpoo.ireon.domain.abandon.repository.command.AbandonScrapRepository;
 import com.uhpoo.ireon.domain.common.Address;
 import com.uhpoo.ireon.domain.common.DeSexing;
 import com.uhpoo.ireon.domain.common.animal.AnimalInfo;
@@ -58,52 +61,26 @@ class AbandonQueryRepositoryTest extends IntegrationTestSupport {
         Address address1 = createAddress("11111", "서울시 송파구 토성로", "서울시 송파구 풍납동", "비밀1");
         Address address2 = createAddress("22222", "서울시 송파구 송파로", "서울시 송파구 송파동", "비밀2");
 
+        AnimalInfo info1 = createAnimalInfo(AnimalType.DOG, "말티즈", Gender.FEMALE, 2);
+        AnimalInfo info2 = createAnimalInfo(AnimalType.CAT, "코리안 숏헤어", Gender.MALE, 3);
+        AnimalInfo info3 = createAnimalInfo(AnimalType.DOG, "믹스", Gender.FEMALE, 1);
 
-        Abandon abandon1 = Abandon.builder()
-                .title("말티즈 입양처 구해요")
-                .content("글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용")
-                .animalInfo(createAnimalInfo(AnimalType.DOG, "말티즈", Gender.FEMALE, 2))
-                .vaccinationStatus(VaccinationStatus.FIRST)
-                .deSexing(DeSexing.UNDONE)
-                .abandonStatus(AbandonStatus.SEARCHING)
-                .address(address1)
-                .phoneNumber("010-1234-5678")
-                .member(author1)
-                .build();
+        Abandon abandon1 = createAbandon(info1, address1, author1, "말티즈 입양처 구해요",
+                "글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용",
+                VaccinationStatus.FIRST, DeSexing.UNDONE, AbandonStatus.SEARCHING, "010-1234-5678");
 
-        Abandon abandon2 = Abandon.builder()
-                .title("임보 중인 삼색 고양이에요")
-                .content("삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이" +
-                        "삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이")
-                .animalInfo(createAnimalInfo(AnimalType.CAT, "코리안 숏헤어", Gender.MALE, 3))
-                .vaccinationStatus(VaccinationStatus.ZERO)
-                .deSexing(DeSexing.DONE)
-                .abandonStatus(AbandonStatus.PROTECTING)
-                .address(address2)
-                .phoneNumber("010-5678-5678")
-                .member(author2)
-                .build();
+        Abandon abandon2 = createAbandon(info2, address2, author2, "임보 중인 삼색 고양이에요",
+                "삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이" +
+                        "삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이",
+                VaccinationStatus.ZERO, DeSexing.DONE, AbandonStatus.PROTECTING, "010-5678-5678");
 
-        Abandon abandon3 = Abandon.builder()
-                .title("믹스견 입양처 구해요")
-                .content("믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양")
-                .animalInfo(createAnimalInfo(AnimalType.DOG, "믹스", Gender.FEMALE, 1))
-                .vaccinationStatus(VaccinationStatus.ZERO)
-                .deSexing(DeSexing.UNDONE)
-                .abandonStatus(AbandonStatus.PROTECTING)
-                .address(address1)
-                .phoneNumber("010-1234-5678")
-                .member(author1)
-                .build();
+        Abandon abandon3 = createAbandon(info3, address1, author1, "믹스견 입양처 구해요",
+                "믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양",
+                VaccinationStatus.ZERO, DeSexing.UNDONE, AbandonStatus.PROTECTING, "010-1234-5678");
 
         abandonRepository.saveAll(List.of(abandon1, abandon2, abandon3));
 
-        AbandonAttachment attachment = AbandonAttachment.builder()
-                .abandon(abandon3)
-                .uploadFile(UploadFile.builder().uploadFileName("믹스견").storeFileName("IMG_URL").build())
-                .build();
-
-        abandonAttachmentRepository.save(attachment);
+        createAttachment(abandon3);
 
         SearchCondition condition = SearchCondition.of(null);
 
@@ -128,52 +105,26 @@ class AbandonQueryRepositoryTest extends IntegrationTestSupport {
         Address address1 = createAddress("11111", "서울시 송파구 토성로", "서울시 송파구 풍납동", "비밀1");
         Address address2 = createAddress("22222", "서울시 송파구 송파로", "서울시 송파구 송파동", "비밀2");
 
+        AnimalInfo info1 = createAnimalInfo(AnimalType.DOG, "말티즈", Gender.FEMALE, 2);
+        AnimalInfo info2 = createAnimalInfo(AnimalType.CAT, "코리안 숏헤어", Gender.MALE, 3);
+        AnimalInfo info3 = createAnimalInfo(AnimalType.DOG, "믹스", Gender.FEMALE, 1);
 
-        Abandon abandon1 = Abandon.builder()
-                .title("말티즈 강아지 입양처 구해요")
-                .content("글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용")
-                .animalInfo(createAnimalInfo(AnimalType.DOG, "말티즈", Gender.FEMALE, 2))
-                .vaccinationStatus(VaccinationStatus.FIRST)
-                .deSexing(DeSexing.UNDONE)
-                .abandonStatus(AbandonStatus.SEARCHING)
-                .address(address1)
-                .phoneNumber("010-1234-5678")
-                .member(author1)
-                .build();
+        Abandon abandon1 = createAbandon(info1, address1, author1, "말티즈 입양처 구해요",
+                "글내용글내용글내용강아지글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용",
+                VaccinationStatus.FIRST, DeSexing.UNDONE, AbandonStatus.SEARCHING, "010-1234-5678");
 
-        Abandon abandon2 = Abandon.builder()
-                .title("임보 중인 삼색고양이에요")
-                .content("삼색이삼색이삼색이삼색고양이삼색이삼색이삼색이삼색이삼색이삼색이삼색이" +
-                        "삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이")
-                .animalInfo(createAnimalInfo(AnimalType.CAT, "코리안 숏헤어", Gender.MALE, 3))
-                .vaccinationStatus(VaccinationStatus.ZERO)
-                .deSexing(DeSexing.DONE)
-                .abandonStatus(AbandonStatus.PROTECTING)
-                .address(address2)
-                .phoneNumber("010-5678-5678")
-                .member(author2)
-                .build();
+        Abandon abandon2 = createAbandon(info2, address2, author2, "임보 중인 삼색 고양이에요",
+                "삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이" +
+                        "삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이",
+                VaccinationStatus.ZERO, DeSexing.DONE, AbandonStatus.PROTECTING, "010-5678-5678");
 
-        Abandon abandon3 = Abandon.builder()
-                .title("믹스 강아지 입양처 구해요")
-                .content("믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양")
-                .animalInfo(createAnimalInfo(AnimalType.DOG, "믹스", Gender.FEMALE, 1))
-                .vaccinationStatus(VaccinationStatus.ZERO)
-                .deSexing(DeSexing.UNDONE)
-                .abandonStatus(AbandonStatus.PROTECTING)
-                .address(address1)
-                .phoneNumber("010-1234-5678")
-                .member(author1)
-                .build();
+        Abandon abandon3 = createAbandon(info3, address1, author1, "믹스 강아지 입양처 구해요",
+                "믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양",
+                VaccinationStatus.ZERO, DeSexing.UNDONE, AbandonStatus.PROTECTING, "010-1234-5678");
 
         abandonRepository.saveAll(List.of(abandon1, abandon2, abandon3));
 
-        AbandonAttachment attachment = AbandonAttachment.builder()
-                .abandon(abandon3)
-                .uploadFile(UploadFile.builder().uploadFileName("믹스견").storeFileName("IMG_URL").build())
-                .build();
-
-        abandonAttachmentRepository.save(attachment);
+        createAttachment(abandon3);
 
         SearchCondition condition = SearchCondition.of("강아지");
 
@@ -230,5 +181,28 @@ class AbandonQueryRepositoryTest extends IntegrationTestSupport {
                 .jibun(jibun)
                 .detail(detail)
                 .build();
+    }
+
+    private Abandon createAbandon(AnimalInfo info, Address address, Member member, String title, String content, VaccinationStatus vaccinationStatus, DeSexing deSexing, AbandonStatus abandonStatus, String phoneNumber) {
+        return Abandon.builder()
+                .title(title)
+                .content(content)
+                .animalInfo(info)
+                .vaccinationStatus(vaccinationStatus)
+                .deSexing(deSexing)
+                .abandonStatus(abandonStatus)
+                .address(address)
+                .phoneNumber(phoneNumber)
+                .member(member)
+                .build();
+    }
+
+    private void createAttachment(Abandon abandon) {
+        AbandonAttachment attachment = AbandonAttachment.builder()
+                .abandon(abandon)
+                .uploadFile(UploadFile.builder().uploadFileName("믹스견").storeFileName("IMG_URL").build())
+                .build();
+
+        abandonAttachmentRepository.save(attachment);
     }
 }
