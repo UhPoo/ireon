@@ -35,10 +35,10 @@ public class AbandonScrap extends TimeBaseEntity {
     private Boolean active;
 
     @Builder
-    private AbandonScrap(Member member, Abandon abandon, Boolean active) {
+    private AbandonScrap(Member member, Abandon abandon) {
         this.member = member;
         this.abandon = abandon;
-        this.active = active;
+        this.active = true;
     }
 
 }
