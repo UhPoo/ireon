@@ -115,7 +115,6 @@ public class AbandonQueryRepository {
                 ))
                 .from(abandon)
                 .join(abandon.member, member)
-                .leftJoin(abandonAttachment).on(abandonAttachment.abandon.eq(abandon), abandonAttachment.active)
                 .where(
                         isAbandonId(abandonId)
                 )
