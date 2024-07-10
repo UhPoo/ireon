@@ -6,13 +6,15 @@ import com.uhpoo.ireon.api.controller.abandon.request.CreateAbandonRequest;
 import com.uhpoo.ireon.api.controller.abandon.request.EditAbandonRequest;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonDetailResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
-import com.uhpoo.ireon.api.service.abandon.query.AbandonQueryService;
 import com.uhpoo.ireon.api.service.abandon.command.AbandonService;
 import com.uhpoo.ireon.api.service.abandon.dto.CreateAbandonDto;
 import com.uhpoo.ireon.api.service.abandon.dto.EditAbandonDto;
+import com.uhpoo.ireon.api.service.abandon.query.AbandonQueryService;
 import com.uhpoo.ireon.domain.abandon.AbandonStatus;
 import com.uhpoo.ireon.domain.abandon.VaccinationStatus;
+import com.uhpoo.ireon.domain.abandon.dto.AbandonDetailDto;
 import com.uhpoo.ireon.domain.abandon.dto.SearchCondition;
+import com.uhpoo.ireon.domain.common.DeSexing;
 import com.uhpoo.ireon.domain.common.animal.AnimalType;
 import com.uhpoo.ireon.domain.common.animal.Gender;
 import jakarta.validation.constraints.NotNull;
@@ -250,7 +252,7 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
     @WithMockUser
     void getAbandon() throws Exception {
 
-        AbandonDetailResponse response = AbandonDetailResponse.builder()
+        AbandonDetailDto dto = AbandonDetailDto.builder()
                 .abandonId(1L)
                 .title("제목1")
                 .author("작성자1")
@@ -259,7 +261,7 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                 .animalGender("암컷")
                 .animalAge(5)
                 .vaccinationStatus(VaccinationStatus.SECOND.getText())
-                .neutralized(false)
+                .deSexing(DeSexing.UNDONE)
                 .abandonStatus(AbandonStatus.SEARCHING.getText())
                 .zipcode("11111")
                 .roadAddress("서울시 송파구 토성로")
@@ -270,12 +272,18 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                 .createdDate("2024-03-05")
                 .build();
 
+        List<String> attachments = List.of("URL1", "URL2");
 
-        given(abandonQueryService.getAbandon(anyLong()))
+        AbandonDetailResponse response = AbandonDetailResponse.builder()
+                .dto(dto)
+                .attachments(attachments)
+                .build();
+
+        given(abandonQueryService.getAbandon(anyLong(), anyString()))
                 .willReturn(response);
 
         mockMvc.perform(
-                        get("/abandon/{abandonId}", response.getAbandonId())
+                        get("/abandon/{abandonId}", dto.getAbandonId())
                                 .header("Authentication", "authentication")
                 )
                 .andDo(print())
@@ -295,39 +303,43 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                                         .description("메시지"),
                                 fieldWithPath("data").type(JsonFieldType.OBJECT)
                                         .description("유기동물 상세 조회 결과"),
-                                fieldWithPath("data.abandonId").type(JsonFieldType.NUMBER)
+                                fieldWithPath("data.dto").type(JsonFieldType.OBJECT)
+                                        .description("유기동물 상세 조회 게시글 정보"),
+                                fieldWithPath("data.attachments").type(JsonFieldType.ARRAY)
+                                        .description("유기동물 게시글 첨부파일 URL 리스트"),
+                                fieldWithPath("data.dto.abandonId").type(JsonFieldType.NUMBER)
                                         .description("유기동물 게시글 PK"),
-                                fieldWithPath("data.title").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.title").type(JsonFieldType.STRING)
                                         .description("글 제목"),
-                                fieldWithPath("data.author").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.author").type(JsonFieldType.STRING)
                                         .description("작성자"),
-                                fieldWithPath("data.animalType").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.animalType").type(JsonFieldType.STRING)
                                         .description("동물 종류"),
-                                fieldWithPath("data.animalDetail").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.animalDetail").type(JsonFieldType.STRING)
                                         .description("동물 종류 상세"),
-                                fieldWithPath("data.animalGender").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.animalGender").type(JsonFieldType.STRING)
                                         .description("동물 성별"),
-                                fieldWithPath("data.animalAge").type(JsonFieldType.NUMBER)
+                                fieldWithPath("data.dto.animalAge").type(JsonFieldType.NUMBER)
                                         .description("동물 나이"),
-                                fieldWithPath("data.vaccinationStatus").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.vaccinationStatus").type(JsonFieldType.STRING)
                                         .description("예방접종 상태"),
-                                fieldWithPath("data.neutralized").type(JsonFieldType.BOOLEAN)
+                                fieldWithPath("data.dto.deSexing").type(JsonFieldType.STRING)
                                         .description("중성화 여부"),
-                                fieldWithPath("data.abandonStatus").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.abandonStatus").type(JsonFieldType.STRING)
                                         .description("유기동물 상태"),
-                                fieldWithPath("data.zipcode").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.zipcode").type(JsonFieldType.STRING)
                                         .description("우편번호"),
-                                fieldWithPath("data.roadAddress").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.roadAddress").type(JsonFieldType.STRING)
                                         .description("도로명 주소"),
-                                fieldWithPath("data.jibunAddress").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.jibunAddress").type(JsonFieldType.STRING)
                                         .description("지번 주소"),
-                                fieldWithPath("data.detailAddress").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.detailAddress").type(JsonFieldType.STRING)
                                         .description("상세 주소"),
-                                fieldWithPath("data.phoneNumber").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.phoneNumber").type(JsonFieldType.STRING)
                                         .description("연락처"),
-                                fieldWithPath("data.clipped").type(JsonFieldType.BOOLEAN)
+                                fieldWithPath("data.dto.clipped").type(JsonFieldType.BOOLEAN)
                                         .description("스크랩 여부"),
-                                fieldWithPath("data.createdDate").type(JsonFieldType.STRING)
+                                fieldWithPath("data.dto.createdDate").type(JsonFieldType.STRING)
                                         .description("작성일")
                         )
                 ));
