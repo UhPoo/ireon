@@ -1,9 +1,9 @@
-package com.uhpoo.ireon.api.service.abandon;
+package com.uhpoo.ireon.api.service.abandon.query;
 
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonReportDetailResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonReportResponse;
-import com.uhpoo.ireon.domain.abandon.repository.AbandonReportQueryRepository;
+import com.uhpoo.ireon.domain.abandon.repository.query.AbandonReportQueryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

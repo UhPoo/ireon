@@ -1,4 +1,4 @@
-package com.uhpoo.ireon.domain.abandon.repository;
+package com.uhpoo.ireon.domain.abandon.repository.query;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

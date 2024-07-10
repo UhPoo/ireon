@@ -6,8 +6,9 @@ import com.uhpoo.ireon.api.controller.abandon.request.CreateAbandonRequest;
 import com.uhpoo.ireon.api.controller.abandon.request.EditAbandonRequest;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonDetailResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
-import com.uhpoo.ireon.api.service.abandon.AbandonQueryService;
-import com.uhpoo.ireon.api.service.abandon.AbandonService;
+import com.uhpoo.ireon.api.service.abandon.query.AbandonQueryService;
+import com.uhpoo.ireon.api.service.abandon.command.AbandonService;
+import com.uhpoo.ireon.domain.abandon.dto.SearchCondition;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,17 +61,26 @@ public class AbandonController {
     /**
      * 유기동물 게시글 목록 조회 API
      *
+     * @param keyword       검색어 (제목 + 내용)
+     * @param lastAbandonId 마지막으로 조회된 유기동물 게시글 PK
      * @return 검색 조건에 해당하는 유기동물 게시글 목록
      */
     @GetMapping
-    public ApiResponse<PageResponse<List<AbandonResponse>>> getAbandons() {
-        // TODO: 2024-03-04 검색조건 추가되어야함.
+    public ApiResponse<PageResponse<List<AbandonResponse>>> getAbandons(
+            @RequestParam(required = false, defaultValue = "", name = "keyword") String keyword,
+            @RequestParam(required = false, defaultValue = "0", name = "lastAbandonId") Long lastAbandonId) {
         log.debug("AbandonController#getAbandons called.");
+        log.debug("keyword={}", keyword);
+        log.debug("lastAbandonId={}", lastAbandonId);
 
-        PageResponse<List<AbandonResponse>> pageResponses = abandonQueryService.getAbandons();
-        log.debug("pageResponses={}", pageResponses);
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
 
-        return ApiResponse.ok(pageResponses);
+        PageResponse<List<AbandonResponse>> pageResponse =
+                abandonQueryService.getAbandons(SearchCondition.of(keyword), lastAbandonId, nickname);
+        log.debug("pageResponse={}", pageResponse);
+
+        return ApiResponse.ok(pageResponse);
     }
 
     /**

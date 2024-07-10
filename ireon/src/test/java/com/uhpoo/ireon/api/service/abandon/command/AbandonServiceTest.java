@@ -1,11 +1,11 @@
-package com.uhpoo.ireon.api.service.abandon;
+package com.uhpoo.ireon.api.service.abandon.command;
 
 import com.uhpoo.ireon.IntegrationTestSupport;
 import com.uhpoo.ireon.api.service.abandon.dto.CreateAbandonDto;
 import com.uhpoo.ireon.domain.abandon.AbandonStatus;
 import com.uhpoo.ireon.domain.abandon.VaccinationStatus;
-import com.uhpoo.ireon.domain.abandon.repository.AbandonAttachmentRepository;
-import com.uhpoo.ireon.domain.abandon.repository.AbandonRepository;
+import com.uhpoo.ireon.domain.abandon.repository.command.AbandonAttachmentRepository;
+import com.uhpoo.ireon.domain.abandon.repository.command.AbandonRepository;
 import com.uhpoo.ireon.domain.common.DeSexing;
 import com.uhpoo.ireon.domain.common.animal.AnimalType;
 import com.uhpoo.ireon.domain.common.animal.Gender;

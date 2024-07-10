@@ -17,6 +17,7 @@ include::{snippets}/create-abandon/response-fields.adoc[]
 ==== HTTP Request
 
 include::{snippets}/get-abandons/http-request.adoc[]
+include::{snippets}/get-abandons/query-parameters.adoc[]
 
 ==== HTTP Response
 include::{snippets}/get-abandons/http-response.adoc[]

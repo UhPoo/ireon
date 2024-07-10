@@ -1,4 +1,4 @@
-package com.uhpoo.ireon.domain.abandon.repository;
+package com.uhpoo.ireon.domain.abandon.repository.command;
 
 import com.uhpoo.ireon.domain.abandon.AbandonComment;
 import org.springframework.data.jpa.repository.JpaRepository;

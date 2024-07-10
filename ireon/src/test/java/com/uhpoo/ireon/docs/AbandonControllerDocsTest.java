@@ -6,12 +6,13 @@ import com.uhpoo.ireon.api.controller.abandon.request.CreateAbandonRequest;
 import com.uhpoo.ireon.api.controller.abandon.request.EditAbandonRequest;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonDetailResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
-import com.uhpoo.ireon.api.service.abandon.AbandonQueryService;
-import com.uhpoo.ireon.api.service.abandon.AbandonService;
+import com.uhpoo.ireon.api.service.abandon.query.AbandonQueryService;
+import com.uhpoo.ireon.api.service.abandon.command.AbandonService;
 import com.uhpoo.ireon.api.service.abandon.dto.CreateAbandonDto;
 import com.uhpoo.ireon.api.service.abandon.dto.EditAbandonDto;
 import com.uhpoo.ireon.domain.abandon.AbandonStatus;
 import com.uhpoo.ireon.domain.abandon.VaccinationStatus;
+import com.uhpoo.ireon.domain.abandon.dto.SearchCondition;
 import com.uhpoo.ireon.domain.common.animal.AnimalType;
 import com.uhpoo.ireon.domain.common.animal.Gender;
 import jakarta.validation.constraints.NotNull;
@@ -28,6 +29,7 @@ import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequ
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -115,7 +117,7 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                                         .description("동물 나이"),
                                 fieldWithPath("vaccinationStatus").type(JsonFieldType.STRING)
                                         .description("접종 상태"),
-                                fieldWithPath("neutralized").type(JsonFieldType.BOOLEAN)
+                                fieldWithPath("deSexing").type(JsonFieldType.STRING)
                                         .description("중성화 여부"),
                                 fieldWithPath("abandonStatus").type(JsonFieldType.STRING)
                                         .description("유기동물 상태"),
@@ -153,46 +155,54 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                 .abandonId(3L)
                 .title("제목1")
                 .author("작성자1")
-                .animalType("개")
-                .abandonStatus(AbandonStatus.SEARCHING.getText())
+                .animalType(AnimalType.DOG)
+                .abandonStatus(AbandonStatus.SEARCHING)
                 .roadAddress("서울시 송파구 토성로")
                 .jibunAddress("서울시 송파구 풍납동")
                 .detailAddress("비밀")
                 .phoneNumber("010-1234-5678")
                 .clipped(true)
-                .createdDate("2024-03-05")
+                .thumbnailUrl("IMG_URL")
+                .createdDate(LocalDateTime.of(2024, 6, 27, 0, 0, 0))
                 .build();
 
         AbandonResponse item2 = AbandonResponse.builder()
                 .abandonId(1L)
                 .title("제목2")
                 .author("작성자2")
-                .animalType("고양이")
-                .abandonStatus(AbandonStatus.SEARCHING.getText())
+                .animalType(AnimalType.CAT)
+                .abandonStatus(AbandonStatus.PROTECTING)
                 .roadAddress("서울시 송파구 토성로")
                 .jibunAddress("서울시 송파구 풍납동")
                 .detailAddress("비밀")
                 .phoneNumber("010-1234-5678")
                 .clipped(false)
-                .createdDate("2024-03-04")
+                .thumbnailUrl("IMG_URL")
+                .createdDate(LocalDateTime.of(2024, 6, 26, 0, 0, 0))
                 .build();
 
         List<AbandonResponse> items = List.of(item1, item2);
 
         PageResponse<List<AbandonResponse>> response = PageResponse.of(false, items);
 
-        given(abandonQueryService.getAbandons())
+        given(abandonQueryService.getAbandons(any(SearchCondition.class), anyLong(), anyString()))
                 .willReturn(response);
 
         mockMvc.perform(
                         get("/abandon")
                                 .header("Authentication", "authentication")
+                                .param("keyword", "keyword")
+                                .param("lastAbandonId", "")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("get-abandons",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
+                        queryParameters(
+                                parameterWithName("keyword").description("검색어"),
+                                parameterWithName("lastAbandonId").description("마지막으로 조회된 유기동물 게시글 PK")
+                        ),
                         responseFields(
                                 fieldWithPath("code").type(JsonFieldType.NUMBER)
                                         .description("코드"),
@@ -226,6 +236,8 @@ public class AbandonControllerDocsTest extends RestDocsSupport {
                                         .description("연락처"),
                                 fieldWithPath("data.items[].clipped").type(JsonFieldType.BOOLEAN)
                                         .description("스크랩 여부"),
+                                fieldWithPath("data.items[].thumbnailUrl").type(JsonFieldType.STRING)
+                                        .description("썸네일 이미지 저장 경로"),
                                 fieldWithPath("data.items[].createdDate").type(JsonFieldType.STRING)
                                         .description("작성일")
                         )
