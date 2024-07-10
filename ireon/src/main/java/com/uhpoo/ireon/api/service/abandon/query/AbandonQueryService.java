@@ -3,6 +3,7 @@ package com.uhpoo.ireon.api.service.abandon.query;
 import com.uhpoo.ireon.api.PageResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonDetailResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
+import com.uhpoo.ireon.domain.abandon.dto.AbandonDetailDto;
 import com.uhpoo.ireon.domain.abandon.dto.SearchCondition;
 import com.uhpoo.ireon.domain.abandon.repository.query.AbandonAttachmentQueryRepository;
 import com.uhpoo.ireon.domain.abandon.repository.query.AbandonQueryRepository;
@@ -55,7 +56,15 @@ public class AbandonQueryService {
      * @return PK에 해당하는 유기동물 게시글 정보
      */
     public AbandonDetailResponse getAbandon(Long abandonId, String nickname) {
-        return null;
+        log.debug("abandonId={}", abandonId);
+        log.debug("nickname={}", nickname);
+
+        AbandonDetailDto dto = abandonQueryRepository.getAbandonByIdAndNickname(abandonId, nickname);
+        log.debug("dto={}", dto);
+
+        List<String> attachments = abandonAttachmentQueryRepository.getAttachmentsByAbandonId(abandonId);
+
+        return AbandonDetailResponse.of(dto, attachments);
     }
 
     /**
