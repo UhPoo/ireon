@@ -2,10 +2,8 @@ package com.uhpoo.ireon.domain.abandon.repository.query;
 
 import com.uhpoo.ireon.IntegrationTestSupport;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
-import com.uhpoo.ireon.domain.abandon.Abandon;
-import com.uhpoo.ireon.domain.abandon.AbandonAttachment;
-import com.uhpoo.ireon.domain.abandon.AbandonStatus;
-import com.uhpoo.ireon.domain.abandon.VaccinationStatus;
+import com.uhpoo.ireon.domain.abandon.*;
+import com.uhpoo.ireon.domain.abandon.dto.AbandonDetailDto;
 import com.uhpoo.ireon.domain.abandon.dto.SearchCondition;
 import com.uhpoo.ireon.domain.abandon.repository.command.AbandonAttachmentRepository;
 import com.uhpoo.ireon.domain.abandon.repository.command.AbandonRepository;
@@ -154,7 +152,49 @@ class AbandonQueryRepositoryTest extends IntegrationTestSupport {
         // then
         assertThat(responses).isEmpty();
 
-        }
+    }
+
+    @DisplayName("PK 와 로그인 중인 회원 닉네임으로 유기동물 게시글을 조회할 수 있다.")
+    @Test
+    void getAbandonByIdAndNickname() {
+        // given
+        Member author1 = createMember("author1@gmail.com", "작성자1");
+        Member author2 = createMember("author2@gmail.com", "작성자2");
+        Member member = createMember("member@gmail.com", "일반회원1");
+
+        Address address1 = createAddress("11111", "서울시 송파구 토성로", "서울시 송파구 풍납동", "비밀1");
+        Address address2 = createAddress("22222", "서울시 송파구 송파로", "서울시 송파구 송파동", "비밀2");
+
+        AnimalInfo info1 = createAnimalInfo(AnimalType.DOG, "말티즈", Gender.FEMALE, 2);
+        AnimalInfo info2 = createAnimalInfo(AnimalType.CAT, "코리안 숏헤어", Gender.MALE, 3);
+        AnimalInfo info3 = createAnimalInfo(AnimalType.DOG, "믹스", Gender.FEMALE, 1);
+
+        Abandon abandon1 = createAbandon(info1, address1, author1, "말티즈 입양처 구해요",
+                "글내용글내용글내용강아지글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용",
+                VaccinationStatus.FIRST, DeSexing.UNDONE, AbandonStatus.SEARCHING, "010-1234-5678");
+
+        Abandon abandon2 = createAbandon(info2, address2, author2, "임보 중인 삼색 고양이에요",
+                "삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이" +
+                        "삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이삼색이",
+                VaccinationStatus.ZERO, DeSexing.DONE, AbandonStatus.PROTECTING, "010-5678-5678");
+
+        Abandon abandon3 = createAbandon(info3, address1, author1, "믹스 강아지 입양처 구해요",
+                "믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양믹스견입양",
+                VaccinationStatus.ZERO, DeSexing.UNDONE, AbandonStatus.PROTECTING, "010-1234-5678");
+
+        abandonRepository.saveAll(List.of(abandon1, abandon2, abandon3));
+
+        createAttachment(abandon3);
+
+        createAbandonScrap(member, abandon1);
+
+        // when
+        AbandonDetailDto dto = abandonQueryRepository.getAbandonByIdAndNickname(abandon1.getId(), member.getNickname());
+        log.info("dto={}", dto);
+
+        // then
+        assertThat(dto).isNotNull();
+    }
 
     private Member createMember(String email, String nickname) {
         Member author = Member.builder()
@@ -204,5 +244,14 @@ class AbandonQueryRepositoryTest extends IntegrationTestSupport {
                 .build();
 
         abandonAttachmentRepository.save(attachment);
+    }
+
+    private void createAbandonScrap(Member member, Abandon abandon) {
+        AbandonScrap scrap = AbandonScrap.builder()
+                .abandon(abandon)
+                .member(member)
+                .build();
+
+        abandonScrapRepository.save(scrap);
     }
 }

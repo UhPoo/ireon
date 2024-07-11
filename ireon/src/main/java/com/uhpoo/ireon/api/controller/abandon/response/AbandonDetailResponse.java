@@ -1,51 +1,29 @@
 package com.uhpoo.ireon.api.controller.abandon.response;
 
+import com.uhpoo.ireon.domain.abandon.dto.AbandonDetailDto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class AbandonDetailResponse {
-    private Long abandonId;
-    private String title;
-    private String author;
-    private String animalType;
-    private String animalDetail;
-    private String animalGender;
-    private Integer animalAge;
-    private String vaccinationStatus;
-    private Boolean neutralized;
-    private String abandonStatus;
-    private String zipcode;
-    private String roadAddress;
-    private String jibunAddress;
-    private String detailAddress;
-    private String phoneNumber;
-    private Boolean clipped;
-    private String createdDate;
+
+    private AbandonDetailDto dto;
+    private List<String> attachments;
 
     @Builder
-    public AbandonDetailResponse(Long abandonId, String title, String author, String animalType, String animalDetail,
-                                 String animalGender, Integer animalAge, String vaccinationStatus, Boolean neutralized,
-                                 String abandonStatus, String zipcode, String roadAddress, String jibunAddress,
-                                 String detailAddress, String phoneNumber, Boolean clipped, String createdDate) {
-        this.abandonId = abandonId;
-        this.title = title;
-        this.author = author;
-        this.animalType = animalType;
-        this.animalDetail = animalDetail;
-        this.animalGender = animalGender;
-        this.animalAge = animalAge;
-        this.vaccinationStatus = vaccinationStatus;
-        this.neutralized = neutralized;
-        this.abandonStatus = abandonStatus;
-        this.zipcode = zipcode;
-        this.roadAddress = roadAddress;
-        this.jibunAddress = jibunAddress;
-        this.detailAddress = detailAddress;
-        this.phoneNumber = phoneNumber;
-        this.clipped = clipped;
-        this.createdDate = createdDate;
+    public AbandonDetailResponse(AbandonDetailDto dto, List<String> attachments) {
+        this.dto = dto;
+        this.attachments = attachments;
+    }
+
+    public static AbandonDetailResponse of(AbandonDetailDto dto, List<String> attachments) {
+        return AbandonDetailResponse.builder()
+                .dto(dto)
+                .attachments(attachments)
+                .build();
     }
 }

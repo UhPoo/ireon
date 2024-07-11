@@ -6,8 +6,8 @@ import com.uhpoo.ireon.api.controller.abandon.request.CreateAbandonRequest;
 import com.uhpoo.ireon.api.controller.abandon.request.EditAbandonRequest;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonDetailResponse;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
-import com.uhpoo.ireon.api.service.abandon.query.AbandonQueryService;
 import com.uhpoo.ireon.api.service.abandon.command.AbandonService;
+import com.uhpoo.ireon.api.service.abandon.query.AbandonQueryService;
 import com.uhpoo.ireon.domain.abandon.dto.SearchCondition;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -94,7 +94,10 @@ public class AbandonController {
         log.debug("AbandonController#getAbandon called.");
         log.debug("abandonId={}", abandonId);
 
-        AbandonDetailResponse response = abandonQueryService.getAbandon(abandonId);
+        String nickname = "nickname";
+        log.debug("nickname={}", nickname);
+
+        AbandonDetailResponse response = abandonQueryService.getAbandon(abandonId, nickname);
         log.debug("response={}", response);
 
         return ApiResponse.ok(response);

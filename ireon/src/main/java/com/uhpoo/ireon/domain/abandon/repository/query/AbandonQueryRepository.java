@@ -5,6 +5,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.uhpoo.ireon.api.controller.abandon.response.AbandonResponse;
+import com.uhpoo.ireon.domain.abandon.dto.AbandonDetailDto;
 import com.uhpoo.ireon.domain.abandon.dto.SearchCondition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -84,6 +85,42 @@ public class AbandonQueryRepository {
                 .fetch();
     }
 
+    /**
+     * PK 와 닉네임으로 유기동물 게시글 상세 조회 쿼리
+     *
+     * @param abandonId 조회하려는 유기동물 게시글 PK
+     * @param nickname  현재 로그인 중인 회원 닉네임
+     * @return 조건에 해당하는 유기동물 게시글 정보
+     */
+    public AbandonDetailDto getAbandonByIdAndNickname(Long abandonId, String nickname) {
+        return queryFactory.select(Projections.constructor(AbandonDetailDto.class,
+                        abandon.id,
+                        abandon.title,
+                        abandon.content,
+                        abandon.member.nickname,
+                        abandon.animalInfo.animalType,
+                        abandon.animalInfo.animalDetail,
+                        abandon.animalInfo.animalGender,
+                        abandon.animalInfo.age,
+                        abandon.vaccinationStatus,
+                        abandon.deSexing,
+                        abandon.abandonStatus,
+                        abandon.address.zipcode,
+                        abandon.address.road,
+                        abandon.address.jibun,
+                        abandon.address.detail,
+                        abandon.phoneNumber,
+                        isClipped(nickname),
+                        abandon.createdDate
+                ))
+                .from(abandon)
+                .join(abandon.member, member)
+                .where(
+                        isAbandonId(abandonId)
+                )
+                .fetchOne();
+    }
+
     private BooleanExpression containsKeyword(String keyword) {
         return hasText(keyword) ? abandon.title.contains(keyword).or(abandon.content.contains(keyword)) : null;
     }
@@ -102,10 +139,14 @@ public class AbandonQueryRepository {
         return select(abandonScrap.count().goe(1L))
                 .from(abandonScrap)
                 .where(
-                        abandonScrap.abandon.eq(abandon),
+                        abandonScrap.abandon.id.eq(abandon.id),
                         abandonScrap.member.nickname.eq(nickname),
                         abandonScrap.active,
                         member.active
                 );
+    }
+
+    private BooleanExpression isAbandonId(Long abandonId) {
+        return abandonId == null ? null : abandon.id.eq(abandonId);
     }
 }
