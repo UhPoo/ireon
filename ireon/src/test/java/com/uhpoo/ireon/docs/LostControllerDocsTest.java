@@ -11,6 +11,7 @@ import com.uhpoo.ireon.api.service.lost.LostQueryService;
 import com.uhpoo.ireon.api.service.lost.LostService;
 import com.uhpoo.ireon.api.service.lost.dto.CreateLostDto;
 import com.uhpoo.ireon.api.service.lost.dto.EditLostDto;
+import com.uhpoo.ireon.domain.common.DeSexing;
 import com.uhpoo.ireon.domain.common.animal.AnimalType;
 import com.uhpoo.ireon.domain.common.animal.Gender;
 import com.uhpoo.ireon.domain.lost.LostStatus;
@@ -66,7 +67,7 @@ public class LostControllerDocsTest extends RestDocsSupport  {
                 .animalDetail("곰상 믹스견")
                 .animalGender(Gender.FEMALE.getText())
                 .animalAge(3)
-                .neutralized(true)
+                .deSexing(DeSexing.DONE.getText())
                 .lostStatus("")
                 .zipcode("03045")
                 .roadAddress("서울 종로구 사직로 161")

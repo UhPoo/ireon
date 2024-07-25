@@ -1,6 +1,6 @@
 package com.uhpoo.ireon.domain.lost;
 
-import com.uhpoo.ireon.domain.common.Address;
+import com.uhpoo.ireon.domain.common.DeSexing;
 import com.uhpoo.ireon.domain.common.TimeBaseEntity;
 import com.uhpoo.ireon.domain.common.animal.AnimalInfo;
 import com.uhpoo.ireon.domain.member.Member;
@@ -35,7 +35,7 @@ public class Lost extends TimeBaseEntity {
     private AnimalInfo animalInfo;
 
     @Column(nullable = false)
-    private Boolean neutralized;
+    private DeSexing deSexing;
 
     @Column(nullable = false, length = 20)
     private LostStatus lostStatus;
@@ -54,17 +54,16 @@ public class Lost extends TimeBaseEntity {
     private Member member;
 
     @Builder
-    private Lost(String title, String content, AnimalInfo animalInfo, Boolean neutralized,
-                 LostStatus lostStatus, LostAddress lostAddress, String phoneNumber,
-                 Boolean active, Member member) {
+    private Lost(String title, String content, AnimalInfo animalInfo, DeSexing deSexing,
+                 LostStatus lostStatus, LostAddress lostAddress, String phoneNumber, Member member) {
         this.title = title;
         this.content = content;
         this.animalInfo = animalInfo;
-        this.neutralized = neutralized;
+        this.deSexing = deSexing;
         this.lostStatus = lostStatus;
         this.lostAddress = lostAddress;
         this.phoneNumber = phoneNumber;
-        this.active = active;
+        this.active = true;
         this.member = member;
     }
 }
