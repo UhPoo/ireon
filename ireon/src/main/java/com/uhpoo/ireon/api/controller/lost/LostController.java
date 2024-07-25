@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class LostController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<Long> createLost(@Valid @RequestPart(name = "request") CreateLostRequest request, @RequestPart(required = false, name = "file") MultipartFile file) {
+    public ApiResponse<Long> createLost(@Valid @RequestPart(name = "request") CreateLostRequest request, @RequestPart(required = false, name = "file") MultipartFile file) throws IOException {
         log.debug("LostController#createLost called.");
         log.debug("CreateLostRequest={}", request);
         log.debug("MultipartFile={}", file);

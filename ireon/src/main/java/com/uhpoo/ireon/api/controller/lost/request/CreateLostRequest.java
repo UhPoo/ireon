@@ -22,7 +22,7 @@ public class CreateLostRequest {
     private String animalDetail;
     private String animalGender;
     private Integer animalAge;
-    private Boolean neutralized;
+    private String deSexing;
     private String lostStatus;
     private String zipcode;
     private String roadAddress;
@@ -34,7 +34,7 @@ public class CreateLostRequest {
 
     @Builder
     public CreateLostRequest(String title, String content, String animalType, String animalDetail,
-                             String animalGender, Integer animalAge, Boolean neutralized, String lostStatus,
+                             String animalGender, Integer animalAge, String deSexing, String lostStatus,
                              String zipcode, String roadAddress, String jibunAddress, String detailAddress,
                              BigDecimal latitude, BigDecimal longitude, String phoneNumber) {
         this.title = title;
@@ -43,7 +43,7 @@ public class CreateLostRequest {
         this.animalDetail = animalDetail;
         this.animalGender = animalGender;
         this.animalAge = animalAge;
-        this.neutralized = neutralized;
+        this.deSexing = deSexing;
         this.lostStatus = lostStatus;
         this.zipcode = zipcode;
         this.roadAddress = roadAddress;
@@ -62,7 +62,7 @@ public class CreateLostRequest {
                 .animalDetail(this.animalDetail)
                 .animalGender(this.animalGender)
                 .animalAge(this.animalAge)
-                .neutralized(this.neutralized)
+                .deSexing(this.deSexing)
                 .lostStatus(this.lostStatus)
                 .zipcode(this.zipcode)
                 .roadAddress(this.roadAddress)

@@ -34,9 +34,9 @@ public class LostAttachment extends TimeBaseEntity {
     private Boolean active;
 
     @Builder
-    public LostAttachment(UploadFile uploadFile, Lost lost, Boolean active) {
+    public LostAttachment(UploadFile uploadFile, Lost lost) {
         this.uploadFile = uploadFile;
         this.lost = lost;
-        this.active = active;
+        this.active = true;
     }
 }
